@@ -1,0 +1,88 @@
+package model;
+
+import java.awt.geom.Point2D; //test//
+
+public class Car implements CarI {
+	private Point2D.Double coordinate;
+	private double currentSpeedLimit;
+	private double maxSpeed;
+	private double currentSpeed;
+	private String destinationId;
+	private String currentRoadId;
+
+	private Lane currentLane;
+
+	public Point2D.Double getCoordinate() {
+		return coordinate;
+	}
+
+	public void setCoordinate(Point2D.Double coordinate) {
+		this.coordinate = coordinate;
+	}
+
+	public double getCurrentSpeedLimit() {
+		return currentSpeedLimit;
+	}
+
+	public void setCurrentSpeedLimit(double currentSpeedLimit) {
+		this.currentSpeedLimit = currentSpeedLimit;
+	}
+
+	public double getMaxSpeed() {
+		return maxSpeed;
+	}
+
+	public void setMaxSpeed(double maxSpeed) {
+		this.maxSpeed = maxSpeed;
+	}
+
+	public double getCurrentSpeed() {
+		return currentSpeed;
+	}
+
+	public void setCurrentSpeed(double currentSpeed) {
+		this.currentSpeed = currentSpeed;
+	}
+
+	public String getDestinationId() {
+		return destinationId;
+	}
+
+	public void setDestinationId(String destinationId) {
+		this.destinationId = destinationId;
+	}
+
+	public String getCurrentRoadId() {
+		return currentRoadId;
+	}
+
+	public void setCurrentRoadId(String currentRoadId) {
+		this.currentRoadId = currentRoadId;
+	}
+
+	public Lane getCurrentLane() {
+		return currentLane;
+	}
+
+	public void setCurrentLane(Lane currentLane) {
+		this.currentLane = currentLane;
+	}
+
+	@Override
+	public void accelerate() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void decelerate() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+
+	}
+}
