@@ -1,12 +1,19 @@
 package model;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
-public class CarWorld  {
+import control.WorldController;
+
+public class CarWorld {
+	private WorldController wCtrl;
+	private boolean status = false;
 	private int height;
 	private int width;
 	private HashMap<String, Road> roads = new HashMap<String, Road>();
+	private HashMap<String, Car> cars = new HashMap<String, Car>();
 
 	public CarWorld() {
 		this.height = 1000;
@@ -32,14 +39,52 @@ public class CarWorld  {
 		roads.put(road.getId(), road);
 	}
 
-	public void removeRoad(String roadId) {
-
+	public void addCar(Car car) {
+		cars.put(car.getId(), car);
 	}
 
-	public void changeRoad(Road road) {
-		Road tempRoad = road;
-		Road originalRoad = roads.get(road.getId());
-		originalRoad.updateRoad(road);
+	public void removeRoad(String roadId) {
+		roads.remove(roadId);
+	}
+
+	public void drawWorld(Graphics g) {
+		for (String key : roads.keySet()) {
+			Road currentRoad = roads.get(key);
+			currentRoad.drawRoad(g);
+
+		}
+		for (String key : cars.keySet()) {
+			Car currentCar = cars.get(key);
+			currentCar.drawCar(g);
+		}
+	}
+
+	public void setController(WorldController wCtrl) {
+		this.wCtrl = wCtrl;
+	}
+
+	public String toString() {
+
+		return "Number of roads: " + roads.size() + "Number of cars"
+				+ cars.size();
+	}
+
+	public void simulate() throws InterruptedException {
+		while(true){
+			if(status==true){
+			wCtrl.render();
+
+			Thread.sleep(1); // the timing mechanism
+			}
+			if(status==false){
+				Thread.sleep(1);
+			}
+		}
+	}
+
+	public void setStatus(boolean b) {
+		this.status=b;
+		
 	}
 
 }

@@ -12,22 +12,22 @@ import java.util.UUID;
 public class Road {
 	private final String roadId;
 	private ArrayList<Lane> lanes = new ArrayList<Lane>();
-	private Map<Float, Float> functionRepresentation;
+	private RepresentationFactory repFactory = new RepresentationFactory();
 
 	public Road(int startX, int startY, int endX, int endY) {
 		Point2D.Double start = new Point2D.Double(startX, startY);
 		Point2D.Double end = new Point2D.Double(endX, endY);
 
-		Map<Float, Float> straightFunction = new HashMap<Float, Float>();
 		roadId = UUID.randomUUID().toString();
-		straightFunction.put((float) 0, (float) 2);
-		Lane baseLane = new Lane(start, end, straightFunction);
+		String function = repFactory
+				.createRepresentation(RepresentationFactory.STRAIGHT_LANE);
+		Lane baseLane = new Lane(start, end, function);
 		lanes.add(baseLane);
 		System.out.println(toString());
 	}
 
 	public Road(int startX, int startY, int endX, int endY,
-			Map<Float, Float> functionRepresentation) {
+			String functionRepresentation) {
 		Point2D.Double start = new Point2D.Double(startX, startY);
 		Point2D.Double end = new Point2D.Double(endX, endY);
 		Lane baseLane = new Lane(start, end, functionRepresentation);
@@ -41,17 +41,8 @@ public class Road {
 		return roadId;
 	}
 
-	public void updateRoad(Road road) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void addLane(Lane lane) {
 		this.lanes.add(lane);
-	}
-
-	public void setLane() {
-
 	}
 
 	public void drawRoad(Graphics g) {
@@ -65,5 +56,32 @@ public class Road {
 
 	public String toString() {
 		return "road id: " + roadId + "\n" + "Number of lanes: " + lanes.size();
+	}
+
+	class RepresentationFactory {
+		public final static int STRAIGHT_LANE = 1;
+		public final static int RoundAbout = 2;
+
+		public RepresentationFactory() {
+
+		}
+
+		public String createRepresentation(int i) {
+			String representation = "";
+			if (i == 1) {
+				representation = "y=0";
+			} else if (i == 2) {
+			} else if (i == 3) {
+
+			} else if (i == 4) {
+
+			} else {
+				// base case
+				// straight road
+				// error catch (irregular i)
+			}
+
+			return representation;
+		}
 	}
 }
