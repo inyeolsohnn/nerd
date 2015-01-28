@@ -12,8 +12,8 @@ public class CarWorld {
 	private boolean status = false;
 	private int height;
 	private int width;
-	private HashMap<String, Road> roads = new HashMap<String, Road>();
-	private HashMap<String, Car> cars = new HashMap<String, Car>();
+	private HashMap<Integer, Road> roads = new HashMap<Integer, Road>();
+	private HashMap<Integer, Car> cars = new HashMap<Integer, Car>();
 
 	public CarWorld() {
 		this.height = 1000;
@@ -48,15 +48,7 @@ public class CarWorld {
 	}
 
 	public void drawWorld(Graphics g) {
-		for (String key : roads.keySet()) {
-			Road currentRoad = roads.get(key);
-			currentRoad.drawRoad(g);
 
-		}
-		for (String key : cars.keySet()) {
-			Car currentCar = cars.get(key);
-			currentCar.drawCar(g);
-		}
 	}
 
 	public void setController(WorldController wCtrl) {
@@ -70,21 +62,31 @@ public class CarWorld {
 	}
 
 	public void simulate() throws InterruptedException {
-		while(true){
-			if(status==true){
-			wCtrl.render();
+		while (true) {
+			if (status == true) {
+				wCtrl.render();
 
-			Thread.sleep(1); // the timing mechanism
+				Thread.sleep(1); // the timing mechanism
 			}
-			if(status==false){
+			if (status == false) {
 				Thread.sleep(1);
 			}
 		}
 	}
 
 	public void setStatus(boolean b) {
-		this.status=b;
-		
+		this.status = b;
+
+	}
+
+	public HashMap<Integer, Car> getCars() {
+		// TODO Auto-generated method stub
+		return cars;
+	}
+
+	public HashMap<Integer, Road> getRoads() {
+		// TODO Auto-generated method stub
+		return roads;
 	}
 
 }

@@ -2,6 +2,8 @@ package control;
 
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 
@@ -22,7 +24,9 @@ public class WorldController {
 		Road road = new Road(100, 100, 400, 500);
 		cWorld.addRoad(road);
 		Car car = new Car(new Point2D.Double(100.0, 100.0), 0, road.getId());
+		Car car1 = new Car(new Point2D.Double(400.0, 500.0), 100, road.getId());
 		cWorld.addCar(car);
+		cWorld.addCar(car1);
 		frame.setSize(cWorld.getWidth(), cWorld.getHeight());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationByPlatform(true);
@@ -62,5 +66,15 @@ public class WorldController {
 
 	public void start() {
 		this.cWorld.setStatus(true);
+	}
+
+	public HashMap<Integer, Car> getCars() {
+		// TODO Auto-generated method stub
+		return this.cWorld.getCars();
+	}
+
+	public HashMap<Integer, Road> getRoads() {
+		// TODO Auto-generated method stub
+		return this.cWorld.getRoads();
 	}
 }

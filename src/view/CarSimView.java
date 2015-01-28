@@ -8,11 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 
+import model.Car;
+import model.Road;
 import control.WorldController;
 
 public class CarSimView extends JFrame implements ActionListener {
@@ -32,8 +35,7 @@ public class CarSimView extends JFrame implements ActionListener {
 		startButton.addActionListener(this);
 		this.add(stopButton);
 		this.add(startButton);
-		this.revalidate();
-		this.repaint();
+	
 
 	}
 
@@ -93,9 +95,19 @@ public class CarSimView extends JFrame implements ActionListener {
 		}
 
 		protected void paintComponent(Graphics g) {
-			control.drawWorld(g);
+			HashMap<Integer, Road> roads = control.getRoads();
+			HashMap<Integer, Car> cars = control.getCars();
+
+			for (Integer roadKey : roads.keySet()) {
+				Road currentRoad = roads.get(roadKey);
+				System.out.println("drawing road: " + currentRoad.getId());
+			}
+			for (Integer carKey : cars.keySet()) {
+				Car currentCar = cars.get(carKey);
+				System.out.println("drawing car: " + currentCar.getId());
+			}
+
 		}
 
 	}
-
 }

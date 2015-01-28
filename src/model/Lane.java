@@ -39,7 +39,5 @@ public class Lane {
 		this.baseLane = bl;
 	}
 
-	public void drawLane(Graphics g) {
-		System.out.println("Lane drawn");
-	}
+
 }

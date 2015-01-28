@@ -9,7 +9,7 @@ public class Car implements CarI {
 	private double currentSpeedLimit;
 	private double maxSpeed;
 	private double currentSpeed;
-	private String destinationId;
+	private int destinationId;
 	private String currentRoadId;
 
 	private static int carsCreated = 0;
@@ -20,7 +20,7 @@ public class Car implements CarI {
 
 	}
 
-	public Car(Point2D.Double coordinate, double maxSpeed, String destinationId) {
+	public Car(Point2D.Double coordinate, double maxSpeed, int destinationId) {
 		this.coordinate = coordinate;
 		this.maxSpeed = maxSpeed;
 		this.destinationId = destinationId;
@@ -64,11 +64,11 @@ public class Car implements CarI {
 		this.currentSpeed = currentSpeed;
 	}
 
-	public String getDestinationId() {
+	public int getDestinationId() {
 		return destinationId;
 	}
 
-	public void setDestinationId(String destinationId) {
+	public void setDestinationId(int destinationId) {
 		this.destinationId = destinationId;
 	}
 
@@ -106,13 +106,13 @@ public class Car implements CarI {
 
 	}
 
-	public String getId() {
+	public int getId() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.id;
 	}
 
 	public void drawCar(Graphics g) {
 		System.out.println("car drawn");
-		
+
 	}
 }

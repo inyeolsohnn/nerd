@@ -10,20 +10,23 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Road {
-	private final String roadId;
+	private final int roadId;
 	private ArrayList<Lane> lanes = new ArrayList<Lane>();
 	private RepresentationFactory repFactory = new RepresentationFactory();
+	private static int roadsCreated=0;
 
 	public Road(int startX, int startY, int endX, int endY) {
 		Point2D.Double start = new Point2D.Double(startX, startY);
 		Point2D.Double end = new Point2D.Double(endX, endY);
 
-		roadId = UUID.randomUUID().toString();
+		roadId = roadsCreated;
 		String function = repFactory
 				.createRepresentation(RepresentationFactory.STRAIGHT_LANE);
 		Lane baseLane = new Lane(start, end, function);
 		lanes.add(baseLane);
 		System.out.println(toString());
+		
+		roadsCreated++;
 	}
 
 	public Road(int startX, int startY, int endX, int endY,
@@ -32,11 +35,12 @@ public class Road {
 		Point2D.Double end = new Point2D.Double(endX, endY);
 		Lane baseLane = new Lane(start, end, functionRepresentation);
 		baseLane.setBaseLane(true);
-		roadId = UUID.randomUUID().toString();
+		roadId = roadsCreated;
+		roadsCreated++;
 
 	}
 
-	public String getId() {
+	public int getId() {
 		// TODO Auto-generated method stub
 		return roadId;
 	}
@@ -45,14 +49,6 @@ public class Road {
 		this.lanes.add(lane);
 	}
 
-	public void drawRoad(Graphics g) {
-		Iterator<Lane> laneIter = lanes.iterator();
-		while (laneIter.hasNext()) {
-			Lane currentLane = laneIter.next();
-			currentLane.drawLane(g);
-			;
-		}
-	}
 
 	public String toString() {
 		return "road id: " + roadId + "\n" + "Number of lanes: " + lanes.size();
