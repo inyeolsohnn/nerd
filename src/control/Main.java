@@ -13,7 +13,7 @@ public class Main {
 		JFrame frame = new CarSimView("carSim");
 		WorldController wControl = new WorldController(frame, cWorld);
 		try {
-			cWorld.simulate();
+			wControl.simulate();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -111,8 +111,5 @@ public class Car implements CarI {
 		return this.id;
 	}
 
-	public void drawCar(Graphics g) {
-		System.out.println("car drawn");
-
-	}
+	
 }

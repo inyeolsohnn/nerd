@@ -18,9 +18,9 @@ public class WorldController {
 
 	public WorldController(JFrame frame, CarWorld cWorld) {
 		this.carView = frame;
-		((CarSimView) frame).setController(this);
 		this.cWorld = cWorld;
-		cWorld.setController(this);
+		((CarSimView) frame).setController(this);
+
 		Road road = new Road(100, 100, 400, 500);
 		cWorld.addRoad(road);
 		Car car = new Car(new Point2D.Double(100.0, 100.0), 0, road.getId());
@@ -40,10 +40,6 @@ public class WorldController {
 
 	public void setcWorld(CarWorld cWorld) {
 		this.cWorld = cWorld;
-	}
-
-	public void drawWorld(Graphics g) {
-		cWorld.drawWorld(g);
 	}
 
 	public String toString() {
@@ -66,6 +62,19 @@ public class WorldController {
 
 	public void start() {
 		this.cWorld.setStatus(true);
+	}
+
+	public void simulate() throws InterruptedException {
+		while (true) {
+			if (cWorld.getStatus() == true) {
+				render();
+
+				Thread.sleep(1); // the timing mechanism
+			}
+			if (cWorld.getStatus() == false) {
+				Thread.sleep(1);
+			}
+		}
 	}
 
 	public HashMap<Integer, Car> getCars() {

@@ -8,8 +8,7 @@ import java.util.Map.Entry;
 import control.WorldController;
 
 public class CarWorld {
-	private WorldController wCtrl;
-	private boolean status = false;
+		private boolean status = false;
 	private int height;
 	private int width;
 	private HashMap<Integer, Road> roads = new HashMap<Integer, Road>();
@@ -47,36 +46,19 @@ public class CarWorld {
 		roads.remove(roadId);
 	}
 
-	public void drawWorld(Graphics g) {
-
-	}
-
-	public void setController(WorldController wCtrl) {
-		this.wCtrl = wCtrl;
-	}
-
 	public String toString() {
 
 		return "Number of roads: " + roads.size() + "Number of cars"
 				+ cars.size();
 	}
 
-	public void simulate() throws InterruptedException {
-		while (true) {
-			if (status == true) {
-				wCtrl.render();
-
-				Thread.sleep(1); // the timing mechanism
-			}
-			if (status == false) {
-				Thread.sleep(1);
-			}
-		}
-	}
-
 	public void setStatus(boolean b) {
 		this.status = b;
 
+	}
+
+	public boolean getStatus() {
+		return this.status;
 	}
 
 	public HashMap<Integer, Car> getCars() {
