@@ -1,11 +1,6 @@
 package model;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
-
-import control.WorldController;
 
 public class CarWorld {
 		private boolean status = false;

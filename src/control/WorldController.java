@@ -51,11 +51,6 @@ public class WorldController {
 		this.carView = frame;
 	}
 
-	public void render() {
-		this.carView.repaint();
-
-	}
-
 	public void pause() {
 		this.cWorld.setStatus(false);
 	}
@@ -64,12 +59,14 @@ public class WorldController {
 		this.cWorld.setStatus(true);
 	}
 
+	// program loop
 	public void simulate() throws InterruptedException {
 		while (true) {
 			if (cWorld.getStatus() == true) {
+				update();
 				render();
-
 				Thread.sleep(1); // the timing mechanism
+									// needs improvement
 			}
 			if (cWorld.getStatus() == false) {
 				Thread.sleep(1);
@@ -86,4 +83,27 @@ public class WorldController {
 		// TODO Auto-generated method stub
 		return this.cWorld.getRoads();
 	}
+
+	private void update() {
+		System.out.println("updated");
+		HashMap<Integer, Car> cars = getCars();
+		HashMap<Integer, Road> roads = getRoads();
+		for (Integer carKey : cars.keySet()) {
+			Car currentCar = cars.get(carKey);
+			currentCar.update();
+			System.out.println("updating car " + currentCar.getId());
+		}
+		for (Integer roadKey : roads.keySet()) {
+			Road currentRoad = roads.get(roadKey);
+			currentRoad.update();
+			System.out.println("updating road: " + currentRoad.getId());
+		}
+
+	}
+
+	private void render() {
+		this.carView.repaint();
+
+	}
+
 }

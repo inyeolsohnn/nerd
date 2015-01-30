@@ -1,11 +1,11 @@
 package model;
 
-import java.awt.Graphics;
+
 import java.awt.geom.Point2D; //test//
 
 public class Car implements CarI {
 	private Point2D.Double coordinate;
-	private int id;
+	private final int id;
 	private double currentSpeedLimit;
 	private double maxSpeed;
 	private double currentSpeed;
@@ -17,7 +17,9 @@ public class Car implements CarI {
 	private Lane currentLane;
 
 	public Car() {
-
+		//dummy constructor for testing
+		this.id=carsCreated;
+		carsCreated++;
 	}
 
 	public Car(Point2D.Double coordinate, double maxSpeed, int destinationId) {
@@ -28,10 +30,7 @@ public class Car implements CarI {
 		Car.carsCreated++;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	
 	public Point2D.Double getCoordinate() {
 		return coordinate;
 	}
@@ -111,5 +110,7 @@ public class Car implements CarI {
 		return this.id;
 	}
 
-	
+	public void update(){
+		
+	}
 }

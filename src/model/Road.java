@@ -1,19 +1,18 @@
 package model;
 
-import java.awt.Graphics;
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.UUID;
 
 public class Road {
 	private final int roadId;
 	private ArrayList<Lane> lanes = new ArrayList<Lane>();
 	private RepresentationFactory repFactory = new RepresentationFactory();
-	private static int roadsCreated=0;
+	private static int roadsCreated = 0;
+	
+	public Road(){
+		this.roadId=roadsCreated;
+	}
 
 	public Road(int startX, int startY, int endX, int endY) {
 		Point2D.Double start = new Point2D.Double(startX, startY);
@@ -25,7 +24,7 @@ public class Road {
 		Lane baseLane = new Lane(start, end, function);
 		lanes.add(baseLane);
 		System.out.println(toString());
-		
+
 		roadsCreated++;
 	}
 
@@ -48,7 +47,6 @@ public class Road {
 	public void addLane(Lane lane) {
 		this.lanes.add(lane);
 	}
-
 
 	public String toString() {
 		return "road id: " + roadId + "\n" + "Number of lanes: " + lanes.size();
@@ -79,5 +77,10 @@ public class Road {
 
 			return representation;
 		}
+	}
+
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1,10 +1,8 @@
 package model;
 
-import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class Lane {
 	private String functionRepresentation;
@@ -16,7 +14,7 @@ public class Lane {
 	private Point2D.Double endPoint;
 
 	public Lane() {
-
+		//dummy constructor for testing
 	}
 
 	public Lane(Point2D.Double start, Point2D.Double end, String fr) {
