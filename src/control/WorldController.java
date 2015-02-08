@@ -3,6 +3,7 @@ package control;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -22,9 +23,12 @@ public class WorldController {
 		((CarSimView) frame).setController(this);
 
 		Road road = new Road(100, 100, 400, 500);
+		Road endRoad = new Road(400, 500, 700, 900);
 		cWorld.addRoad(road);
-		Car car = new Car(new Point2D.Double(100.0, 100.0), 0, road.getId());
-		Car car1 = new Car(new Point2D.Double(400.0, 500.0), 100, road.getId());
+		Car car = new Car(new Point2D.Double(100.0, 100.0), 0, road.getId(),
+				endRoad.getId());
+		Car car1 = new Car(new Point2D.Double(400.0, 500.0), 100, road.getId(),
+				endRoad.getId());
 		cWorld.addCar(car);
 		cWorld.addCar(car1);
 		frame.setSize(cWorld.getWidth(), cWorld.getHeight());
@@ -104,6 +108,12 @@ public class WorldController {
 	private void render() {
 		this.carView.repaint();
 
+	}
+
+	public static ArrayList<Road> bfsRoads(int currentRoadId,
+			int destinationRoadId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
