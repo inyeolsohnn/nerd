@@ -46,14 +46,14 @@ To design such a system as a group we believed it best to created a system model
 
 \end{figure}
 
-Additionally looking at the UL Highway Code manual helped us identify the Road Marking rules and what they mean to  incorporate into our simulation. For example within our initial design Figure \ref{fig:GUI} is rule 127 about the Centre Line "Do not cross it unless you can see the road is clear and wish to overtake or turn off" and rule 175 about Stop Lines before the traffic lights where you must wait until the traffic light is green.\\Overall, thus far we have created a Model-View-Controller structure for the development in Eclipse IDE. We understand that the development of straight roads will be very easy and therefore have been doing research into the development of curved roads using analysis into Bezier Curves which should help us create curved roads and enable cars to move on them to create a roundabout.\\ 
+Additionally looking at the UK Highway Code manual helped us identify the Road Marking rules and what they mean to  incorporate into our simulation. For example within our initial design Figure \ref{fig:GUI} shows rule 127 about the Centre Line "Do not cross it unless you can see the road is clear and wish to overtake or turn off" and rule 175 about Stop Lines before the traffic-lights where you must wait until the traffic-light is green.\\Overall, thus far we have created a Model-View-Controller structure for the development in Eclipse IDE and began simple road development. We understand that the development of straight roads will be easy and therefore have been doing research into the development of curved roads using analysis into Bézier Curves which are used when drawing smoothed curves between control points with anchor points on a path. Bezier curve tracing can be solved using De Casteljau's algorithm. So in our model we will have to build an additional class 'BezierCurve' to represent the function, essentially two polynomial functions using three points. This should help us create curved roads and enable cars to move on them to create a roundabout.
 
 \textbf{Current Development Goals:}
 \begin{enumerate}
 	\item A car is able to travel on one straight road with one lane.
 	\item A car is able to travel on one straight road with multiple lanes.
-	\item A car should be able to travel 2 roads connected with one lane in each roads
-	\item A car is able to travel on two connected roads while each roads can have different numbers of lanes
+	\item A car should be able to travel on two roads connected with one lane in each road.
+	\item A car is able to travel on two connected roads while each road can have different numbers of lanes.
 \end{enumerate}
 
 \begin{table}[ht]
