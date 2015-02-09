@@ -1,37 +1,55 @@
 package model;
 
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
+import java.awt.geom.Point2D.Float;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Lane {
 	private String functionRepresentation;
 	private boolean baseLane = false;
-
-	private int laneId;
+	private static final float SMALL_NUM = (float) 0.00000001;
+	private int laneId; // its id
 	private int roadId; // id of the road it belongs to
-	private Point2D.Double startPoint;
-	private Point2D.Double endPoint;
-	private HashMap<Point2D.Double, Road> connectionPoints = new HashMap<Point2D.Double, Road>(); // Map
-																									// of
-																									// points
-																									// connecting
-																									// roads;
+	private float laneSpan;
+	private Point2D.Float startPoint;
+	private Point2D.Float endPoint;
+	private int noPoints;
+	private ArrayList<TrafficLight> trafficLights = new ArrayList<TrafficLight>();
+	private HashMap<Point2D.Float, Road> connectionPoints = new HashMap<Point2D.Float, Road>(); // Map
+																								// of
+																								// points
+																								// connecting
+																								// roads;
 
 	public Lane() {
 		// dummy constructor for testing
 	}
 
-	public Lane(Point2D.Double start, Point2D.Double end, String fr, int roadId) {
-		functionRepresentation = adjustFunction(start, end, fr);
+	public Lane(Point2D.Float start, Point2D.Float end, int roadId) {
+		this.startPoint = start;
+		this.endPoint = end;
+		this.roadId = roadId;
+		this.laneSpan = calculateDistance(startPoint, endPoint);
+		calculatePointCount();
 	}
 
-	private String adjustFunction(Double start, Double end, String function) {
-		// parse string, turn it into appropriate according to star e.g) y=x ->
-		// y=x-5
+	public void calculatePointCount() {
+		System.out.println("lane span: " + laneSpan);
+		float points = (float) (this.laneSpan / 0.2);
+		this.noPoints = (int) Math.ceil(points);
+		System.out.println("Number of approximation points: " + noPoints);
+	}
 
-		String newFunction = function;
-		return newFunction;
+	public int getPointsCount() {
+		return this.noPoints;
+	}
+
+	public float calculateDistance(Point2D.Float pointA, Point2D.Float pointB) {
+		// TODO Auto-generated method stub
+		return (float) Math.sqrt(Math.pow((pointB.y - pointA.y), 2)
+				+ Math.pow((pointB.x - pointA.x), 2));
 	}
 
 	public void setFunctionRepresentation(String function) {
@@ -51,15 +69,23 @@ public class Lane {
 										// legal(conforms to the
 										// shape(functional representation) of
 										// its current lane
-		// TODO Auto-generated method stub
+
+		Line2D.Float currentLane = new Line2D.Float(this.startPoint,
+				this.endPoint);
+		Point2D.Float currentPosition = car.getCoordinate();
+		if (car.getCoordinate().x >= startPoint.x
+				&& car.getCoordinate().x <= endPoint.x
+				&& car.getCoordinate().y == startPoint.y) {
+			return true;
+		}
 		return false;
 	}
 
-	public Point2D.Double getStart() {
+	public Point2D.Float getStart() {
 		return this.startPoint;
 	}
 
-	public Double getEnd() {
+	public Float getEnd() {
 		// TODO Auto-generated method stub
 		return this.endPoint;
 	}
@@ -78,56 +104,84 @@ public class Lane {
 		int types = 0;
 		switch (types) {
 		case 0:
-			Point2D.Double aStart = laneA.getStart();
-			Point2D.Double aEnd = laneA.getEnd();
-			Point2D.Double bStart = laneB.getStart();
-			Point2D.Double bEnd = laneB.getEnd();
-			/*
-			 * function doLineSegmentsIntersect(p, p2, q, q2) { var r =
-			 * subtractPoints(p2, p); var s = subtractPoints(q2, q);
-			 * 
-			 * var uNumerator = crossProduct(subtractPoints(q, p), r); var
-			 * denominator = crossProduct(r, s);
-			 * 
-			 * if (uNumerator == 0 && denominator == 0) { // They are coLlinear
-			 * 
-			 * // Do they touch? (Are any of the points equal?) if
-			 * (equalPoints(p, q) || equalPoints(p, q2) || equalPoints(p2, q) ||
-			 * equalPoints(p2, q2)) { return true } // Do they overlap? (Are all
-			 * the point differences in either direction the same sign) // Using
-			 * != as exclusive or return ((q.x - p.x < 0) != (q.x - p2.x < 0) !=
-			 * (q2.x - p.x < 0) != (q2.x - p2.x < 0)) || ((q.y - p.y < 0) !=
-			 * (q.y - p2.y < 0) != (q2.y - p.y < 0) != (q2.y - p2.y < 0)); }
-			 * 
-			 * if (denominator == 0) { // lines are paralell return false; }
-			 * 
-			 * var u = uNumerator / denominator; var t =
-			 * crossProduct(subtractPoints(q, p), s) / denominator;
-			 * 
-			 * return (t >= 0) && (t <= 1) && (u >= 0) && (u <= 1); }
-			 */
+			Point2D.Float aStart = laneA.getStart();
+			Point2D.Float aEnd = laneA.getEnd();
+			Point2D.Float bStart = laneB.getStart();
+			Point2D.Float bEnd = laneB.getEnd();
 
-		
+			return doSegmentsIntersect(aStart, aEnd, bStart, bEnd);
 
 		}
 		return false;
 	}
 
-	public static Point2D.Double subtractPoints(Point2D.Double p1,
-			Point2D.Double p2) {
-
-		double resultX = p1.x - p2.x;
-		double resultY = p1.y - p2.y;
-		Point2D.Double result = new Point2D.Double(resultX, resultY);
-		return result;
+	public static boolean doSegmentsIntersect(Point2D.Float aStart,
+			Point2D.Float aEnd, Point2D.Float bStart, Point2D.Float bEnd) {
+		Line2D line1 = new Line2D.Float(aStart.x, aStart.y, aEnd.x, aEnd.y);
+		Line2D line2 = new Line2D.Float(bStart.x, bStart.y, bEnd.x, bEnd.y);
+		return line2.intersectsLine(line1);
 
 	}
 
-	public static double crossProduct(Point2D.Double p1, Point2D.Double p2) {
-		return p1.x * p2.y - p1.y * p2.x;
+	public void addTrafficLight(TrafficLight light) {
+		// needs to check if the point lies on the lane
+		// not yet implemented
+
 	}
 
-	public static boolean equalPoints(Point2D.Double p1, Point2D.Double p2) {
-		return p1.x == p2.x && p1.y == p2.y;
+	public Point2D.Float evaluateExpression(float t) {
+		// t should range fro 0 to 1, % of the lane traversed
+		float xDifference = this.endPoint.x - this.startPoint.x;
+		float yDifference = this.endPoint.y - this.startPoint.y;
+		float slope;
+		try {
+			// non-vertical
+			slope = yDifference / xDifference;
+			System.out.println("Slope: " + slope);
+
+			float yCoordinate = (endPoint.y - startPoint.y) * t
+					+ this.startPoint.y;
+			float xCoordinate = (endPoint.x - startPoint.x) * t
+					+ this.startPoint.x;
+			System.out.println(new Point2D.Float(xCoordinate, yCoordinate));
+			return new Point2D.Float(xCoordinate, yCoordinate);
+		} catch (ArithmeticException ae) {
+			// vertical
+			return null;
+		}
+	}
+
+	public TrafficLight checkTrafficLight(Point2D.Float coordinate) {
+		// checking if trafficlight exists at the coordinate
+		return null;
+	}
+
+	public TrafficLight getNextTrafficLight(Car car) {
+		Point2D.Float carPos = car.getCoordinate();
+		return null;
+	}
+
+	public Point2D.Float nextPosition(Car car) {
+
+		float targetDistance = car.getCurrentSpeed() * (float) 0.1; // simulation
+																	// updates
+																	// every
+																	// 100ms
+		while (true) {
+			Point2D.Float nextApproximation = evaluateExpression(car.getT());
+			float currentDistance = calculateDistance(car.getCoordinate(),
+					nextApproximation);
+			if (currentDistance > targetDistance) {
+				break;
+			}
+		}
+
+		return endPoint;
+
+	}
+
+	public float getSpan() {
+		// TODO Auto-generated method stub
+		return laneSpan;
 	}
 }

@@ -34,30 +34,17 @@ public class Road {
 	}
 
 	public Road(int startX, int startY, int endX, int endY) {
-		Point2D.Double start = new Point2D.Double(startX, startY);
-		Point2D.Double end = new Point2D.Double(endX, endY);
+		Point2D.Float start = new Point2D.Float(startX, startY);
+		Point2D.Float end = new Point2D.Float(endX, endY);
 
 		roadId = roadsCreated;
 		String function = repFactory
 				.createRepresentation(RepresentationFactory.STRAIGHT_LANE);
-		Lane baseLane = new Lane(start, end, function, this.roadId);
+		Lane baseLane = new Lane(start, end, this.roadId);
 		lanes.add(baseLane);
 		System.out.println(toString());
 
 		roadsCreated++;
-	}
-
-	public Road(int startX, int startY, int endX, int endY,
-			String functionRepresentation) {
-		Point2D.Double start = new Point2D.Double(startX, startY);
-		Point2D.Double end = new Point2D.Double(endX, endY);
-
-		roadId = roadsCreated;
-		roadsCreated++;
-		Lane baseLane = new Lane(start, end, functionRepresentation,
-				this.roadId);
-		baseLane.setBaseLane(true);
-
 	}
 
 	public int getId() {
@@ -130,6 +117,5 @@ public class Road {
 						// the target road;
 
 	}
-
 
 }

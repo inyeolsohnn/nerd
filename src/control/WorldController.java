@@ -25,9 +25,9 @@ public class WorldController {
 		Road road = new Road(100, 100, 400, 500);
 		Road endRoad = new Road(400, 500, 700, 900);
 		cWorld.addRoad(road);
-		Car car = new Car(new Point2D.Double(100.0, 100.0), 0, road.getId(),
+		Car car = new Car(new Point2D.Float((float)100.0, (float)100.0), 0, road.getId(),
 				endRoad.getId());
-		Car car1 = new Car(new Point2D.Double(400.0, 500.0), 100, road.getId(),
+		Car car1 = new Car(new Point2D.Float((float)400.0, (float)500.0), 100, road.getId(),
 				endRoad.getId());
 		cWorld.addCar(car);
 		cWorld.addCar(car1);
@@ -69,11 +69,11 @@ public class WorldController {
 			if (cWorld.getStatus() == true) {
 				update();
 				render();
-				Thread.sleep(1); // the timing mechanism
+				Thread.sleep(20); // the timing mechanism
 									// needs improvement
 			}
 			if (cWorld.getStatus() == false) {
-				Thread.sleep(1);
+				Thread.sleep(20);
 			}
 		}
 	}
