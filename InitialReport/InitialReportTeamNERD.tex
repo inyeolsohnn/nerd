@@ -14,8 +14,8 @@
 
 
 \begin{document}
-\title{\Huge Initial Report}
-\author{\bf{team NERD}}
+\title{\textbf{Initial Report}}
+\author{Team NERD}
 \maketitle
 
 \section[short]{Part One:}
@@ -24,10 +24,10 @@ To build an interactive system that is capable of simulating and rendering the U
 The problems the group has encountered and identified so far while learning about the project domain include; equational representation of roads, interaction between roads, interaction between lanes in the same road, and interaction between lanes in different roads.
 
 \subsection{Strategy}%Tanda
-The overall strategy for achieving the aim of the project is the use of the programming language Java. Initially there were suggestions for the use of JavaScript, HTML and PHP however due to the time restraints and lack of knowledge from the majority of the group we steered away from this option in choice of Java, which is a mutually known programming language the majority of the group felt comfortable using and had some experience with prior.\\There are a number of risks involved with the development of the project, our main concern is with the road development, it involves the most risk and is essential to the success of the project. Therefore in terms of a development cycle it is proposed that we use the Agile project management with a focus on risk management. This involves identifying the risk, responding to the risk and then reviewing the risk. This risk management is reflected in the Table \ref{table:plan} were there is continuous improvement to expose flaws faster with the two intense testing stages.
+The overall strategy for achieving the aim of the project is the use of the programming language Java. Initially there were suggestions for the use of JavaScript, HTML and PHP however due to the time restraints and lack of knowledge from the majority of the group we steered away from this option in choice of Java, which is a mutually known programming language the majority of the group felt comfortable using and had some experience with prior.\\There are a number of risks involved with the development of the project, our main concern is with the road development, it involves the most risk and is essential to the success of the project. Therefore in terms of a work development cycle, it is proposed that we use the Agile project management with a focus on risk management. This involves identifying the risk, responding to the risk and then reviewing the risk. This risk management is reflected in the Table \ref{table:plan} were there is continuous improvement to expose flaws faster with the two intense testing stages.\\When discussing the system initially we created a use case diagram which is highlighted as key to include when using Agile development approach as a project plan skeleton. The usecase defines the interaction between an actor and the system, the actor (user) of our system should be able to adjust the traffic light speed and be able to increase or decrease the number of cars travelling on the road.
 
 %The progress
-\subsection{The Current Work}%Tanda
+\subsection{Current Progress}%Tanda
 To design such a system as a group we believed it best to created a system modelled against the existing UK road network and laws. This can be seen within our initial design of the traffic simulation in Figure \ref{fig:GUI} which was created based loosely on the Waterloo roundabout seen in Figure \ref{fig:Waterloo}
 
 \begin{figure}[ht]%Figures
@@ -46,7 +46,7 @@ To design such a system as a group we believed it best to created a system model
 
 \end{figure}
 
-Additionally looking at the UK Highway Code manual helped us identify the Road Marking rules and what they mean to  incorporate into our simulation. For example within our initial design Figure \ref{fig:GUI} shows rule 127 about the Centre Line "Do not cross it unless you can see the road is clear and wish to overtake or turn off" and rule 175 about Stop Lines before the traffic-lights where you must wait until the traffic-light is green.\\Overall, thus far we have created a Model-View-Controller structure for the development in Eclipse IDE and began simple road development. We understand that the development of straight roads will be easy and therefore have been doing research into the development of curved roads using analysis into Bézier Curves which are used when drawing smoothed curves between control points with anchor points on a path. Bezier curve tracing can be solved using De Casteljau's algorithm. So in our model we will have to build an additional class 'BezierCurve' to represent the function, essentially two polynomial functions using three points. This should help us create curved roads and enable cars to move on them to create a roundabout.
+Additionally looking at the UK Highway Code manual helped us identify the Road Marking rules and what they mean to  incorporate into our simulation. For example within our initial design Figure \ref{fig:GUI} shows rule 127 about the Centre Line "Do not cross it unless you can see the road is clear and wish to overtake or turn off" and rule 175 about Stop Lines before the traffic-lights where you must wait until the traffic-light is green.\\Overall, thus far we have created a Model-View-Controller structure for the development in Eclipse IDE and began simple road development. We understand that the development of straight roads will be easy and therefore have been doing research into the development of curved roads using analysis into B\'{e}zier Curve which are used when drawing smoothed curves between control points with anchor points on a path. B\'{e}zier Curve tracing can be solved using De Casteljau's algorithm. So in our model we will have to build an additional class 'B\'{e}zier Curve' to represent the function, essentially two polynomial functions using three points. This should help us create curved roads and enable cars to move on them to create a roundabout.\\Currently, according to the plan in Table \ref{table:plan} we are on schedule because we used the Agile development cycle, highlighting road development as the major risk making it easier to handle.
 
 \textbf{Current Development Goals:}
 \begin{enumerate}
@@ -106,9 +106,9 @@ We have established a number of ways we can work together as a team. A key aspec
 \subsubsection[short]{Roles}
 
 \begin{itemize}%Provisional Roles
-	\item Project Coordinator/Organizer: Tanda Kabanda
+	\item Project Coordinator: Tanda Kabanda
 	\item Lead Programmers: Inyeol Sohn, Jie Ding
-	\item Research/Analysis Leaders: Qiu Yun, Mark Azer
+	\item System Analysts: Qiu Yun, Mark Azer
 \end{itemize}
 
 \textbf{Note:} all group members are expected to code when designated tasks by Lead Programmers
