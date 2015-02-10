@@ -4,10 +4,8 @@ class Car extends Thread {
 	private String name;
 	private String status = "Moving";
 
-	public Car(String name, TrafficLight[] trafficLights) {
+	public Car(String name) {
 		this.name = name;
-		this.trafficLights = trafficLights;
-		roadPosition = 0;
 		start();
 	}
 
@@ -26,32 +24,6 @@ class Car extends Thread {
 	public String getStatus(){
 		
 		return status;
-	}
-
-	private synchronized void carCanDrive() {
-		try {
-			Thread.sleep((int) (Math.random() * 100));
-		} catch (InterruptedException e) {
-		}
-		roadPosition++;
-		if (roadPosition == trafficLights.length) // Car has gone down the road
-			roadPosition = 0;//Reset the cars position.
-	}
-
-	public synchronized int position() {
-		return roadPosition;
-	}
-
-	public void run() {
-		while (true) {
-			try {
-				sleep((int) (Math.random() * 100)); // cars are moving.
-			} catch (InterruptedException e) {
-			}
-
-			trafficLights[roadPosition].Stop(); // wait before a traffic light
-			carCanDrive(); // go on driving to next traffic light
-		}
 	}
 
 }
