@@ -36,7 +36,8 @@ public abstract class Lane {
 
 	public abstract Point2D.Float nextPosition(Car car, float targetDistance);
 
-	public abstract float calculateDistance(Point2D.Float pointA, Point2D.Float pointB);
+	public abstract float calculateDistance(Point2D.Float pointA,
+			Point2D.Float pointB);
 
 	public float getLaneSpan() {
 		return laneSpan;
@@ -55,18 +56,12 @@ public abstract class Lane {
 										// legal(conforms to the
 										// shape(functional representation) of
 										// its current lane
+		// todo
 
-		Line2D.Float currentLane = new Line2D.Float(this.startPoint,
-				this.endPoint);
-		Point2D.Float currentPosition = car.getCoordinate();
-		if (car.getCoordinate().x >= startPoint.x
-				&& car.getCoordinate().x <= endPoint.x
-				&& car.getCoordinate().y == startPoint.y) {
-			return true;
-		}
 		return false;
 	}
 
+	// in case of roundabout this will return center point
 	public final Point2D.Float getStart() {
 		return this.startPoint;
 	}
@@ -108,11 +103,6 @@ public abstract class Lane {
 		// needs to check if the point lies on the lane
 		// not yet implemented
 
-	}
-
-	public TrafficLight checkTrafficLight(Point2D.Float coordinate) {
-		// checking if trafficlight exists at the coordinate
-		return null;
 	}
 
 	public TrafficLight getNextTrafficLight(Car car) {

@@ -4,6 +4,15 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
 
 public class RoundAbout extends Lane {
+	private Point2D.Float center;
+	private float radius;
+
+	public RoundAbout(Point2D.Float center, float radius, int roadId) {
+		super(center, center, roadId);
+		this.center = center;
+		this.radius = radius;
+
+	}
 
 	@Override
 	public float calculateLaneSpan() {

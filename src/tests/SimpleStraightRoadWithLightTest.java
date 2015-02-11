@@ -10,7 +10,7 @@ import model.TrafficLight;
 
 public class SimpleStraightRoadWithLightTest {
 	public static void main(String[] args) throws InterruptedException {
-		Point2D.Float startingPoint = new Point2D.Float(80, 0);
+		Point2D.Float startingPoint = new Point2D.Float(80, 60);
 		Point2D.Float endPoint = new Point2D.Float(0, 0);
 		Road firstRoad = new Road();
 
@@ -23,13 +23,12 @@ public class SimpleStraightRoadWithLightTest {
 		Car secondCar = new Car();
 
 		firstCar.setCurrentSpeed(10);
-		secondCar.setCurrentSpeed(20);
 
 		firstCar.enterLane(straightLane, straightLane.getStart());
 		secondCar.enterLane(straightLane, straightLane.getStart());
 		while (true) {
 			firstCar.move();
-			secondCar.move();
+
 			Thread.sleep(20);
 		}
 
