@@ -26,24 +26,31 @@ public class Road {
 																					// it
 																					// connects
 																					// to)
-	private RepresentationFactory repFactory = new RepresentationFactory();
+
 	private static int roadsCreated = 0;
+	public static final int STRAIGHT_LANE = 0;
+	public static final int ROUNDABOUT = 1;
+	public static final int CURVE = 2;
 
 	public Road() {
 		this.roadId = roadsCreated;
 	}
 
-	public Road(int startX, int startY, int endX, int endY) {
+	public Road(int startX, int startY, int endX, int endY, int laneType) {
 		Point2D.Float start = new Point2D.Float(startX, startY);
 		Point2D.Float end = new Point2D.Float(endX, endY);
-
 		roadId = roadsCreated;
-		String function = repFactory
-				.createRepresentation(RepresentationFactory.STRAIGHT_LANE);
-		Lane baseLane = new Lane(start, end, this.roadId);
-		lanes.add(baseLane);
-		System.out.println(toString());
+		Lane baseLane = new StraightLane(start, end, this.roadId);
+		switch (laneType) {
+		case 0:
+			// default case-> leave as it is
+		case 1:
+			baseLane = new RoundAbout();
+		case 2:
+			baseLane = new BezierCurve();
 
+		}
+		lanes.add(baseLane);
 		roadsCreated++;
 	}
 
@@ -58,33 +65,6 @@ public class Road {
 
 	public String toString() {
 		return "road id: " + roadId + "\n" + "Number of lanes: " + lanes.size();
-	}
-
-	class RepresentationFactory {
-		public final static int STRAIGHT_LANE = 1;
-		public final static int RoundAbout = 2;
-
-		public RepresentationFactory() {
-
-		}
-
-		public String createRepresentation(int i) {
-			String representation = "";
-			if (i == 1) {
-				representation = "y=0";
-			} else if (i == 2) {
-			} else if (i == 3) {
-
-			} else if (i == 4) {
-
-			} else {
-				// base case
-				// straight road
-				// error catch (irregular i)
-			}
-
-			return representation;
-		}
 	}
 
 	public int getLaneCount() {

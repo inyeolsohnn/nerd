@@ -21,6 +21,7 @@ public class Car implements CarI {
 	private Road currentRoad;
 	private Lane currentLane;
 	private float currentT;
+	private float distanceCovered;
 
 	public Car() {
 		// dummy constructor for testing
@@ -35,6 +36,7 @@ public class Car implements CarI {
 		this.destinationRoadId = destinationRoadId;
 		this.currentRoadId = initialRoadId;
 		this.id = Car.carsCreated;
+		this.distanceCovered = 0;
 		Car.carsCreated++;
 		plan = WorldController.bfsRoads(currentRoadId, destinationRoadId);
 	}
@@ -127,58 +129,42 @@ public class Car implements CarI {
 
 	}
 
-	public void enterLane(Lane lane) {
+	public void enterLane(Lane lane, Point2D.Float entryPoint) {
 		this.currentLane = lane;
+		this.coordinate = entryPoint;
+		this.distanceCovered = currentLane.calculateDistance(
+				currentLane.getStart(), entryPoint);
+		System.out.println("Currently covered distance of the lane: "
+				+ distanceCovered);
 	}
 
 	public void move() {
-		// check if the lane is continuing
-		// ->(1.lane is not continuing)
-		// -> is it end of the run?
-		// -> if not how do i move to the next lane;
-		// nextTrafficLight = currentLane.getNextTrafficLight(this);
-		// ->(1.lane is continuing)
-		// ->is it okay to move to the next point on lane
-		// -> check traffic light status, obstacle status
+		float tempDistance = distanceCovered + this.currentSpeed * 0.02f;
+		System.out.println("Temp distance: " + tempDistance);
 
-		// approximation point every 0.5 m;
-		float deltaT = (float) (1.0 / currentLane.getPointsCount());
-		System.out.println("delta T: "+deltaT);
-
-		currentT += deltaT;
-		System.out.println("Current T: " + currentT);
-		Point2D.Float newCoordinate;
-		if (currentT > 0.99) {
-			// move to next road or stop if destination
+		if (tempDistance < this.currentLane.getSpan()) {
+			this.setCoordinate(this.currentLane
+					.nextPosition(this, tempDistance));
+			distanceCovered = tempDistance;
+			System.out.println("Current  coordinate: " + this.getCoordinate());
 		} else {
-			float targetDistance = (float) (this.getCurrentSpeed() * 0.02); // simulation
-																	// updates
-																	// every
-																	// 20ms ->50
-																	// updates
-																	// per
-																	// second;
-			System.out.println("TargetDistance: " + targetDistance);
+			this.setCoordinate(this.currentLane.getEnd());
+			this.setCurrentSpeed(0f);
+			distanceCovered = currentLane.getLaneSpan();
+			System.out.println("Car ID:" + this.id
+					+ " has reached the end of the lane");
+			System.out.println("Current  coordinate: " + this.getCoordinate());
 
-			while (true) {
-				Point2D.Float nextApproximation = currentLane
-						.evaluateExpression(this.currentT);
-				System.out.println(nextApproximation);
-				float currentDistance = currentLane.calculateDistance(
-						this.coordinate, nextApproximation);
-				System.out.println("Current distance: " + currentDistance);
-				if (currentDistance > targetDistance) {
-					System.out.println("Break happened");
-					newCoordinate = nextApproximation;
-					break;
-				} else {
-					currentT += deltaT;
-				}
-			}
-			System.out.println("new coordinate");
-			this.coordinate = currentLane.evaluateExpression(currentT);
 		}
-		
+
+	}
+
+	public float getDistanceCovered() {
+		return distanceCovered;
+	}
+
+	public void setDistanceCovered(float distanceCovered) {
+		this.distanceCovered = distanceCovered;
 	}
 
 	public int getId() {
