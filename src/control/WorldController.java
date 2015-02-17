@@ -12,6 +12,7 @@ import view.CarSimView;
 import model.CarWorld;
 import model.Road;
 import model.Car;
+import model.UnknownConnectionError;
 
 public class WorldController {
 	private CarWorld cWorld; // core model
@@ -22,8 +23,8 @@ public class WorldController {
 		this.cWorld = cWorld;
 		((CarSimView) frame).setController(this);
 
-		Road road = new Road(100, 100, 400, 500, Road.STRAIGHT_LANE);
-		Road endRoad = new Road(400, 500, 700, 900, Road.STRAIGHT_LANE);
+		Road road = new Road(100, 100, 400, 500);
+		Road endRoad = new Road(400, 500, 700, 900);
 		cWorld.addRoad(road);
 		Car car = new Car(new Point2D.Float((float) 100.0, (float) 100.0), 0,
 				road.getId(), endRoad.getId());
@@ -42,6 +43,11 @@ public class WorldController {
 		return cWorld;
 	}
 
+	public void addRoad(Road road) throws UnknownConnectionError{
+		cWorld.addRoad(road);
+		cWorld.connectRoads();
+		//******call to connection network logic required here*********//
+	}
 	public void setcWorld(CarWorld cWorld) {
 		this.cWorld = cWorld;
 	}
@@ -78,30 +84,21 @@ public class WorldController {
 		}
 	}
 
-	public HashMap<Integer, Car> getCars() {
+	public ArrayList<Car> getCars() {
 		// TODO Auto-generated method stub
 		return this.cWorld.getCars();
 	}
 
-	public HashMap<Integer, Road> getRoads() {
+	public ArrayList<Road> getRoads() {
 		// TODO Auto-generated method stub
 		return this.cWorld.getRoads();
 	}
 
 	private void update() {
 		System.out.println("updated");
-		HashMap<Integer, Car> cars = getCars();
-		HashMap<Integer, Road> roads = getRoads();
-		for (Integer carKey : cars.keySet()) {
-			Car currentCar = cars.get(carKey);
-			currentCar.update();
-			System.out.println("updating car " + currentCar.getId());
-		}
-		for (Integer roadKey : roads.keySet()) {
-			Road currentRoad = roads.get(roadKey);
-			currentRoad.update();
-			System.out.println("updating road: " + currentRoad.getId());
-		}
+		ArrayList<Car> cars = getCars();
+		ArrayList<Road> roads = getRoads();
+		
 
 	}
 
@@ -114,6 +111,15 @@ public class WorldController {
 			int destinationRoadId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	//example case setup
+	public void setTJunction(){
+		
+	}
+	
+	public void setRoundAbout(){
+		
 	}
 
 }

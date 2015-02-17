@@ -4,6 +4,7 @@ import java.awt.geom.Point2D; //test//
 import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import control.WorldController;
 
@@ -116,16 +117,13 @@ public class Car implements CarI {
 	}
 
 	public void enterRoad(Road road) {
-
-		Iterator<Lane> laneIter = road.getLanes().iterator();
-		while (laneIter.hasNext()) {
-			Lane otherLane = laneIter.next();
-			if (Lane.isConnected(this.currentLane, otherLane)) {
-				currentRoad = road;
-				currentLane = otherLane;
-				currentT = 0;
-			}
-		}
+		/*
+		 * 
+		 * Iterator<Lane> laneIter = ((List<Road>) road.getLanes()).iterator();
+		 * while (laneIter.hasNext()) { Lane otherLane = laneIter.next(); if
+		 * (Lane.isConnected(this.currentLane, otherLane)) { currentRoad = road;
+		 * currentLane = otherLane; currentT = 0; } }
+		 */
 
 	}
 

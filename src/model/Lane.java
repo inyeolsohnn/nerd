@@ -11,15 +11,16 @@ public abstract class Lane {
 	private int laneId; // its id
 	private int roadId; // id of the road it belongs to
 	protected float laneSpan;
+	private ArrayList<ConnectionPoint> connections = new ArrayList<ConnectionPoint>();
 	protected Point2D.Float startPoint;
 	protected Point2D.Float endPoint;
 
+	// store traffic lights that belong to this lane.
 	private ArrayList<TrafficLight> trafficLights = new ArrayList<TrafficLight>();
-	private HashMap<Point2D.Float, Road> connectionPoints = new HashMap<Point2D.Float, Road>(); // Map
-																								// of
-																								// points
-																								// connecting
-																								// roads;
+
+	// at the index of roadID, store lanes if there are any lanes connected to
+	// current lane belonging to that specific road.
+	private ArrayList<ArrayList<Lane>> connected = new ArrayList<ArrayList<Lane>>();
 
 	public Lane() {
 		// dummy constructor for testing
