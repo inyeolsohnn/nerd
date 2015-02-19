@@ -22,10 +22,5 @@ public class BezierCurve extends Lane {
 		return null;
 	}
 
-	@Override
-	public float calculateDistance(Float pointA, Float pointB) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 }

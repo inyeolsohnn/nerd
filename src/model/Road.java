@@ -15,7 +15,7 @@ public abstract class Road {
 	// definition of connection: contiguous legal movements possible
 	protected final int roadId;
 	protected final int roadType;
-	protected final static int roadWidth = 30;  //each roads are 30 pixels wide
+	protected final static int roadWidth = 30; // each roads are 30 pixels wide
 	private static int roadsCreated = 0;
 	public static final int STRAIGHT_LANE = 0;
 	public static final int ROUNDABOUT = 1;
@@ -50,6 +50,13 @@ public abstract class Road {
 
 	public int getType() {
 		return this.roadType;
+	}
+
+	public static void connectLane(Road currentRoad, int currentLane,
+			Road targetRoad, int targetLane) {
+		// sets connection state between the lane corresponding to the
+		// currentLane in currentRoad and the corresponding targetLane, in
+		// targetRoad
 	}
 
 	/****************************/

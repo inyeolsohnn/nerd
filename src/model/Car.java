@@ -2,7 +2,9 @@ package model;
 
 import java.awt.geom.Point2D; //test//
 import java.awt.geom.Point2D.Double;
+import java.awt.geom.Point2D.Float;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class Car implements CarI {
 	private Road currentRoad;
 	private Lane currentLane;
 	private float currentT;
-	private float distanceCovered;
+	private CarWorld cWorld;
 
 	public Car() {
 		// dummy constructor for testing
@@ -31,13 +33,13 @@ public class Car implements CarI {
 	}
 
 	public Car(Point2D.Float coordinate, float maxSpeed, int initialRoadId,
-			int destinationRoadId) {
+			int destinationRoadId, CarWorld cWorld) {
 		this.coordinate = coordinate;
 		this.maxSpeed = maxSpeed;
 		this.destinationRoadId = destinationRoadId;
 		this.currentRoadId = initialRoadId;
 		this.id = Car.carsCreated;
-		this.distanceCovered = 0;
+		this.cWorld = cWorld;
 		Car.carsCreated++;
 		plan = WorldController.bfsRoads(currentRoadId, destinationRoadId);
 	}
@@ -125,44 +127,99 @@ public class Car implements CarI {
 		 * currentLane = otherLane; currentT = 0; } }
 		 */
 
+		this.setCurrentRoadId(road.getId());
+		// currently arbitrarily chosen lane entered
+
+		if (!(road instanceof RoundRoad)) {
+			HashMap<Integer, Lane> laneMap = road.getLanes();
+			Lane basicLane = laneMap.get(0);
+			this.enterLane(basicLane, basicLane.getStart());
+		} else {
+			System.out.println("Car enters roundabout");
+			HashMap<Integer, Lane> laneMap = road.getLanes();
+			RoundAbout basicLane = (RoundAbout) laneMap.get(0);
+			this.enterLane(basicLane, new Point2D.Float(basicLane.getStart().x
+					- basicLane.getRadius(), basicLane.getStart().y));
+		}
+
 	}
 
 	public void enterLane(Lane lane, Point2D.Float entryPoint) {
 		this.currentLane = lane;
 		this.coordinate = entryPoint;
-		this.distanceCovered = currentLane.calculateDistance(
-				currentLane.getStart(), entryPoint);
-		System.out.println("Currently covered distance of the lane: "
-				+ distanceCovered);
+		System.out.println("Entry lane point: " + entryPoint);
+		// car entering a lane logic
 	}
 
 	public void move() {
-		float tempDistance = distanceCovered + this.currentSpeed * 0.02f;
-		System.out.println("Temp distance: " + tempDistance);
-
-		if (tempDistance < this.currentLane.getSpan()) {
-			this.setCoordinate(this.currentLane
-					.nextPosition(this, tempDistance));
-			distanceCovered = tempDistance;
-			System.out.println("Current  coordinate: " + this.getCoordinate());
+		if (this.currentSpeed == 0) {
+			System.out.println("Car is not moving");
 		} else {
-			this.setCoordinate(this.currentLane.getEnd());
-			this.setCurrentSpeed(0f);
-			distanceCovered = currentLane.getLaneSpan();
-			System.out.println("Car ID:" + this.id
-					+ " has reached the end of the lane");
-			System.out.println("Current  coordinate: " + this.getCoordinate());
+			boolean speedUp = false;
+			if (speedUp) {
+				/** speed up meta level control **/
+			}
+			float tempDistance = this.currentSpeed * 0.02f;
+			System.out.println("Temp distance: " + tempDistance);
+			boolean isObstacle = this.checkObstacles();
+			if (isObstacle) {
+				// appropriate reaction to obstacle required
+				/**
+				 * obstacle can include other cars in vicinity -> that are
+				 * currently in that's connected to the road the car is on ( if
+				 * straight distance is below certain value obstacle detected)
+				 **/
+				/**
+				 * obstacle can also be traffic lights that are currently red
+				 * and stopping signs(connection points) -> requires appropriate
+				 * logic added
+				 **/
 
+				/** work in progress reaction to obstacles */
+			} else {
+				Point2D.Float nextPosition = this.currentLane.nextPosition(
+						this, tempDistance);
+				Point2D.Float nextDisplacement = new Point2D.Float(
+						Math.abs(nextPosition.x - this.coordinate.x),
+						Math.abs(nextPosition.y - this.coordinate.y));
+				/*
+				 * System.out.println("From car, next displacement: " +
+				 * nextDisplacement);
+				 */
+				Point2D.Float dToEnd = new Point2D.Float(Math.abs(currentLane
+						.getEnd().x - this.getCoordinate().x),
+						Math.abs(currentLane.getEnd().y
+								- this.getCoordinate().y));
+				/*
+				 * System.out.println("From car, dte: " + dToEnd);
+				 * System.out.println(this.currentLane.getClass().getName());
+				 */
+				if (!(this.currentLane instanceof RoundAbout)
+						&& (dToEnd.x < nextDisplacement.x || dToEnd.y < nextDisplacement.y)) {
+					this.coordinate = this.currentLane.getEnd(); // reached the
+																	// end
+																	// of the
+																	// lane
+																	// additional
+																	// appropriate
+																	// logic
+																	// required
+					/*
+					 * System.out
+					 * .println("Car has reached the end of it's current lane");
+					 */
+					this.setCurrentSpeed(0);
+				} else {
+					this.coordinate = nextPosition;
+					System.out.println("New Position: " + this.coordinate);
+				}
+			}
 		}
-
 	}
 
-	public float getDistanceCovered() {
-		return distanceCovered;
-	}
-
-	public void setDistanceCovered(float distanceCovered) {
-		this.distanceCovered = distanceCovered;
+	private boolean checkObstacles() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	public int getId() {

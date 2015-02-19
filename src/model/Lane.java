@@ -12,8 +12,11 @@ public abstract class Lane {
 	private int roadId; // id of the road it belongs to
 	protected float laneSpan;
 	private ArrayList<ConnectionPoint> connections = new ArrayList<ConnectionPoint>();
+	private HashMap<Integer, Car> carsInLane = new HashMap<Integer, Car>();
 	protected Point2D.Float startPoint;
 	protected Point2D.Float endPoint;
+
+	private static int lanesCreated = 0;
 
 	// store traffic lights that belong to this lane.
 	private ArrayList<TrafficLight> trafficLights = new ArrayList<TrafficLight>();
@@ -23,13 +26,15 @@ public abstract class Lane {
 	private ArrayList<ArrayList<Lane>> connected = new ArrayList<ArrayList<Lane>>();
 
 	public Lane() {
-		// dummy constructor for testing
+		// for special lanes
 	}
 
 	public Lane(Point2D.Float start, Point2D.Float end, int roadId) {
 		this.startPoint = start;
 		this.endPoint = end;
 		this.roadId = roadId;
+		this.laneId = lanesCreated;
+		lanesCreated++;
 
 	}
 
@@ -37,11 +42,16 @@ public abstract class Lane {
 
 	public abstract Point2D.Float nextPosition(Car car, float targetDistance);
 
-	public abstract float calculateDistance(Point2D.Float pointA,
-			Point2D.Float pointB);
-
 	public float getLaneSpan() {
 		return laneSpan;
+	}
+
+	public int getLaneId() {
+		return this.laneId;
+	}
+
+	public int getRoadId() {
+		return this.roadId;
 	}
 
 	public final void setLaneSpan(float laneSpan) {
@@ -63,11 +73,12 @@ public abstract class Lane {
 	}
 
 	// in case of roundabout this will return center point
-	public final Point2D.Float getStart() {
+	public Point2D.Float getStart() {
 		return this.startPoint;
 	}
 
-	public final Point2D.Float getEnd() {
+	// in case of roundabout this will return center point
+	public Point2D.Float getEnd() {
 		// TODO Auto-generated method stub
 		return this.endPoint;
 	}
@@ -114,5 +125,15 @@ public abstract class Lane {
 	public float getSpan() {
 		// TODO Auto-generated method stub
 		return laneSpan;
+	}
+
+	public void addCar(Car car) {
+		int carId = car.getId();
+		carsInLane.put(carId, car);
+	}
+
+	public void removeCar(Car car) {
+		int carId = car.getId();
+		carsInLane.remove(carId);
 	}
 }

@@ -12,6 +12,8 @@ public class StraightRoad extends Road {
 
 	// can only hold straight lanes
 	// even and odd lane
+	//numAddLane= numbers of lanes that equals to the direction of the center line
+	//num subLane = numbers of lanes that is opposite of the direction of the center line
 
 	public StraightRoad(Point2D.Float startingPoint, Point2D.Float endingPoint,
 			int numAddLane, int numSubLane) {

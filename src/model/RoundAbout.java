@@ -17,19 +17,45 @@ public class RoundAbout extends Lane {
 	@Override
 	public float calculateLaneSpan() {
 		// TODO Auto-generated method stub
-		return 0;
+
+		return (float) (Math.PI * 2 * this.radius);
+	}
+
+	@Override
+	public Point2D.Float getStart() {
+		return getCenter();
+	}
+
+	@Override
+	public Point2D.Float getEnd() {
+		return getCenter();
+	}
+
+	public Point2D.Float getCenter() {
+		return this.center;
 	}
 
 	@Override
 	public Point2D.Float nextPosition(Car car, float targetDistance) {
 		// TODO Auto-generated method stub
-		return null;
+
+		double angle = 360 * targetDistance / calculateLaneSpan();
+
+		double rad = Math.toRadians(angle);
+
+		float newX = (float) (this.getStart().x + (Math.cos(rad)
+				* (car.getCoordinate().x - this.getStart().x) + Math.sin(rad)
+				* (car.getCoordinate().y - this.getStart().y)));
+
+		float newY = (float) (this.getStart().y
+				- (Math.sin(rad) * (car.getCoordinate().x - this.getStart().x)) + Math
+				.cos(rad) * (car.getCoordinate().y - this.getStart().y));
+
+		return new Point2D.Float(newX, newY);
 	}
 
-	@Override
-	public float calculateDistance(Float pointA, Float pointB) {
-		// TODO Auto-generated method stub
-		return 0;
+	public float getRadius() {
+		return this.radius;
 	}
 
 }
