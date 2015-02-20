@@ -32,7 +32,8 @@ public class ConnectionPoint {
 		return lane;
 	}
 
-	public void createConnection(Road targetRoad, Lane targetLane) {
+	public void createConnection(Road targetRoad, Lane targetLane)
+			throws UnknownConnectionError {
 		Connection newConnection = new Connection(this.road, this.lane,
 				targetRoad, targetLane, this);
 		connections.add(newConnection);
