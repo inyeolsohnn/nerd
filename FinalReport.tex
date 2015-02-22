@@ -2,35 +2,42 @@
 \usepackage[a4paper,pdftex]{geometry}	% Use A4 paper margins
 \usepackage[english]{babel}
 \usepackage{xcolor} 
-\definecolor{grey}{rgb}{0.9,0.9,0.9}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{array} % for m[{x cm} in tables
+
 
 \begin{document}
-	\thispagestyle{empty} % Remove page numbering on this page
+	\begin{titlepage}
+	\center
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
+\includegraphics[scale=0.2]{kingslogo}\\
+\HRule \\[0.4cm]
+{ \huge \bfseries Final Report}\\[0.4cm] % Title of your document
+	\ Team NERD
+\HRule \\[1.5cm]
+{\large \today}\\[10cm] 
+	
 
-	%	TITLE SECTION
-	\colorbox{grey}{
-		\parbox[t]{1.0\linewidth}{
-			\centering \fontsize{180pt}{40pt}\selectfont % The first argument for fontsize is the font size of the text and the second is the line spacing - you may need to play with these for your particular title
-			\vspace*{0.3cm} % Space between the start of the title and the top of the grey box
-			
-			\hfill Final Report \\
-			\hfill Traffic Simulation\par
-			
-			\vspace*{0.7cm} % Space between the end of the title and the bottom of the grey box
-		}
-	}
-	\vfill % Space between the title box and author information
-	%	AUTHOR NAME AND INFORMATION SECTION
-	{\centering \large 
-		\hfill \textbf{Team Nerd} \\
-		\hfill Mark Azer 1271398/1\\
-		\hfill Jie Ding 1412858/2 \\
-		\hfill Tanda Kabanda 1472443/1 \\
-		\hfill Inyeol Sohn 1466384/1 \\
-		\hfill Qiu Yun 1430295/1 \\
-		\hfill King's College London \\
-	}
-	\clearpage % Whitespace to the end of the page
+\begin{minipage}{0.4\textwidth}
+	\begin{flushleft} \large
+		\emph{Authors:}\\
+			Mark Azer 1271398/1\\
+			Jie Ding 1412858/2 \\
+			Tanda Kabanda 1472443/1 \\
+			Inyeol Sohn 1466384/1 \\
+			Qiu Yun 1430295/1 \\
+	\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+	\begin{flushright} \large
+		\emph{Lecturer:} \\
+		Name
+	\end{flushright}
+\end{minipage}\\[4cm]
+	
+	\end{titlepage}
 	\tableofcontents
 	
 	\section{Introduction} %Introduce project and aim
@@ -42,19 +49,127 @@
 	\subsection{User Manual}
 	\section{Implementation} %Above sections can be completed for now when it gets to implementation contribution from programmers will be needed
 	\subsection{System Design Changes}
+	An important aspect of the traffic simulator is how it appears to the user, the graphical user interface (GUI) and as a requirement users of the application should be able to interact with it. When designing when discussing how the application should be presented to the user.
+	
+	A number of user interface initial designs were developed and discussed as a group taking into consideration principles and guidelines for good user interface design as noted by Donald \cite{Norman} (2002) aspects such as consistency, visibility and mapping, all important for the usability of a system. The appearance of the application is important however the usability and ease of use of the system is as just as important.
+	\begin{figure}[h]
+	\caption{Initial GUI Structure}
+	\label{initialGUI}
+	\end{figure}
+	
+	\begin{figure}[h]
+	\caption{Final GUI Structure}
+	\label{finalGUI}
+	\end{figure}
+	Figure~\ref{initialGUI} illustrates the first prototype design of the system and Figure~\ref{finalGUI} illustrates how from the prototype the system design changed to utilize space for efficiently and usability better. 
+	Initially we thought we may not need a lot of space for control panel but through discussion and prototype developments we changed the control panel from being at the bottom of the screen to the left. 
+	
 	\section{Evaluation} %Technical Evaluation of the system
 	\subsection{Testing} %How we tested the program (e.g Black/White Box)
 	\section{Group Dicussion}
 	\subsection{Team Organisation} %How each member contributed to the project and how the workload was divided 
+	The team 
 	\textbf{Work Load Division:}\\ 
 	\section{Conclusion}
 	\subsection{Lessons Learned} 
 	\textbf{Program Development Lessons Learned:}\\ %Dicussion on the implementation
+	
 	\textbf{Group Work Lessons Learned:}\\ %What we learnt about group work and working together
+	During the project as a group we learnt that...%for example despite each member have a defined role, there needs to be a lot of communication between all members to ensure that. 
 	\subsection{Future Work} %How the project could be extended
 	\section{References}
+	
+	 https://www.gov.uk/using-the-road-159-to-203/roundabouts-184-to-190	
+	Traffic Modelling Guidelines://www.tfl.gov.uk/cdn/static/cms/documents/traffic-modelling-guidelines.pdf
+	
+	\begin{thebibliography}{9}
+			\bibitem{Norman} Norman, Donald. \emph{The Design of Everyday Things} (2002) Basic Books
+	\end{thebibliography}
+	
+
 	\section{Appendices}
 	\subsection{Meeting Diaries} %Meeting Minutes kept and updated by project coordinator
+	
+			\begin{tabular}{|m{2cm}|m{12cm}|}
+				\hline
+				\multicolumn{2}{ |l|}{ \textbf{Meeting 1}} \\  \hline
+				Date: & 1 Hour \\  \hline
+				Attendance: & Mark, Inyeol, Qiu, Jie, Tanda  \\   \hline
+				Duration: & TEXT \\  \hline
+				Agenda: & Aim for project, ways of developing project and meet group
+				members, decide which days are best for meetings and get to
+				know each person in the group. \\  \hline
+				Outcome: &  Each member is to develop some ideas for how initial design of system and look into using JavaScript and PHP and as a
+				means of programming. \\  \hline
+		
+				\multicolumn{2}{ c}{} \\
+				\hline
+				\multicolumn{2}{ |l|}{ \textbf{Meeting 2}} \\  \hline
+				Date: & 23/01/2015 (1pm)  \\  \hline
+				Attendance: & Inyeol, Tanda, Yun, Qiu  \\   \hline
+				Duration: & 1 Hour \\  \hline
+				Agenda: & Follow on discussion from previous meeting about how the
+				system should be designed. \\ \hline
+				Outcome: &  Inyeol presented group with a UML diagram of a potential
+				system and discussion is raised into changing the programming
+				language to Java. \\  \hline
+				
+				\multicolumn{2}{ c}{} \\
+				\hline
+				\multicolumn{2}{ |l|}{ \textbf{Meeting 3}} \\  \hline
+				Date: & 26/01/2015 (1pm)  \\  \hline
+				Attendance: & Mark, Inyeol, Yun, Jie, Tanda  \\   \hline
+				Duration: & 1 hour 20 minutes  \\  \hline
+				Agenda: & Finalise discussion on the project system and programming
+				language that is going to be used.  \\ \hline
+				Outcome: &  Java chosen as programming language and tasks set for each
+				member to complete a section for the first assessment. \\  \hline
+			\end{tabular}
+			
+			\begin{tabular}{|m{2cm}|m{12cm}|}
+				  \hline
+				  \multicolumn{2}{ |l|}{ \textbf{Meeting 4}} \\  \hline
+				  Date: & 28/01/2015 (1 hour) \\  \hline
+				  Attendance: & Inyeol, Yun, Tanda, Jie  \\   \hline
+				  Duration: & 1 hour  \\  \hline
+				  Agenda: & Looking at different techniques for road development. \\ \hline
+				  Outcome: &  Discussion on road technique and ensure people are working
+				  on tasks during Mondays meeting for the first assessment. \\  \hline
+				  
+				  \multicolumn{2}{ c}{} \\
+				  \hline
+				  \multicolumn{2}{|l|}{ \textbf{Meeting 5}} \\  \hline
+				  Date: & 30/01/2015 (1pm) \\  \hline
+				  Attendance: & Jie, Qiu, Inyeol, Mark, Tanda  \\   \hline
+				  Duration: & 1 hour 15 minutes  \\  \hline
+				  Agenda: & Finalise initial report and continue with discussions on
+				  road development. \\ \hline
+				  Outcome: &  Qiu to complete section for the initial report. Good
+				  discussion about road development continues, those confident
+				  with programming should continue developing a small example
+				  to present to all for a better understanding of programming
+				  and those less confident with programming should continue
+				  looking at the mathematical aspects behind road development. \\ \hline
+				  \multicolumn{2}{ c}{} \\
+				  \hline
+				  \multicolumn{2}{ |l|}{ \textbf{Meeting 6}} \\  \hline
+				  Date: & 02/02/2015 (3pm) \\  \hline
+				  Attendance: & Jie and Tanda \\   \hline
+				  Duration: & 30 minutes \\  \hline
+				  Agenda: &  \\ \hline
+				  Outcome: & Discussion and review of the initial report and what can be done by other members to make it better. Jie described the code he had been working on for the system and the continued development into  \\  \hline
+				  \multicolumn{2}{ c}{} \\
+				  \hline
+				  \multicolumn{2}{ |l|}{ \textbf{Meeting 7}} \\  \hline
+				  Date: & 06/02/2015 (1pm) \\  \hline
+				  Attendance: & Mark, Jie, Tanda, Qiu (Inyeol Pardoned)\\   \hline
+				  Duration: &  45 minutes\\  \hline
+				  Agenda: & Editing the Initial Report and getting more contribution from group members for first section and brief talk on presentation and get the prototype on Github. \\ \hline
+				  Outcome: &  Jie illustrated to the group a prototype and has explained the code together. Tanda and Jie had discussion about the GUI of the simulation and how to present the visualisation better shall be worked on by all group members. Mark assigned task to create presentation  \\  \hline
+			\end{tabular}
+			
+	
+	
 	\subsection{Personal Logs} %Each member should be completing there own log 
 	\subsection{Usecase Diagram} 
 	\subsection{Class Diagram}
