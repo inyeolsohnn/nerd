@@ -23,6 +23,7 @@ public class RoundRoad extends Road {
 			System.out.println("Lane found: " + currentLane.getStart() + ", "
 					+ currentLane.getEnd());
 		}
+		this.setBilateral(false);
 	}
 
 	private void setUpLanes(Float centerPoint, int radius, int numLanes) {
