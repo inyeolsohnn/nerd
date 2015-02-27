@@ -41,9 +41,11 @@ public class ConnectTest {
 				while (it1.hasNext()) {
 					Map.Entry pair1 = (Map.Entry) it1.next();
 					Connection c1 = (Connection) pair1.getValue();
-					System.out.println(c1.getEnd());
+					System.out.println(c1.getStart()); //returns intersection point
+					System.out.println(c1.getInter()); //returns intersection point
+					System.out.println(c1.getEnd()); //returns intersection point
 				}
-				it.remove(); // avoids a ConcurrentModificationException
+				
 			}
 		} catch (UnknownConnectionError e) {
 			// TODO Auto-generated catch block

@@ -25,7 +25,7 @@ public class Car implements CarI {
 	private Lane currentLane;
 	private float currentT;
 	private CarWorld cWorld;
-	private float distanceTravelled; //distance travelled on the current road 0-roadSpan
+	private float distanceTravelled=0; //distance travelled on the current road 0-roadSpan
 
 	public Car() {
 		// dummy constructor for testing
@@ -162,6 +162,7 @@ public class Car implements CarI {
 			}
 			float tempDistance = this.currentSpeed * 0.02f;
 			System.out.println("Temp distance: " + tempDistance);
+			distanceTravelled+=tempDistance;
 			boolean isObstacle = this.checkObstacles();
 			if (isObstacle) {
 				// appropriate reaction to obstacle required

@@ -19,7 +19,7 @@ public class Connection extends Lane {
 			ConnectionPoint cp, Point2D.Float interStartPoint,
 			Point2D.Float interEndPoint, Point2D.Float intersectingPoint)
 			throws UnknownConnectionError {
-		super();
+		super(sRoad.getId());
 		this.sRoad = sRoad;
 		this.sLane = sLane;
 		this.tRoad = tRoad;
@@ -29,6 +29,7 @@ public class Connection extends Lane {
 		this.interEndPoint = interEndPoint;
 		this.intersectingPoint = intersectingPoint;
 		setupBezier(interStartPoint, intersectingPoint, interEndPoint);
+		this.setLaneSpan(calculateLaneSpan());
 
 	}
 
@@ -46,12 +47,17 @@ public class Connection extends Lane {
 
 	@Override
 	public Point2D.Float getStart() {
-		return cp.getPointCoordinate();
+		return this.interStartPoint;
 
 	}
 
 	@Override
 	public Point2D.Float getEnd() {
+		return this.interEndPoint;
+
+	}
+
+	public Point2D.Float getInter() {
 		return this.intersectingPoint;
 
 	}
@@ -63,7 +69,6 @@ public class Connection extends Lane {
 	public Lane getTargetLane() {
 		return this.tLane;
 	}
-
 
 	private void setupBezier(Point2D.Float startingPoint,
 			Point2D.Float controlPoint, Point2D.Float endPoint) {

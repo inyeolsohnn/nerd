@@ -25,7 +25,7 @@ public abstract class Lane {
 	// current lane belonging to that specific road.
 	private ArrayList<ArrayList<Lane>> connected = new ArrayList<ArrayList<Lane>>();
 
-	public Lane() {
+	public Lane(int roadId) {
 		// for special lanes
 	}
 
