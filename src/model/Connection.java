@@ -7,20 +7,28 @@ import java.awt.geom.Point2D.Float;
 public class Connection extends Lane {
 	private Road sRoad, tRoad;
 	private Lane sLane, tLane;
+	private Point2D.Float interStartPoint;
+	private Point2D.Float interEndPoint;
 	private Point2D.Float intersectingPoint;
-	private Point2D.Float targetPoint;
 	private ConnectionPoint cp;
+	private float[] bezierTable = new float[1000];
 
 	// this is quadratic bezier curve that car will move onto while changing
 	// lane
 	Connection(Road sRoad, Lane sLane, Road tRoad, Lane tLane,
-			ConnectionPoint cp) throws UnknownConnectionError {
+			ConnectionPoint cp, Point2D.Float interStartPoint,
+			Point2D.Float interEndPoint, Point2D.Float intersectingPoint)
+			throws UnknownConnectionError {
 		super();
 		this.sRoad = sRoad;
 		this.sLane = sLane;
 		this.tRoad = tRoad;
 		this.tLane = tLane;
 		this.cp = cp;
+		this.interStartPoint = interStartPoint;
+		this.interEndPoint = interEndPoint;
+		this.intersectingPoint = intersectingPoint;
+		setupBezier(interStartPoint, intersectingPoint, interEndPoint);
 
 	}
 
@@ -48,11 +56,17 @@ public class Connection extends Lane {
 
 	}
 
-	public Road returnTargetRoad() {
+	public Road getTargetRoad() {
 		return this.tRoad;
 	}
 
-	public Lane returnTargetLane() {
+	public Lane getTargetLane() {
 		return this.tLane;
+	}
+
+
+	private void setupBezier(Point2D.Float startingPoint,
+			Point2D.Float controlPoint, Point2D.Float endPoint) {
+
 	}
 }

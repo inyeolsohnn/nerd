@@ -25,6 +25,7 @@ public class Car implements CarI {
 	private Lane currentLane;
 	private float currentT;
 	private CarWorld cWorld;
+	private float distanceTravelled; //distance travelled on the current road 0-roadSpan
 
 	public Car() {
 		// dummy constructor for testing

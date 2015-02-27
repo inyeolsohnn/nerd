@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
 import java.util.ArrayList;
@@ -62,13 +63,14 @@ public abstract class Road {
 	}
 
 	protected void setBilateral(boolean bl) {
-
+		this.bilateral = bl;
 	}
 
 	public static void connectLane(Road currentRoad, int currentLane,
 			Road targetRoad, int targetLane) throws UnknownConnectionError {
 
 		if ((currentRoad instanceof StraightRoad && targetRoad instanceof StraightRoad)) {
+			lineLineConnect(currentRoad, currentLane, targetRoad, targetLane);
 
 		} else if ((currentRoad instanceof StraightRoad && targetRoad instanceof RoundRoad)) {
 
@@ -96,13 +98,20 @@ public abstract class Road {
 
 	}
 
-	private static void lineLineConnect(Road currentRoad, int currentLane,
+	private static boolean lineLineConnect(Road currentRoad, int currentLane,
 			Road targetRoad, int targetLane) throws UnknownConnectionError {
+		System.out.println("Start connecting");
 		HashMap<Integer, Lane> sLanes = currentRoad.getLanes();
 		HashMap<Integer, Lane> tLanes = targetRoad.getLanes();
+		Point2D.Float intersectingStartPoint;
+		Point2D.Float intersectingControlPoint;
+		Point2D.Float intersectingEndPoint;
+		boolean success = false;
+		boolean overlapFound = false;
 		// checks if the roads actually has the lanes that are needed to be
 		// connected
 		if (sLanes.containsKey(currentLane) && tLanes.containsKey(targetLane)) {
+			System.out.println("Lanes in the roads found");
 			// get two most outer roads-> get most outer boundaries of the two
 			// roads
 			// check if the closest outer boundary intersects with the
@@ -136,7 +145,9 @@ public abstract class Road {
 				// highest odd key
 
 				// start checking for nextHighest
+				System.out.println("starting road is bilateral");
 				if (modulus == 0) {
+					System.out.println("Starting highest==even");
 					// highest is even-> next highest should be odd since
 					// bilateral
 					for (int i = sortedS.size() - 2; i >= 0; i--) {
@@ -168,6 +179,7 @@ public abstract class Road {
 				} else {
 					// highest is odd-> next highest should be even since
 					// bilateral
+					System.out.println("Starting highest== odd");
 					for (int i = sortedS.size() - 2; i >= 0; i--) {
 						if (sortedS.get(i) % 2 == 0) {
 							nextHighest = sortedS.get(i);
@@ -198,8 +210,10 @@ public abstract class Road {
 			} else {
 				// unilateral sLAne->get a lane with highest key and one with
 				// the lowest key
+
 				nextHighest = sortedS.get(0);
 				if (nextHighest % 2 == 0) {
+					System.out.println("Starting lane is even unilateral");
 					// even lanes
 					// one outer line is highest + offset
 					// one outer line is nextHighest - offset
@@ -217,6 +231,7 @@ public abstract class Road {
 					a4 = new Point2D.Float(nh.getEnd().x - halfVector.x,
 							nh.getEnd().y - halfVector.y);
 				} else {
+					System.out.println("Starting lane is odd unilateral");
 					// odd lanes
 					// one outer line is highest - offset
 					// one outer line is nextHighest + offset
@@ -246,6 +261,7 @@ public abstract class Road {
 			ArrayList<Integer> sortedT = new ArrayList<Integer>(tLanes.keySet());
 			Collections.sort(sortedT);
 			int tHighest = sortedT.get(sortedT.size() - 1);
+
 			int tModulus = tHighest % 2;
 			int tNextHighest = -1;
 			if (targetRoad.getBilateral()) {
@@ -257,10 +273,13 @@ public abstract class Road {
 					// bilateral
 
 					for (int i = sortedT.size() - 2; i >= 0; i--) {
-						if (sortedT.get(i) == 1)
+
+						if (sortedT.get(i) % 2 == 1) {
 							tNextHighest = sortedT.get(i);
-						break;
+							break;
+						}
 					}
+
 					// highest is even the outer line is another addition of the
 					// half offset vector
 					// nextHighest is odd the outer line is another subtraction
@@ -283,9 +302,10 @@ public abstract class Road {
 					// highest is odd-> next highest should be even since
 					// bilateral
 					for (int i = sortedT.size() - 2; i >= 0; i--) {
-						if (sortedT.get(i) == 0)
+						if (sortedT.get(i) == 0) {
 							tNextHighest = sortedT.get(i);
-						break;
+							break;
+						}
 					}
 					// highest is odd the outer line is another subtraction of
 					// the half offset vector
@@ -315,11 +335,11 @@ public abstract class Road {
 					// even lanes
 					// one outer line is highest + offset
 					// one outer line is nextHighest - offset
-					Point2D.Float base1 = sLanes.get(tNextHighest).getStart();
-					Point2D.Float base2 = sLanes.get(tNextHighest).getEnd();
+					Point2D.Float base1 = tLanes.get(tNextHighest).getStart();
+					Point2D.Float base2 = tLanes.get(tNextHighest).getEnd();
 					Point2D.Float halfVector = getHalf(base1, base2);
-					Lane h = sLanes.get(tHighest);
-					Lane nh = sLanes.get(tNextHighest);
+					Lane h = tLanes.get(tHighest);
+					Lane nh = tLanes.get(tNextHighest);
 					b1 = new Point2D.Float(h.getStart().x + halfVector.x,
 							h.getStart().y + halfVector.y);
 					b2 = new Point2D.Float(h.getEnd().x + halfVector.x,
@@ -332,11 +352,12 @@ public abstract class Road {
 					// odd lanes
 					// one outer line is highest - offset
 					// one outer line is nextHighest + offset
-					Point2D.Float base1 = sLanes.get(tNextHighest).getEnd();
-					Point2D.Float base2 = sLanes.get(tNextHighest).getStart();
+					Lane h = tLanes.get(tHighest);
+					Lane nh = tLanes.get(tNextHighest);
+					Point2D.Float base1 = nh.getEnd();
+					Point2D.Float base2 = nh.getStart();
 					Point2D.Float halfVector = getHalf(base1, base2);
-					Lane h = sLanes.get(tHighest);
-					Lane nh = sLanes.get(tNextHighest);
+
 					b1 = new Point2D.Float(h.getStart().x - halfVector.x,
 							h.getStart().y - halfVector.y);
 					b2 = new Point2D.Float(h.getEnd().x - halfVector.x,
@@ -348,18 +369,256 @@ public abstract class Road {
 				}
 
 			}
+			// now see if a1-a2, a3-a4 intersects with b1-b2 or b3-b4
+			// or if b1-b2 and b3-b4 overlaps with a1-a2 or a3-a4
+			System.out.println(highest);
+			System.out.println(nextHighest);
+			System.out.println(tHighest);
+			System.out.println(tNextHighest);
+			System.out.println(a1);
+			System.out.println(a2);
+			System.out.println(a3);
+			System.out.println(a4);
+			System.out.println(b1);
+			System.out.println(b2);
+			System.out.println(b3);
+			System.out.println(b4);
+			Line2D.Float line1 = new Line2D.Float(a1, a2);
+			Line2D.Float line2 = new Line2D.Float(a3, a4);
+			Line2D.Float line3 = new Line2D.Float(b1, b2);
+			Line2D.Float line4 = new Line2D.Float(b3, b4);
+
+			// if the line overlaps check if the overlapped segment is closest
+			// to the starting lane's starting point
+
+			if ((line1.intersectsLine(line3) && line2.intersectsLine(line3))) {
+				System.out.println("Overlapping found1");
+				overlapFound = true;
+
+				// check distance between the starting point of the starting
+				// lane and line3, as well as the distance between the same
+				// point and line4. If line 3 is the closest intersection
+				// between this line is the starting point
+
+			} else if ((line1.intersectsLine(line4) && line2
+					.intersectsLine(line4))) {
+				System.out.println("Overlapping found2");
+				overlapFound = true;
+
+			} else if ((line3.intersectsLine(line1) && line4
+					.intersectsLine(line1))) {
+				System.out.println("Overlapping found3");
+				overlapFound = true;
+
+			} else if ((line3.intersectsLine(line2) && line4
+					.intersectsLine(line2))) {
+				System.out.println("Overlapping found4");
+				overlapFound = true;
+
+			} else {
+				System.out.println("overlapping not found");
+				return false;
+			}
+
+			if (overlapFound) {
+				System.out
+						.println("Finding closest outerline of the target road");
+				// get starting lane's outer lines
+				// find two intersection point with the closest road outerline
+				// of the target road
+				// get the vector that is perpendicular to the outer line that
+				// previously found intersection point lines on
+				// get intersection of the previously found vector and the
+				// starting lane's vector-> starting point of the connection
+
+				// get intersection between the starting lane vector and target
+				// lane vector-> control point of the quadratic bezier
+
+				// get a point that lies on target lane's vector with the
+				// distance of the displacement between the two previously found
+				// points-> end point of the quadratic bezier
+				Lane startingL = sLanes.get(currentLane);
+				Lane endingL = tLanes.get(targetLane);
+				Point2D.Float slStarting = startingL.getStart();
+				Point2D.Float slEnding = startingL.getEnd();
+				Point2D.Float halfVector = getHalf(slStarting, slEnding);
+				Point2D.Float sla1;
+				Point2D.Float sla2;
+				Point2D.Float sla3;
+				Point2D.Float sla4;
+				sla1 = new Point2D.Float(slStarting.x + halfVector.x,
+						slStarting.y + halfVector.y);
+				sla2 = new Point2D.Float(slEnding.x + halfVector.x, slEnding.y
+						+ halfVector.y);
+				sla3 = new Point2D.Float(slStarting.x - halfVector.x,
+						slStarting.y - halfVector.y);
+				sla4 = new Point2D.Float(slEnding.x - halfVector.x, slEnding.y
+						- halfVector.y);
+				Point2D.Float i1 = linesolver.checkIntersection(slStarting,
+						slEnding, (Point2D.Float) line3.getP1(),
+						(Point2D.Float) line3.getP2());
+				Point2D.Float i2 = linesolver.checkIntersection(slStarting,
+						slEnding, (Point2D.Float) line4.getP1(),
+						(Point2D.Float) line4.getP2());
+				System.out.println(i1);
+				System.out.println(i2);
+				float d1 = (float) Math.sqrt(Math.pow((slStarting.x - i1.x),
+						2.0) + Math.pow(slStarting.y - i1.y, 2.0)); // length
+																	// between
+																	// line 3
+				float d2 = (float) Math.sqrt(Math.pow((slStarting.x - i2.x),
+						2.0) + Math.pow(slStarting.y - i2.y, 2.0)); // length
+																	// between
+																	// line 4
+				System.out.println(d1);
+				System.out.println(d2);
+				Point2D.Float closestPoint;
+				Line2D.Float closestLine;
+				if (d1 > d2) {
+					// line 4 is the closest outer line
+					// get intersection between line 4 and line 1,line 2
+					System.out.println("line 4 is the closest line");
+					Point2D.Float ii1 = linesolver.checkIntersection(
+							(Point2D.Float) line4.getP1(),
+							(Point2D.Float) line4.getP2(),
+							(Point2D.Float) line1.getP1(),
+							(Point2D.Float) line1.getP2());
+					Point2D.Float ii2 = linesolver.checkIntersection(
+							(Point2D.Float) line4.getP1(),
+							(Point2D.Float) line4.getP2(),
+							(Point2D.Float) line2.getP1(),
+							(Point2D.Float) line2.getP2());
+					System.out.println(ii1);
+					System.out.println(ii2);
+					float dd1 = (float) Math.sqrt(Math.pow(
+							(slStarting.x - ii1.x), 2.0)
+							+ Math.pow(slStarting.y - ii1.y, 2.0));
+					float dd2 = (float) Math.sqrt(Math.pow(
+							(slStarting.x - ii2.x), 2.0)
+							+ Math.pow(slStarting.y - ii2.y, 2.0));
+					System.out.println(dd1);
+					System.out.println(dd2);
+					if (dd1 > dd2) {
+						// ii2 is the closest intersection point
+						// lies on line2
+						System.out.println(line2.getP1());
+						closestPoint = ii2;
+						closestLine = line2;
+
+					} else if (dd2 > dd1) {
+						// ii1 is the closest intersection point
+						// lies on line1
+						System.out.println(line1.getP1());
+						closestPoint = ii1;
+						closestLine = line1;
+					} else {
+						// they are the same so chose which ever point
+						// lies on line1
+						System.out.println(line1.getP1());
+						closestPoint = ii1;
+						closestLine = line1;
+					}
+				} else if (d2 > d1) {
+					// line 3 is the shorted outer line
+					// get intersection between line 3 and line 1, line 2
+					System.out.println("line 3 is the closest line");
+
+					Point2D.Float ii1 = linesolver.checkIntersection(
+							(Point2D.Float) line3.getP1(),
+							(Point2D.Float) line3.getP2(),
+							(Point2D.Float) line1.getP1(),
+							(Point2D.Float) line1.getP2());
+					Point2D.Float ii2 = linesolver.checkIntersection(
+							(Point2D.Float) line3.getP1(),
+							(Point2D.Float) line3.getP2(),
+							(Point2D.Float) line2.getP1(),
+							(Point2D.Float) line2.getP2());
+					System.out.println(ii1);
+					System.out.println(ii2);
+					float dd1 = (float) Math.sqrt(Math.pow(
+							(slStarting.x - ii1.x), 2.0)
+							+ Math.pow(slStarting.y - ii1.y, 2.0));
+					float dd2 = (float) Math.sqrt(Math.pow(
+							(slStarting.x - ii2.x), 2.0)
+							+ Math.pow(slStarting.y - ii2.y, 2.0));
+					System.out.println(dd1);
+					System.out.println(dd2);
+					if (dd1 > dd2) {
+						// ii2 is the closest intersection point
+						// lies on line2
+						System.out.println(line2.getP1());
+						closestPoint = ii2;
+						closestLine = line2;
+
+					} else if (dd2 > dd1) {
+						// ii1 is the closest intersection point
+						// lies on line1
+						System.out.println(line1.getP1());
+						closestPoint = ii1;
+						closestLine = line1;
+					} else {
+						// they are the same so chose which ever point
+						// lies on line1
+						System.out.println(line1.getP1());
+						closestPoint = ii1;
+						closestLine = line1;
+					}
+				} else {
+					throw new UnknownConnectionError();
+				}
+				System.out.println(closestPoint);
+				Point2D.Float closestVec = new Point2D.Float(
+						((Point2D.Float) closestLine.getP1()).x
+								- closestPoint.x,
+						((Point2D.Float) closestLine.getP1()).y
+								- closestPoint.y);
+				System.out.println(closestVec);
+				intersectingStartPoint = new Point2D.Float(
+						((Point2D.Float) startingL.getStart()).x - closestVec.x,
+						((Point2D.Float) startingL.getStart()).y - closestVec.y);
+				System.out.println(intersectingStartPoint);
+				intersectingControlPoint = linesolver.checkIntersection(
+						slStarting, slEnding, endingL.getStart(),
+						endingL.getEnd());
+				System.out.println(intersectingControlPoint);
+				Point2D.Float iVec = new Point2D.Float(intersectingStartPoint.x
+						- intersectingControlPoint.x, intersectingStartPoint.y
+						- intersectingControlPoint.y);
+				float scd = (float) Math.sqrt(Math.pow((iVec.x), 2.0)
+						+ Math.pow(iVec.y, 2.0));
+				Point2D.Float tVec = new Point2D.Float(endingL.getStart().x
+						- endingL.getEnd().x, endingL.getStart().y
+						- endingL.getEnd().y);
+				float tVecD = (float) Math.sqrt(Math.pow((tVec.x), 2.0)
+						+ Math.pow(tVec.y, 2.0));
+				intersectingEndPoint = new Point2D.Float(
+						intersectingControlPoint.x
+								+ ((endingL.getEnd().x - endingL.getStart().x)
+										/ tVecD * scd),
+						intersectingControlPoint.y
+								+ ((endingL.getEnd().y - endingL.getStart().y)
+										/ tVecD * scd));
+				System.out.println(intersectingStartPoint);
+				System.out.println(intersectingControlPoint);
+				System.out.println(intersectingEndPoint);
+
+				ConnectionPoint cp = new ConnectionPoint(currentRoad,
+						startingL, intersectingStartPoint);
+				Connection cn = new Connection(currentRoad, startingL,
+						targetRoad, endingL, cp, intersectingStartPoint,
+						intersectingEndPoint, intersectingControlPoint);
+				success = startingL.addConnectionPoint(cp, cn);
+			}
+
+			return success;
 		} else {
+
 			throw new UnknownConnectionError();
 		}
 		// end if
 		// //////////
 		// ////////////
 
-	}
-
-	public Point2D.Float lineAndLineIntersect(StraightLane sLane,
-			StraightLane tLane) throws UnknownConnectionError {
-		return null;
 	}
 
 	private static Point2D.Float getHalf(Point2D.Float base1,

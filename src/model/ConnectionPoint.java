@@ -2,9 +2,10 @@ package model;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ConnectionPoint {
-	ArrayList<Connection> connections = new ArrayList<Connection>();
+	HashMap<Lane, Connection> connections = new HashMap<Lane, Connection>();
 	private Point2D.Float pointCoordinate;
 	private Road road;
 	private Lane lane;
@@ -32,10 +33,10 @@ public class ConnectionPoint {
 		return lane;
 	}
 
-	public void createConnection(Road targetRoad, Lane targetLane)
-			throws UnknownConnectionError {
-		Connection newConnection = new Connection(this.road, this.lane,
-				targetRoad, targetLane, this);
-		connections.add(newConnection);
+	public void addConnection(Connection cn) throws UnknownConnectionError {
+		connections.put(cn.getTargetLane(), cn);
+	}
+	public  HashMap<Lane, Connection> getConnections(){
+		return connections;
 	}
 }

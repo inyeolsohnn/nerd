@@ -24,10 +24,10 @@ public class StraightRoad extends Road {
 		this.endingPoint = endingPoint;
 		setUpLanes(startingPoint, endingPoint, numAddLane, numSubLane);
 		Iterator it = this.lanes.entrySet().iterator();
-		if (numAddLane == 0 || numSubLane == 0)
-			this.setBilateral(true);
-		else
+		if ((numAddLane == 0 && numSubLane != 0)||(numAddLane!=0 && numSubLane==0))
 			this.setBilateral(false);
+		else
+			this.setBilateral(true);
 
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();

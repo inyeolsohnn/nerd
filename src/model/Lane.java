@@ -11,7 +11,7 @@ public abstract class Lane {
 	private int laneId; // its id
 	private int roadId; // id of the road it belongs to
 	protected float laneSpan;
-	private ArrayList<ConnectionPoint> connections = new ArrayList<ConnectionPoint>();
+	private HashMap<Point2D.Float, ConnectionPoint> connectionPoints = new HashMap<Point2D.Float, ConnectionPoint>();
 	private HashMap<Integer, Car> carsInLane = new HashMap<Integer, Car>();
 	protected Point2D.Float startPoint;
 	protected Point2D.Float endPoint;
@@ -58,11 +58,6 @@ public abstract class Lane {
 		this.laneSpan = laneSpan;
 	}
 
-	public static boolean isConnected(Lane currentLane, Lane otherLane) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	public boolean isInLane(Car car) { // checks if car's movement is
 										// legal(conforms to the
 										// shape(functional representation) of
@@ -81,34 +76,6 @@ public abstract class Lane {
 	public Point2D.Float getEnd() {
 		// TODO Auto-generated method stub
 		return this.endPoint;
-	}
-
-	public static boolean doIntersect(Lane laneA, Lane laneB) {
-		// method checks if two lanes from connected different roads A and B,
-		// respectively, intersect with each other
-		// straight line 0
-		// roundabout 1
-		// beizer 2
-		// case1: straight line and straight line
-		// case 2: straight line and roundabout
-		// case 3: straight line and bezier
-		// case 4: roundabout and bezier
-		// case 5: bezier and bezier
-		int types = 0;
-		/*
-		 * switch (types) { case 0:
-		 */
-		Point2D.Float aStart = laneA.getStart();
-		Point2D.Float aEnd = laneA.getEnd();
-		Point2D.Float bStart = laneB.getStart();
-		Point2D.Float bEnd = laneB.getEnd();
-		Line2D line1 = new Line2D.Float(aStart.x, aStart.y, aEnd.x, aEnd.y);
-		Line2D line2 = new Line2D.Float(bStart.x, bStart.y, bEnd.x, bEnd.y);
-		return line2.intersectsLine(line1);
-
-		/*
-		 * } return false;
-		 */
 	}
 
 	public void addTrafficLight(TrafficLight light) {
@@ -135,5 +102,44 @@ public abstract class Lane {
 	public void removeCar(Car car) {
 		int carId = car.getId();
 		carsInLane.remove(carId);
+	}
+
+	public boolean addConnectionPoint(ConnectionPoint cp, Connection cn)
+			throws UnknownConnectionError {
+
+		// if cp starting point and cn starting point is not equal throw an
+		// error
+		// if they are the same, but not on the lane throw an error
+		// start checking
+
+		// if failed return false
+		// end checking
+
+		// check if the connection point starting at the same coordinate in the
+		// starting Lane exists
+
+		// exist
+		// if it doesn't add connection to the connection point and add it to
+		// the lane
+		// if it does add connection to the existing connection point
+
+		if (connectionPoints.get(cp.getPointCoordinate()) == null) {
+
+			System.out
+					.println("Connection point not found, adding new connection point");
+			cp.addConnection(cn);
+			connectionPoints.put(cp.getPointCoordinate(), cp);
+			return true;
+		} else {
+			System.out
+					.println("connection point found, adding new connection to the existing connection point");
+			ConnectionPoint existingCp = connectionPoints.get(cp
+					.getPointCoordinate());
+			existingCp.addConnection(cn);
+			return true;
+		}
+	}
+	public HashMap<Float, ConnectionPoint> getConnectionPoints(){
+		return this.connectionPoints;
 	}
 }
