@@ -20,7 +20,7 @@ public class ConnectTest {
 				new Point2D.Float(400, 200), 3, 1);
 		System.out.println(sr.getBilateral());
 		Road sr2 = new StraightRoad(new Point2D.Float(300, 1000),
-				new Point2D.Float(300, 200), 1, 1);
+				new Point2D.Float(300, 200), 1, 0);
 		System.out.println(sr2.getBilateral());
 		try {
 			Road.connectLane(sr2, 0, sr, 1);

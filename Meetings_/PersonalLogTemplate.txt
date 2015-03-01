@@ -1,5 +1,0 @@
-Personal log template
-Name: (Your name here)
-Task: (What was the task you did/ what was your contribution)
-Duration: (How long did you work on this task for)
-Date Completed: (when did you finish the task stated)
