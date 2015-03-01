@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -48,7 +49,7 @@ public class CarSimView extends JFrame implements ActionListener {
 	
 	public void setController(WorldController controller) {
 		this.wController = controller;
-		mainContainer.add(new simulationPanel(controller));
+		mainContainer.add(new simulationPanel(controller)); 
 
 	}
 
@@ -68,10 +69,15 @@ public class CarSimView extends JFrame implements ActionListener {
 		public simulationPanel(WorldController control) {
 
 			this.control = control;
+
 			//setSize(800, 600);
 			setPreferredSize(new Dimension(1000,800));
 			setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
 		
+			this.setPreferredSize(new Dimension(1100,800));
+			this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+			this.setBackground(Color.WHITE);
+
 		}
 
 		@Override
@@ -110,8 +116,7 @@ public class CarSimView extends JFrame implements ActionListener {
 			for(int i = 0;i<trafficlightnums;i++){
 				paintTrafficLight();
 			}
-		
-			
+	
 
 		}
 
