@@ -46,14 +46,17 @@ public class Connection extends Lane {
 
 	@Override
 	public Point2D.Float getStart() {
-		return cp.getPointCoordinate();
-
+		return this.interStartPoint;
 	}
 
 	@Override
 	public Point2D.Float getEnd() {
-		return this.intersectingPoint;
+		return this.interEndPoint;
 
+	}
+
+	public Point2D.Float getIntersection() {
+		return this.intersectingPoint;
 	}
 
 	public Road getTargetRoad() {
@@ -63,7 +66,6 @@ public class Connection extends Lane {
 	public Lane getTargetLane() {
 		return this.tLane;
 	}
-
 
 	private void setupBezier(Point2D.Float startingPoint,
 			Point2D.Float controlPoint, Point2D.Float endPoint) {

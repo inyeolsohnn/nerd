@@ -39,6 +39,7 @@ public class ConnectTest {
 				Iterator<Entry<Lane, Connection>> it1 = connections.entrySet()
 						.iterator();
 				while (it1.hasNext()) {
+					System.out.println("printing connection");
 					Map.Entry pair1 = (Map.Entry) it1.next();
 					Connection c1 = (Connection) pair1.getValue();
 					System.out.println(c1.getEnd());
