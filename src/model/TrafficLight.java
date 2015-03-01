@@ -6,16 +6,19 @@ import java.util.Date;
 public class TrafficLight {
 	private Lane lane; // lane object it belongs to
 	private String status;
-	private long interval;
+	private long greenInterval;
+	private long redInterval;
 	private Date lastChanged;
 	private Point2D.Double coordination;
 	private int id;
 	private static int totalLights = 0;
-
+	private double tempInterval=0.0;
 	// testing stubs
 	public TrafficLight() {
-		this.interval = 10000;
+		this.greenInterval = 100;
+		this.redInterval = 200;
 		this.lastChanged = new Date();
+		System.out.println(this.lastChanged);
 		this.status = "Green";
 		this.id = totalLights;
 		totalLights++;
@@ -23,7 +26,7 @@ public class TrafficLight {
 
 	public TrafficLight(Lane lane) {
 		this.lane = lane;
-		this.interval = 500;
+		
 		this.lastChanged = new Date();
 		this.status = "Green";
 		this.id = totalLights;
@@ -32,11 +35,12 @@ public class TrafficLight {
 
 	// testing stubs end
 
-	public TrafficLight(Lane lane, long interval, Point2D.Double coordination) {
+	public TrafficLight(Lane lane,String status, long greenInterval,long redInterval, Point2D.Double coordination) {
 		this.lane = lane;
-		this.interval = interval;
+		this.redInterval = redInterval;
+		this.greenInterval = greenInterval; 
 		this.lastChanged = new Date();
-		this.status = "Green";
+		this.status = status;
 		this.coordination = coordination;
 		this.id = totalLights;
 		totalLights++;
@@ -58,19 +62,20 @@ public class TrafficLight {
 		this.status = status;
 	}
 
-	public void setInterval(long interval) {
-		this.interval = interval;
+	public void setRedInterval(long interval) {
+		this.redInterval = interval;
 	}
+	
 
 	public Lane getLane() {
 		return this.lane;
 	}
 
 	public void update() {
-		Date currentDate = new Date();
+	/*	Date currentDate = new Date();
 		if (currentDate.getTime() - lastChanged.getTime() > interval) {
 			System.out.println("changing");
-
+			System.out.println(currentDate.getTime() - lastChanged.getTime());
 			lastChanged = currentDate;
 			if (status.equals("Green")) {
 				this.status = "Red";
@@ -78,7 +83,28 @@ public class TrafficLight {
 				this.status = "Green";
 			}
 			System.out.println(this.status);
+		}*/
+	
+		if(this.status.equalsIgnoreCase("green")){
+			
+			if(tempInterval==greenInterval){
+				this.status ="red";
+				tempInterval=0.0;
+			}
+			else{
+				tempInterval+=20;
+			}
 		}
+		else{
+			if(tempInterval==redInterval){
+				this.status ="green";
+				tempInterval=0.0;
+			}
+			else{
+				tempInterval+=20;
+			}
+		}
+		//System.out.println(getStatus());
 	}
 
 }
