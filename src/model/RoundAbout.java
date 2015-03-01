@@ -11,7 +11,6 @@ public class RoundAbout extends Lane {
 		super(center, center, roadId);
 		this.center = center;
 		this.radius = radius;
-		this.setLaneSpan(calculateLaneSpan());
 
 	}
 
