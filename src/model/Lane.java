@@ -40,7 +40,7 @@ public abstract class Lane {
 
 	public abstract float calculateLaneSpan();
 
-	public abstract Point2D.Float nextPosition(Car car, float targetDistance);
+	public abstract Point2D.Float nextPosition(Car car, float targetDistance, float distanceTravelled);
 
 	public float getLaneSpan() {
 		return laneSpan;

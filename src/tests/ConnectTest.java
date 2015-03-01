@@ -42,6 +42,8 @@ public class ConnectTest {
 					System.out.println("printing connection");
 					Map.Entry pair1 = (Map.Entry) it1.next();
 					Connection c1 = (Connection) pair1.getValue();
+					System.out.println(c1.getStart());
+					System.out.println(c1.getIntersection());
 					System.out.println(c1.getEnd());
 				}
 				it.remove(); // avoids a ConcurrentModificationException

@@ -36,7 +36,8 @@ public class RoundAbout extends Lane {
 	}
 
 	@Override
-	public Point2D.Float nextPosition(Car car, float targetDistance) {
+	public Point2D.Float nextPosition(Car car, float targetDistance,
+			float distanceTravelled) {
 		// TODO Auto-generated method stub
 
 		double angle = 360 * targetDistance / calculateLaneSpan();

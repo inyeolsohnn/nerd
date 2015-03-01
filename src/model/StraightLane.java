@@ -21,7 +21,8 @@ public class StraightLane extends Lane {
 	}
 
 	@Override
-	public Point2D.Float nextPosition(Car car, float targetDistance) {
+	public Point2D.Float nextPosition(Car car, float targetDistance,
+			float distanceTravelled) {
 
 		// update rate at 20ms
 		float desiredDistance = targetDistance;

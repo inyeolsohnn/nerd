@@ -179,7 +179,7 @@ public class Car implements CarI {
 				/** work in progress reaction to obstacles */
 			} else {
 				Point2D.Float nextPosition = this.currentLane.nextPosition(
-						this, tempDistance);
+						this, tempDistance, this.distanceTravelled);
 				Point2D.Float nextDisplacement = new Point2D.Float(
 						Math.abs(nextPosition.x - this.coordinate.x),
 						Math.abs(nextPosition.y - this.coordinate.y));
