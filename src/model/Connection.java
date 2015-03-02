@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Graphics;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
@@ -107,6 +108,12 @@ public class Connection extends Lane {
 	private float findT(Point2D.Float point) {
 		// takes the current point, returns T
 		return 0.1f;
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

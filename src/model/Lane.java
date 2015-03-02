@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Graphics;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
@@ -142,4 +143,6 @@ public abstract class Lane {
 	public HashMap<Float, ConnectionPoint> getConnectionPoints(){
 		return this.connectionPoints;
 	}
+
+	public abstract void paint(Graphics g) ;
 }
