@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage[a4paper,pdftex]{geometry}	% Use A4 paper margins
 \usepackage[english]{babel}
-\usepackage{xcolor} 
+\usepackage{xcolor,enumitem} 
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage{array} % for m[{x cm} in tables
@@ -42,30 +42,51 @@
 	%Describe the context for the work and the problem you are addressing. Briely summarise what you achieved in the project
 	The intention of this report is to present and demonstrate the progression, development and overall outcome of the Traffic Simulation application created. The report is structured into 11 sections each with a purpose to provide further understanding into the steps taken throughout the project as a whole. 
 	\\ This first section is an introduction to the whole project and provides an understanding of what is to be expected throughout the entire report. The second section discusses the requirements needed for the project to be deemed successful and appropriate for the cause to fit what is needed. Section three looking into the different existing systems and how the system we are developing is different and any challenges brought about based upon what exists already. Section four discusses the system design including a user manual. In the fifth section of the report is discussion on the process of the actual implementation completed by the two main programmers in the team, which includes how prototypes were created and developed into the final application, as well as some discussion on any system design changes that happened. In the sixth section is a full technical evaluation of the system including the methods used to test the system. In the seventh section is a group evaluation of how the team has been organized throughout the project and then a discussion about the work load division, this section should give a clear insight into the team work throughout project. The eighth section of the report is a conclusion of the project as a whole specifically looking at the lessons learned about program development, what we learnt from about group work and lastly how we would progress in the future with the project. The tenth section is simply the bibliography references to sources we used throughout the report and lastly the eleventh section is the appendices of all additional relevant documents such as a group meetings, personal logs, project plans and documents that supported the system design of the application.\\
+	
 	Overall, this introduction should outline what is to be expected throughout the entire and give insight into how the group worked together to successfully create a traffic simulation.
 	
-	\subsection{Scope}%Need help here.
+	\subsection{Scope}%Need help here please.
 	
 	\subsection{Objectives} %Making The Map - More maps addtional stuff
-	The aim of the project is to build an application which will simulate cars movement on the UK road system, the users aim is able to find the perfect balance of (word here). If a road system is created using the application where the traffic light system is illogical, for example the wrong traffic light position or wrong traffic light interval this will result in a crash or unfair waiting time.
+	The aim of the project was to build an application which will simulate cars movement on the UK road system. The users aim is to be able to find the perfect balance of (word here). If a road system is created using the application where the traffic light system is illogical, for example the wrong traffic light position or wrong traffic light interval this will result in a crash or unfair waiting time.
 	%More needs to be added
-	The value of this system is…
-	What we have achieved 
+	The value of this system is to provide an effective system to simulate traffic to ensure that drivers have an good road network which is fair to all drivers making sure they are able to get to their destinations. 
+	%What we have achieved ...
+	
+	These objectives were set as a group at the beginning to the project the reports will continue to illustrated you how we reached these objectives together a group and the final outcome of the traffic simulation system.
+	
 	\section{Requirements} %What is needed for the project to be succesful 
-	Our purpose is to develop the traffic simulator related to real traffic system and user requirement . Traffic simulation is a well-established field with several ways to achieve it and gain different feedback.           Considering the group work project as well as peer assessment, we made a initial plan at very beginning quickly based on each member’s specific ability and individual background. After our first meeting, we separate the project with schedules according to agile software development principles. It can be generally described as follow :
-1)	Initiation , analysis and risk management related to requirements that define our project and work to do.
- In this case, we need to build a traffic simulate software our own which can also conveniently collect some user requirement and then generate feedback. To be more specific, it means a general map with at least simple straight roads, round roads, cross roads as well as traffic lights and so on.
-2)	Planning , containing the schedule and priorization of work.
-As our consideration, the round road may be the most difficult and complex part in this project. So we decide to solve this part first while trying to implement crossroads with traffic lights to determine car movements, then the combination of several kinds of roads after complete each part of them successfully.  
-3)	Development, including designing the scope which we need to keep track to, and implementation, porting with verification of each units to make sure the correction and integrating after that. If it can goes well so far, then perform corrective improvement towards the whole system to check all the function.
-4)	Deliver the product and final report, which may go through with the progress at first to record everything we need then generate the final paper about our group work software and make peer assessment in this case as needed.
+	Our purpose is to develop the traffic simulator related to real traffic system and user requirement . Traffic simulation is a well-established field with several ways to achieve it and gain different feedback.           Considering the group work project as well as peer assessment, we made a initial plan at very beginning quickly based on each member’s specific ability and individual background. After our first meeting, we separate the project with schedules according to agile software development principles. It can be generally described as follow \\
+	\begin{enumerate}[noitemsep]
+	\item	Initiation , analysis and risk management related to requirements that define our project and work to do.  In this case, we need to build a traffic simulate software our own which can also conveniently collect some user requirement and then generate feedback. To be more specific, it means a general map with at least simple straight roads, round roads, cross roads as well as traffic lights and so on.\\
+ \item Planning , containing the schedule and priorization of work.
+As our consideration, the round road may be the most difficult and complex part in this project. So we decide to solve this part first while trying to implement crossroads with traffic lights to determine car movements, then the combination of several kinds of roads after complete each part of them successfully. \\ 
+\item	Development, including designing the scope which we need to keep track to, and implementation, porting with verification of each units to make sure the correction and integrating after that. If it can goes well so far, then perform corrective improvement towards the whole system to check all the function.\\
+\item	Deliver the product and final report, which may go through with the progress at first to record everything we need then generate the final paper about our group work software and make peer assessment in this case as needed.
 After setting our first plan.
+	\end{enumerate}
 
 
 	\section{Related Work} %Examples of systems and dicussion of them compared to what we are creating.
 	\section{System Design}
+	\subsection{Work Cycle}
 	\subsection{User Manual}
 	\section{Implementation} %Above sections can be completed for now when it gets to implementation contribution from programmers will be needed
+	This section shall present the implementation steps taken to create our application. 
+	%Protypes developed first then modelled into correct OOP -- most signficant concern was road developement - mention plan. 
+	
+	\textbf{Road Development}\\
+	%Talk about the three types of roads -- Straight, Curve, Roundabout.
+	\textbf{Traffic Light}\\
+	update is executed every 0.02 times 
+	check current status
+	each traffic light has a status - check each interval 
+	traffic light object -- \\
+	\textbf{Car Development}\\
+	To truly be able to model an efficient traffic simulation system its important to ensure that cars are developed to have realistic car movement behaviour. For example, in many applications cars may simply stop when it approaches a traffic light but in reality when a car approaches a traffic light it should decelerate. On the CSGNetworks website on Vehicle Stopping Distance And Time \cite{CSGNetwork} states that 'The intelligent driver will error on the safe side and leave room for reaction time and less than perfect conditions. That driver will also hone the braking skills to give more of a margin of safety. That margin can save lives.' These margins were implemented by calculating....(ADD HERE -- SHOW CALCULATION)
+
+	Overall, I hope this section has been able to demonstrate all the technical steps taken into the creation of the simulation. 
+	
 	\subsection{System Design Changes}
 	An important aspect of the traffic simulator is how it appears to the user, the graphical user interface (GUI) and as a requirement users of the application should be able to interact with it. When designing when discussing how the application should be presented to the user.
 	
@@ -86,7 +107,15 @@ After setting our first plan.
 	\subsection{Testing} %How we tested the program (e.g Black/White Box)
 	\section{Group Dicussion}
 	\subsection{Team Organisation} %How each member contributed to the project and how the workload was divided 
+	Effective team organisation was essential to the success of the project. This section shall outline how each member contributed to the project and how the workload was divided among the members. 
+	
+	After initial planning and understanding of the project about the project we began to have discussions about the roles of each member and how they could contribute. This lead to the group being split into two teams. The first team are the programmers, Inyeol and Jie were the most experienced and most comfortable programmers. Jie would develop prototypes which Inyeol would then develop into object orientated programming, this process worked well because as prototypes were developed early and presented to all group members we were all up to date with the progress of the implementation of the system and make changes and alterations when need be. 
+	The second team was Tanda, Qiu and Mark working as system analysts in charge of all documentation and research.
+	Tanda as project coordinator worked to ensure that these two teams although separate would remain in constant communication during meetings or online. Thus meaning that system analysts would always know the progress of the programmers and with this be able to understand what the programmers are doing to write the final report . \\
 	\textbf{Work Load Division:}\\ 
+	The work load...
+	
+	We hope this section has given evidence of the contribution of each member of the group and showed how we worked together to complete the project. 
 	\section{Conclusion}
 	\subsection{Lessons Learned} 
 	\textbf{Program Development Lessons Learned:}\\ %Dicussion on the implementation
@@ -98,6 +127,7 @@ After setting our first plan.
 	
 	\begin{thebibliography}{9}
 			\bibitem{Norman} Norman, Donald. \emph{The Design of Everyday Things} (2002) Basic Books
+			\bibitem{CSGNetwork}Computer Support Group (CSGNetwork), Inc. \emph{Vehicle Stopping Distance And Time} (2015) http://www.csgnetwork.com/stopdistinfo.html
 	\end{thebibliography}
 	
 
@@ -224,10 +254,10 @@ After setting our first plan.
 			\hline
 			\multicolumn{2}{ |l|}{ \textbf{Meeting 14}} \\  \hline
 			Date: & 27/02/2015 (1pm) \\  \hline
-			Attendance: & \\ \hline
-			Duration: &  \\  \hline
+			Attendance: & Mark, Inyeol, Tanda, Jie, Qiu\\ \hline
+			Duration: &  1 hour 30 minutes\\  \hline
 			Agenda: & Tanda shall ensure that Mark and Qiu are able to add their contributions constantly to the latex document on Github. Finalise the Pixel --> meters representation issue.\\ \hline
-			Outcome: & \\  \hline
+			Outcome: & Qiu and Mark know how to add to the final report via Github and continuing to actively work on the report. Inyeol, Jie and Tanda working together to begin developing the View. The Traffic Light prototype created by Tanda and Jie needs to be adjusted to suit the final system. \\  \hline
 			\multicolumn{2}{ c}{} \\
 			\hline
 			\multicolumn{2}{ |l|}{ \textbf{Meeting 15}} \\  \hline
