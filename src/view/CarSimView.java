@@ -27,17 +27,13 @@ public class CarSimView extends JFrame implements ActionListener {
 	private Container mainContainer;
 	private WorldController wController;
 	private JButton stopButton, startButton;
-	private int trafficlightnums;
-	public CarSimView(String title , int trafficlightnums) {
+
+	public CarSimView(String title ) {
 		super(title);
 		mainContainer = this.getContentPane();
 		FlowLayout experimentLayout = new FlowLayout();
 		this.setLayout(experimentLayout);
-		this.trafficlightnums = trafficlightnums;
-		ArrayList <TrafficLight> lights = new ArrayList<TrafficLight>();
-		for(int i=0;i<trafficlightnums;i++){
-			
-		}
+		
 		stopButton = new JButton("STOP");
 		stopButton.addActionListener(this);
 		startButton = new JButton("Start");
@@ -113,17 +109,12 @@ public class CarSimView extends JFrame implements ActionListener {
 		protected void paintComponent(Graphics g) {
 			ArrayList<Road> roads = control.getRoads();
 			ArrayList<Car> cars = control.getCars();
-			for(int i = 0;i<trafficlightnums;i++){
-				paintTrafficLight();
-			}
+		
 	
 
 		}
 
-		private void paintTrafficLight() {
-			// TODO Auto-generated method stub
-			
-		}
+	
 
 	}
 }

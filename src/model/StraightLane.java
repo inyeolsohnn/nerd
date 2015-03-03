@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
 
@@ -39,6 +40,12 @@ public class StraightLane extends Lane {
 				+ displacement.x, car.getCoordinate().y + displacement.y);
 		System.out.println("New point: " + newPoint);
 		return newPoint;
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

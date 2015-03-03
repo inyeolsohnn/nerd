@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
 
@@ -57,6 +58,12 @@ public class RoundAbout extends Lane {
 
 	public float getRadius() {
 		return this.radius;
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

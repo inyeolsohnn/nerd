@@ -23,15 +23,7 @@ public class WorldController {
 		this.cWorld = cWorld;
 		((CarSimView) frame).setController(this);
 
-		Road road = new Road(100, 100, 400, 500);
-		Road endRoad = new Road(400, 500, 700, 900);
-		cWorld.addRoad(road);
-		Car car = new Car(new Point2D.Float((float) 100.0, (float) 100.0), 0,
-				road.getId(), endRoad.getId());
-		Car car1 = new Car(new Point2D.Float((float) 400.0, (float) 500.0),
-				100, road.getId(), endRoad.getId());
-		cWorld.addCar(car);
-		cWorld.addCar(car1);
+		
 		frame.setSize(cWorld.getWidth(), cWorld.getHeight());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationByPlatform(true);

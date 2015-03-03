@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Graphics;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
@@ -8,6 +9,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public abstract class Road {
 	// knows which lane is connecting to which road, pair of (lane number, and
@@ -33,7 +36,17 @@ public abstract class Road {
 		roadsCreated++;
 		this.roadType = roadType;
 	}
-
+	public void paint(Graphics g){
+		Iterator<Entry<Integer, Lane>> it = lanes
+				.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			Lane currentLane = (Lane) pair.getValue();
+			currentLane.paint(g);
+			
+			
+		}
+	}
 	/**** road type dependent ****/
 
 	// contaaining all lanes
