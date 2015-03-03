@@ -25,7 +25,8 @@ public class Car implements CarI {
 	private Lane currentLane;
 	private float currentT;
 	private CarWorld cWorld;
-	private float distanceTravelled; //distance travelled on the current road 0-roadSpan
+	private float distanceTravelled; // distance travelled on the current road
+										// 0-roadSpan
 
 	public Car() {
 		// dummy constructor for testing
@@ -153,6 +154,7 @@ public class Car implements CarI {
 	}
 
 	public void move() {
+
 		if (this.currentSpeed == 0) {
 			System.out.println("Car is not moving");
 		} else {
@@ -195,6 +197,16 @@ public class Car implements CarI {
 				 * System.out.println("From car, dte: " + dToEnd);
 				 * System.out.println(this.currentLane.getClass().getName());
 				 */
+				if (this.currentLane.getConnectionPoints().size() == 0) {
+					System.out.println("no connection");
+				} else {
+					if (!(currentLane.getConnectionPoints().get(
+							new Point2D.Float((int) this.coordinate.x,
+									(int) this.coordinate.y)) == null)) {
+						System.out.println("connection found");
+						System.exit(1);
+					}
+				}
 				if (!(this.currentLane instanceof RoundAbout)
 						&& (dToEnd.x < nextDisplacement.x || dToEnd.y < nextDisplacement.y)) {
 					this.coordinate = this.currentLane.getEnd(); // reached the
@@ -234,6 +246,11 @@ public class Car implements CarI {
 
 	public float getT() {
 		return this.currentT;
+	}
+
+	public void setTravelled(float f) {
+		this.distanceTravelled = f;
+
 	}
 
 }

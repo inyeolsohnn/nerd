@@ -41,7 +41,8 @@ public abstract class Lane {
 
 	public abstract float calculateLaneSpan();
 
-	public abstract Point2D.Float nextPosition(Car car, float targetDistance, float distanceTravelled);
+	public abstract Point2D.Float nextPosition(Car car, float targetDistance,
+			float distanceTravelled);
 
 	public float getLaneSpan() {
 		return laneSpan;
@@ -129,7 +130,9 @@ public abstract class Lane {
 			System.out
 					.println("Connection point not found, adding new connection point");
 			cp.addConnection(cn);
-			connectionPoints.put(cp.getPointCoordinate(), cp);
+			connectionPoints.put(
+					new Point2D.Float(((int) cp.getPointCoordinate().x),
+							((int) cp.getPointCoordinate().y)), cp);
 			return true;
 		} else {
 			System.out
@@ -140,9 +143,10 @@ public abstract class Lane {
 			return true;
 		}
 	}
-	public HashMap<Float, ConnectionPoint> getConnectionPoints(){
+
+	public HashMap<Float, ConnectionPoint> getConnectionPoints() {
 		return this.connectionPoints;
 	}
 
-	public abstract void paint(Graphics g) ;
+	public abstract void paint(Graphics g);
 }
