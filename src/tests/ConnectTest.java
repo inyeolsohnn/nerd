@@ -57,7 +57,7 @@ public class ConnectTest {
 		}
 		Car c1 = new Car();
 		c1.setCurrentSpeed(10);
-		c1.enterRoad(sr2);
+		c1.enterLane(sr2.getLanes().get(0), sr2.getLanes().get(0).getStart());
 		while (true) {
 			c1.move();
 			Thread.sleep(20);

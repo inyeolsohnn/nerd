@@ -10,23 +10,24 @@ import java.util.List;
 
 import control.WorldController;
 
-public class Car implements CarI {
+public class Car {
+	private static int carsCreated = 0;
+	private ArrayList<Road> plan = new ArrayList<Road>();
 	private Point2D.Float coordinate;
 	private final int id;
 	private float currentSpeedLimit;
 	private float maxSpeed;
 	private float currentSpeed;
-	private int destinationRoadId;;
-	private int currentRoadId;
-	private ArrayList<Road> plan;
-	private TrafficLight nextTrafficLight;
-	private static int carsCreated = 0;
+
 	private Road currentRoad;
 	private Lane currentLane;
-	private float currentT;
 	private CarWorld cWorld;
 	private float distanceTravelled; // distance travelled on the current road
 										// 0-roadSpan
+	private float changeInSpeed;
+	private float acceleration;
+	private float breaking;
+	private boolean signalled = false;
 
 	public Car() {
 		// dummy constructor for testing
@@ -34,16 +35,15 @@ public class Car implements CarI {
 		carsCreated++;
 	}
 
-	public Car(Point2D.Float coordinate, float maxSpeed, int initialRoadId,
-			int destinationRoadId, CarWorld cWorld) {
+	public Car(Point2D.Float coordinate, float maxSpeed, Lane initialLane,
+			CarPark destinationPark, CarWorld cWorld, Point2D.Float entryPoint) {
 		this.coordinate = coordinate;
 		this.maxSpeed = maxSpeed;
-		this.destinationRoadId = destinationRoadId;
-		this.currentRoadId = initialRoadId;
+		this.enterLane(initialLane, entryPoint);
 		this.id = Car.carsCreated;
 		this.cWorld = cWorld;
 		Car.carsCreated++;
-		plan = WorldController.bfsRoads(currentRoadId, destinationRoadId);
+		plan = Road.bfsParks(currentRoad, destinationPark);
 	}
 
 	public Point2D.Float getCoordinate() {
@@ -78,21 +78,7 @@ public class Car implements CarI {
 		this.currentSpeed = currentSpeed;
 	}
 
-	public int getDestinationId() {
-		return this.destinationRoadId;
-	}
-
-	public void setDestinationId(int destinationId) {
-		this.destinationRoadId = destinationId;
-	}
-
-	public int getCurrentRoadId() {
-		return currentRoadId;
-	}
-
-	public void setCurrentRoadId(int currentRoadId) {
-		this.currentRoadId = currentRoadId;
-	}
+	
 
 	public Lane getCurrentLane() {
 		return currentLane;
@@ -102,155 +88,113 @@ public class Car implements CarI {
 		this.currentLane = currentLane;
 	}
 
-	@Override
-	public void accelerate() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void decelerate() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void enterRoad(Road road) {
-		/*
-		 * 
-		 * Iterator<Lane> laneIter = ((List<Road>) road.getLanes()).iterator();
-		 * while (laneIter.hasNext()) { Lane otherLane = laneIter.next(); if
-		 * (Lane.isConnected(this.currentLane, otherLane)) { currentRoad = road;
-		 * currentLane = otherLane; currentT = 0; } }
-		 */
-
-		this.setCurrentRoadId(road.getId());
-		// currently arbitrarily chosen lane entered
-
-		if (!(road instanceof RoundRoad)) {
-			HashMap<Integer, Lane> laneMap = road.getLanes();
-			Lane basicLane = laneMap.get(0);
-			this.enterLane(basicLane, basicLane.getStart());
-		} else {
-			System.out.println("Car enters roundabout");
-			HashMap<Integer, Lane> laneMap = road.getLanes();
-			RoundAbout basicLane = (RoundAbout) laneMap.get(0);
-			this.enterLane(basicLane, new Point2D.Float(basicLane.getStart().x
-					- basicLane.getRadius(), basicLane.getStart().y));
-		}
-
-	}
 
 	public void enterLane(Lane lane, Point2D.Float entryPoint) {
 		this.currentLane = lane;
+		this.currentRoad= lane.getRoad();
+		lane.carEnters(this);
 		this.coordinate = entryPoint;
 		System.out.println("Entry lane point: " + entryPoint);
 		// car entering a lane logic
 	}
 
 	public void move() {
+		// ///Initial Belief section//////
+		float currS = this.currentSpeed;
+		Car frontCar = this.currentLane.getFrontCar(this);
+		Car tailCar = this.currentLane.getTailCar(this);
+		boolean onCourse = checkCourse();
+		// ////Initial Beleif section/////
+
+		// if oncourse & acceptable speed//
+		// -> keep this state-> just move along
+
+		// if unacceptable speed: ; and on course//
+		// ->if due to front car; if not just increase the speed till due to
+		// ->if canOverTake (checks gaps: allowed distance infront of the front
+		// car, allowed gap in side lane)-> change lane
+
+		// if !onCourse-> change lane: requires checking where to change to and
+		// if it can change,
 
 		if (this.currentSpeed == 0) {
 			System.out.println("Car is not moving");
 		} else {
-			boolean speedUp = false;
-			if (speedUp) {
-				/** speed up meta level control **/
+			float speedChange = checkSpeedChange();
+			if (speedChange != 0) {
+
 			}
 			float tempDistance = this.currentSpeed * 0.02f;
-			System.out.println("Temp distance: " + tempDistance);
-			boolean isObstacle = this.checkObstacles();
-			if (isObstacle) {
-				// appropriate reaction to obstacle required
-				/**
-				 * obstacle can include other cars in vicinity -> that are
-				 * currently in that's connected to the road the car is on ( if
-				 * straight distance is below certain value obstacle detected)
-				 **/
-				/**
-				 * obstacle can also be traffic lights that are currently red
-				 * and stopping signs(connection points) -> requires appropriate
-				 * logic added
-				 **/
 
-				/** work in progress reaction to obstacles */
+			Point2D.Float nextPosition = this.currentLane.nextPosition(this,
+					tempDistance, this.distanceTravelled);
+			Point2D.Float nextDisplacement = new Point2D.Float(
+					Math.abs(nextPosition.x - this.coordinate.x),
+					Math.abs(nextPosition.y - this.coordinate.y));
+			/*
+			 * System.out.println("From car, next displacement: " +
+			 * nextDisplacement);
+			 */
+			Point2D.Float dToEnd = new Point2D.Float(Math.abs(currentLane
+					.getEnd().x - this.getCoordinate().x), Math.abs(currentLane
+					.getEnd().y - this.getCoordinate().y));
+			/*
+			 * System.out.println("From car, dte: " + dToEnd);
+			 * System.out.println(this.currentLane.getClass().getName());
+			 */
+
+			if (!(this.currentLane instanceof RoundAbout)
+					&& (dToEnd.x < nextDisplacement.x || dToEnd.y < nextDisplacement.y)) {
+				this.coordinate = this.currentLane.getEnd(); // reached the
+																// end
+																// of the
+																// lane
+																// additional
+																// appropriate
+																// logic
+																// required
+				/*
+				 * System.out
+				 * .println("Car has reached the end of it's current lane");
+				 */
+				this.setCurrentSpeed(0);
 			} else {
-				Point2D.Float nextPosition = this.currentLane.nextPosition(
-						this, tempDistance, this.distanceTravelled);
-				Point2D.Float nextDisplacement = new Point2D.Float(
-						Math.abs(nextPosition.x - this.coordinate.x),
-						Math.abs(nextPosition.y - this.coordinate.y));
-				/*
-				 * System.out.println("From car, next displacement: " +
-				 * nextDisplacement);
-				 */
-				Point2D.Float dToEnd = new Point2D.Float(Math.abs(currentLane
-						.getEnd().x - this.getCoordinate().x),
-						Math.abs(currentLane.getEnd().y
-								- this.getCoordinate().y));
-				/*
-				 * System.out.println("From car, dte: " + dToEnd);
-				 * System.out.println(this.currentLane.getClass().getName());
-				 */
-				if (this.currentLane.getConnectionPoints().size() == 0) {
-					System.out.println("no connection");
-				} else {
-					if (!(currentLane.getConnectionPoints().get(
-							new Point2D.Float((int) this.coordinate.x,
-									(int) this.coordinate.y)) == null)) {
-						System.out.println("connection found");
-						System.exit(1);
-					}
-				}
-				if (!(this.currentLane instanceof RoundAbout)
-						&& (dToEnd.x < nextDisplacement.x || dToEnd.y < nextDisplacement.y)) {
-					this.coordinate = this.currentLane.getEnd(); // reached the
-																	// end
-																	// of the
-																	// lane
-																	// additional
-																	// appropriate
-																	// logic
-																	// required
-					/*
-					 * System.out
-					 * .println("Car has reached the end of it's current lane");
-					 */
-					this.setCurrentSpeed(0);
-				} else {
-					this.coordinate = nextPosition;
-					System.out.println("New Position: " + this.coordinate);
+				this.coordinate = nextPosition;
+				System.out.println("New Position: " + this.coordinate);
+			}
+			// taking connection point logic
+			if (this.currentLane.getConnectionPoints().size() == 0) {
+				System.out.println("no connection");
+			} else {
+				if (!(currentLane.getConnectionPoints().get(
+						new Point2D.Float((int) this.coordinate.x,
+								(int) this.coordinate.y)) == null)) {
+					System.out.println("connection found");
+
+					this.setCoordinate(new Point2D.Float(
+							(int) this.coordinate.x, (int) this.coordinate.y));
+
 				}
 			}
 		}
 	}
 
-	private boolean checkObstacles() {
+	private boolean checkCourse() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public int getId() {
+	private float checkSpeedChange() {
 		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getId() {
 		return this.id;
-	}
-
-	public void update() {
-
-	}
-
-	public float getT() {
-		return this.currentT;
 	}
 
 	public void setTravelled(float f) {
 		this.distanceTravelled = f;
-
 	}
 
 }

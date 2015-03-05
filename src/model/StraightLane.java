@@ -9,8 +9,8 @@ public class StraightLane extends Lane {
 	private int noPoints;
 
 	public StraightLane(Point2D.Float startingPoint, Point2D.Float endPoint,
-			int id) {
-		super(startingPoint, endPoint, id);
+			Road cRoad, CarWorld cWorld) {
+		super(startingPoint, endPoint, cRoad, cWorld);
 		this.setLaneSpan(calculateLaneSpan());
 	}
 

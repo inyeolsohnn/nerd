@@ -18,8 +18,8 @@ public class StraightRoad extends Road {
 	// center line
 
 	public StraightRoad(Point2D.Float startingPoint, Point2D.Float endingPoint,
-			int numAddLane, int numSubLane) {
-		super(Road.STRAIGHT_LANE);
+			int numAddLane, int numSubLane, CarWorld world) {
+		super(Road.STRAIGHT_LANE, world);
 		this.startingPoint = startingPoint;
 		this.endingPoint = endingPoint;
 		setUpLanes(startingPoint, endingPoint, numAddLane, numSubLane);
@@ -72,7 +72,7 @@ public class StraightRoad extends Road {
 			Point2D.Float newEnd = new Point2D.Float(endingPoint.x
 					+ halfScaled.x + scaledPerpen.x * i, endingPoint.y
 					+ halfScaled.y + i * scaledPerpen.y);
-			Lane newStraight = new StraightLane(newStart, newEnd, this.roadId);
+			Lane newStraight = new StraightLane(newStart, newEnd, this, this.getWorld());
 			this.lanes.put(laneNumber, newStraight);
 		}
 
@@ -86,7 +86,7 @@ public class StraightRoad extends Road {
 			Point2D.Float newEnd = new Point2D.Float(startingPoint.x
 					- halfScaled.x - i * scaledPerpen.x, startingPoint.y
 					- halfScaled.y - i * scaledPerpen.y);
-			Lane newStraight = new StraightLane(newStart, newEnd, this.roadId);
+			Lane newStraight = new StraightLane(newStart, newEnd, this, this.getWorld());
 			this.lanes.put(laneNumber, newStraight);
 		}
 

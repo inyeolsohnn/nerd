@@ -8,12 +8,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Lane {
+
+	
 	private static final float SMALL_NUM = (float) 0.00000001;
+
 	private int laneId; // its id
-	private int roadId; // id of the road it belongs to
+	private Road contained;
 	protected float laneSpan;
 	private HashMap<Point2D.Float, ConnectionPoint> connectionPoints = new HashMap<Point2D.Float, ConnectionPoint>();
 	private HashMap<Integer, Car> carsInLane = new HashMap<Integer, Car>();
+	private HashMap<Integer, CarPark> parks = new HashMap<Integer, CarPark>();
+	private CarWorld world;
 	protected Point2D.Float startPoint;
 	protected Point2D.Float endPoint;
 
@@ -22,19 +27,16 @@ public abstract class Lane {
 	// store traffic lights that belong to this lane.
 	private ArrayList<TrafficLight> trafficLights = new ArrayList<TrafficLight>();
 
-	// at the index of roadID, store lanes if there are any lanes connected to
-	// current lane belonging to that specific road.
-	private ArrayList<ArrayList<Lane>> connected = new ArrayList<ArrayList<Lane>>();
-
 	public Lane() {
 		// for special lanes
 	}
 
-	public Lane(Point2D.Float start, Point2D.Float end, int roadId) {
+	public Lane(Point2D.Float start, Point2D.Float end, Road cRoad, CarWorld cWorld) {
 		this.startPoint = start;
 		this.endPoint = end;
-		this.roadId = roadId;
+		this.contained = cRoad;
 		this.laneId = lanesCreated;
+		this.world=cWorld;
 		lanesCreated++;
 
 	}
@@ -52,21 +54,12 @@ public abstract class Lane {
 		return this.laneId;
 	}
 
-	public int getRoadId() {
-		return this.roadId;
+	public Road getRoad() {
+		return this.contained;
 	}
 
 	public final void setLaneSpan(float laneSpan) {
 		this.laneSpan = laneSpan;
-	}
-
-	public boolean isInLane(Car car) { // checks if car's movement is
-										// legal(conforms to the
-										// shape(functional representation) of
-										// its current lane
-		// todo
-
-		return false;
 	}
 
 	// in case of roundabout this will return center point
@@ -86,7 +79,17 @@ public abstract class Lane {
 
 	}
 
+	public void addCarPark(int type) {
+		CarPark newPark= new CarPark(this, type, this.world);
+		parks.put(newPark.getId(), newPark);
+	}
+
+	public void update() {
+		// update car parks, and traffic lights belonging to this lane
+	}
+
 	public TrafficLight getNextTrafficLight(Car car) {
+		// not yet implemented
 		Point2D.Float carPos = car.getCoordinate();
 		return null;
 	}
@@ -149,4 +152,26 @@ public abstract class Lane {
 	}
 
 	public abstract void paint(Graphics g);
+
+	public void carEnters(Car car) {
+		// TODO Auto-generated method stub
+		int carId = car.getId();
+		carsInLane.put(carId, car);
+
+	}
+
+	public void carLeavs(Car car) {
+		carsInLane.remove(car.getId());
+	}
+
+	public Car getFrontCar(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Car getTailCar(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

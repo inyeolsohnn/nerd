@@ -18,28 +18,16 @@ public class WorldController {
 	private CarWorld cWorld; // core model
 	private JFrame carView; // JFrame
 
-	public WorldController(JFrame frame, CarWorld cWorld) {
-		this.carView = frame;
-		this.cWorld = cWorld;
-		((CarSimView) frame).setController(this);
-
+	public WorldController() {
+	
+		this.cWorld = this.createWorld();
 		
-		frame.setSize(cWorld.getWidth(), cWorld.getHeight());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationByPlatform(true);
-		frame.setVisible(true);
-
 	}
 
 	public CarWorld getcWorld() {
 		return cWorld;
 	}
-
-	public void addRoad(Road road) throws UnknownConnectionError{
-		cWorld.addRoad(road);
-		cWorld.connectRoads();
-		//******call to connection network logic required here*********//
-	}
+	
 	public void setcWorld(CarWorld cWorld) {
 		this.cWorld = cWorld;
 	}
@@ -54,24 +42,31 @@ public class WorldController {
 	}
 
 	public void pause() {
-		this.cWorld.setStatus(false);
+		this.cWorld.setStatus("paused");
 	}
 
 	public void start() {
-		this.cWorld.setStatus(true);
+		this.cWorld.setStatus("running");
+	}
+	public void exit(){
+		this.cWorld.setStatus("exit");
 	}
 
 	// program loop
 	public void simulate() throws InterruptedException {
+		
 		while (true) {
-			if (cWorld.getStatus() == true) {
+			if (cWorld.getStatus().equals("running")) {
 				update();
 				render();
 				Thread.sleep(20); // the timing mechanism
 									// needs improvement
 			}
-			if (cWorld.getStatus() == false) {
+			else if (cWorld.getStatus().equals("paused")) {
 				Thread.sleep(20);
+			}
+			else if(cWorld.getStatus().equals("exit")){
+				return;
 			}
 		}
 	}
@@ -87,7 +82,7 @@ public class WorldController {
 	}
 
 	private void update() {
-		System.out.println("updated");
+		System.out.println("updating everything in the world");
 		ArrayList<Car> cars = getCars();
 		ArrayList<Road> roads = getRoads();
 		
@@ -98,20 +93,37 @@ public class WorldController {
 		this.carView.repaint();
 
 	}
+	
+	
+	
 
-	public static ArrayList<Road> bfsRoads(int currentRoadId,
-			int destinationRoadId) {
+	public static ArrayList<Road> bfsRoads(Road road,
+			Road destinationRoad) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	//example case setup
 	public void setTJunction(){
+		//construct the world with road network
+		this.cWorld.setStatus("paused");
+		this.cWorld.flush();
+		//add new roads and such
+		
 		
 	}
 	
 	public void setRoundAbout(){
-		
+		//first construct the world with road network
+	
 	}
-
+	public CarWorld createWorld(){
+		if(this.cWorld==null){
+			CarWorld world= new CarWorld();
+			this.cWorld=world;
+			return cWorld;
+		}else{
+			return this.cWorld;
+		}
+	}
 }
