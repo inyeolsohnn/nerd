@@ -12,8 +12,8 @@ public class RoundRoad extends Road {
 	// centerPoint= center point of the roundabout
 	// radius= radius of center circle
 	// numLanes= number of lanes in the roundabout
-	public RoundRoad(Point2D.Float centerPoint, int radius, int numLanes) {
-		super(1);
+	public RoundRoad(Point2D.Float centerPoint, int radius, int numLanes, CarWorld world) {
+		super(1, world);
 		// TODO Auto-generated constructor stub
 		setUpLanes(centerPoint, radius, numLanes);
 		Iterator it = this.lanes.entrySet().iterator();
@@ -30,7 +30,7 @@ public class RoundRoad extends Road {
 		int firstRadius = radius + 15;
 		for (int i = 0; i < numLanes; i++) {
 			Lane ra = new RoundAbout(centerPoint, firstRadius + (i * 30),
-					this.roadId);
+					this, this.getWorld());
 			this.lanes.put(i, ra);
 		}
 

@@ -28,10 +28,11 @@ public abstract class Road {
 	public static final int ROUNDABOUT = 1;
 	public static final int CURVE = 2;
 	protected HashMap<Integer, Lane> lanes = new HashMap<Integer, Lane>();
+	private CarWorld world;
 	private boolean bilateral;
 	private static final int[][] perpenMat = new int[][] { { 0, -1 }, { 1, 0 } };
 
-	public Road(int roadType) {
+	public Road(int roadType, CarWorld cWorld) {
 		this.roadId = roadsCreated;
 		roadsCreated++;
 		this.roadType = roadType;
@@ -64,7 +65,7 @@ public abstract class Road {
 	}
 
 	public void update() {
-
+		//update all lanes belonging to this road
 	}
 
 	public int getType() {
@@ -659,5 +660,14 @@ public abstract class Road {
 
 	}
 	/****************************/
-
+	public static ArrayList<Road> bfsParks(Road currentRoad,
+			CarPark destinationPark) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public CarWorld getWorld(){
+		return this.world;
+	}
+	
 }

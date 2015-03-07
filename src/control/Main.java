@@ -9,12 +9,16 @@ import view.CarSimView;
 public class Main {
 	public static void main(String[] args) {
 
-		CarWorld cWorld = new CarWorld();
-		JFrame frame = new CarSimView("carSim");
-		WorldController wControl = new WorldController(frame, cWorld);
+		WorldController wControl = new WorldController();
+		JFrame frame = new CarSimView("carSim", wControl);
+		wControl.setView(frame);
+		
+		CarWorld cWorld=wControl.createWorld();
 		RoadController rControl = new RoadController(frame, cWorld);
+		
 		try {
 			wControl.simulate();
+		((CarSimView) frame).mainMenu();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

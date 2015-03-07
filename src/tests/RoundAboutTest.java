@@ -13,7 +13,7 @@ public class RoundAboutTest {
 		Road ra = new RoundRoad(new Point2D.Float(100, 100), 20, 1);
 		Car c1 = new Car();
 		c1.setCurrentSpeed(10);
-		c1.enterRoad(ra);
+		c1.enterLane(ra.getLanes().get(0), new Point2D.Float(65f, 100f));
 		while (true) {
 			c1.move();
 			Thread.sleep(20);

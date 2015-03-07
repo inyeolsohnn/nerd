@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class CarWorld {
-	private boolean status = false;
+	private String status = "paused";
 	private int height;
 	private int width;
 	private ArrayList<Road> roads = new ArrayList<Road>();
@@ -49,18 +49,29 @@ public class CarWorld {
 				+ cars.size();
 	}
 
-	public void setStatus(boolean b) {
-		this.status = b;
+	public void setStatus(String s) {
+		this.status = s;
 
 	}
 
-	public boolean getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
 	public ArrayList<Car> getCars() {
 		// TODO Auto-generated method stub
 		return cars;
+	}
+
+	public Road getRoad(int roadId) {
+		Road tRoad = null;
+		for (int i = 0; i < roads.size(); i++) {
+			Road cRoad = roads.get(i);
+			if (cRoad.getId() == roadId) {
+				tRoad = cRoad;
+			}
+		}
+		return tRoad;
 	}
 
 	public ArrayList<Road> getRoads() {
@@ -112,6 +123,13 @@ public class CarWorld {
 			}
 		}
 
+	}
+
+	public void flush() {
+		roads=new ArrayList<Road>();
+		cars=new ArrayList<Car>();
+		// TODO Auto-generated method stub
+		
 	}
 
 }

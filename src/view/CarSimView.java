@@ -22,99 +22,52 @@ import model.Road;
 import model.TrafficLight;
 import control.WorldController;
 
-public class CarSimView extends JFrame implements ActionListener {
+public class CarSimView extends JFrame  {
 
 	private Container mainContainer;
-	private WorldController wController;
+	private WorldController wControl;
 	private JButton stopButton, startButton;
+	private MainMenu mainMenu;
+	private SimulationPanel simPanel;
 
-	public CarSimView(String title ) {
+	public CarSimView(String title, WorldController wControl) {
 		super(title);
 		mainContainer = this.getContentPane();
-		FlowLayout experimentLayout = new FlowLayout();
-		this.setLayout(experimentLayout);
+		this.wControl=wControl;
+		simPanel= new SimulationPanel(this.wControl, this);
+		mainMenu= new MainMenu(this.wControl, this);
 		
-		stopButton = new JButton("STOP");
-		stopButton.addActionListener(this);
-		startButton = new JButton("Start");
-		startButton.addActionListener(this);
-		this.add(stopButton);
-		this.add(startButton);
+		
+		
+		this.setSize(1280, 960);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationByPlatform(true);
+		this.setVisible(true);
 
+		mainContainer.removeAll();
+		mainContainer.add(mainMenu);
 	}
 	
-	public void setController(WorldController controller) {
-		this.wController = controller;
-		mainContainer.add(new simulationPanel(controller)); 
+	
 
+	public void mainMenu() {
+		// TODO Auto-generated method stub
+		//change panel  main menu
+		mainContainer.removeAll();
+		mainContainer.add(mainMenu);
+		mainContainer.revalidate();
+		mainContainer.repaint();
+		
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == stopButton) {
-			this.wController.pause();
-		} else if (e.getSource() == startButton) {
-			this.wController.start();
-		}
-	}
-	
-	class simulationPanel extends JPanel implements MouseListener {
 
-		private WorldController control;
 
-		public simulationPanel(WorldController control) {
-
-			this.control = control;
-
-			//setSize(800, 600);
-			setPreferredSize(new Dimension(1000,800));
-			setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+	public void simulationView() {
+		// TODO Auto-generated method stub
+		mainContainer.removeAll();
+		mainContainer.add(simPanel);
+		mainContainer.revalidate();
+		mainContainer.repaint();
 		
-			this.setPreferredSize(new Dimension(1100,800));
-			this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
-			this.setBackground(Color.WHITE);
-
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-		
-		protected void paintComponent(Graphics g) {
-			ArrayList<Road> roads = control.getRoads();
-			ArrayList<Car> cars = control.getCars();
-		
-	
-
-		}
-
-	
-
 	}
 }
