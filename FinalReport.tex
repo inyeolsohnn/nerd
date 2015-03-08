@@ -40,7 +40,8 @@
 	\newpage
 	\section{Introduction} %Introduce project and aim 
 	%Describe the context for the work and the problem you are addressing. Briely summarise what you achieved in the project
-	The intention of this report is to present and demonstrate the progression, development and overall outcome of the Traffic Simulation application created. The report is structured into 11 sections each with a purpose to provide further understanding into the steps taken throughout the project as a whole. 
+Working together as a team NERD the aim of this project was to succsessful develop a traffic simulation system. The intention of this report is to present and demonstrate the progression, development and overall outcome of the Traffic Simulation application created and how our approach compares to the simulators currently avaliable. 
+The report is structured into 11 sections, each with a purpose to provide further understanding into the steps taken throughout the project as a whole. 
 	\\ This first section is an introduction to the whole project and provides an understanding of what is to be expected throughout the entire report. The second section discusses the requirements needed for the project to be deemed successful and appropriate for the cause to fit what is needed. Section three looking into the different existing systems and how the system we are developing is different and any challenges brought about based upon what exists already. Section four discusses the system design including a user manual. In the fifth section of the report is discussion on the process of the actual implementation completed by the two main programmers in the team, which includes how prototypes were created and developed into the final application, as well as some discussion on any system design changes that happened. In the sixth section is a full technical evaluation of the system including the methods used to test the system. In the seventh section is a group evaluation of how the team has been organized throughout the project and then a discussion about the work load division, this section should give a clear insight into the team work throughout project. The eighth section of the report is a conclusion of the project as a whole specifically looking at the lessons learned about program development, what we learnt from about group work and lastly how we would progress in the future with the project. The tenth section is simply the bibliography references to sources we used throughout the report and lastly the eleventh section is the appendices of all additional relevant documents such as a group meetings, personal logs, project plans and documents that supported the system design of the application.\\
 	
 	Overall, this introduction should outline what is to be expected throughout the entire and give insight into how the group worked together to successfully create a traffic simulation.
@@ -58,18 +59,17 @@
 	\section{Requirements} %What is needed for the project to be succesful 
 	Our purpose is to develop the traffic simulator related to real traffic system and user requirement . Traffic simulation is a well-established field with several ways to achieve it and gain different feedback.           Considering the group work project as well as peer assessment, we made a initial plan at very beginning quickly based on each member’s specific ability and individual background. After our first meeting, we separate the project with schedules according to agile software development principles. It can be generally described as follow \\
 	\begin{enumerate}[noitemsep]
-	\item	Initiation , analysis and risk management related to requirements that define our project and work to do.  In this case, we need to build a traffic simulate software our own which can also conveniently collect some user requirement and then generate feedback. To be more specific, it means a general map with at least simple straight roads, round roads, cross roads as well as traffic lights and so on.\\
- \item Planning , containing the schedule and priorization of work.
+\item Initiation, analysis and risk management related to requirements that define our project and work to do.  In this case, we need to build a traffic simulate software our own which can also conveniently collect some user requirement and then generate feedback. To be more specific, it means a general map with at least simple straight roads, round roads, cross roads as well as traffic lights and so on.\\
+\item Planning , containing the schedule and priorization of work.
 As our consideration, the round road may be the most difficult and complex part in this project. So we decide to solve this part first while trying to implement crossroads with traffic lights to determine car movements, then the combination of several kinds of roads after complete each part of them successfully. \\ 
-\item	Development, including designing the scope which we need to keep track to, and implementation, porting with verification of each units to make sure the correction and integrating after that. If it can goes well so far, then perform corrective improvement towards the whole system to check all the function.\\
-\item	Deliver the product and final report, which may go through with the progress at first to record everything we need then generate the final paper about our group work software and make peer assessment in this case as needed.
-After setting our first plan.
+\item Development, including designing the scope which we need to keep track to, and implementation, porting with verification of each units to make sure the correction and integrating after that. If it can goes well so far, then perform corrective improvement towards the whole system to check all the function.\\
+\item Deliver the product and final report, which may go through with the progress at first to record everything we need then generate the final paper about our group work software and make peer assessment in this case as needed.
 	\end{enumerate}
+After setting our first plan.
 
-
-	\section{Related Work} %Examples of systems and dicussion of them compared to what we are creating.
+\section{Related Work} %Examples of systems and dicussion of them compared to what we are creating.
 	
-	History: 
+	\textbf{History:} 
 in the past years traffic simulation models played a very important role in the performance and facilities of the road traffic. the simulation traffic models can be used in many road development process.
 Only in the United Kingdom vehicle traffic has been in a rise to 2.1 per cent comparing to the previous year 2014, the government figures shown that 310.2 billions miles for the travelled vehicles in all the road in the United Kingdom only in year 2014.  
 Some initial government reports shows that the increased traffic raised in a four areas like services, manufacturing, production and construction. only in year 2014, that was a growth comparing to the previous year 2013.
@@ -79,7 +79,7 @@ U.K Traffic Congestion
 Traffic congestion has been always a big problem on the roads of many countries, almost the whole world. 
 
 
-Current: 
+	\textbf{Current:} 
 The current technologies has considered many aspects like ;
 
 speed: the street maximum speed, speed between cars. 
@@ -89,13 +89,24 @@ Traffic Flow control: for ramps and round about, and any intersection.
 
 But the nobody has brought any idea about if the traffic flow has increased or any future upgrade like connecting the current roads with a new route. the new system should have these important strategies to help improve congestion 
 Measuring Traffic Flow: many researchers have been trying to find a good ways of measuring traffic flows as it’s very important because if we able to measure the traffic flow that would be very useful and would enable us to predict any traffic congestion and how to avoid it and find another routes. 
-	\section{System Design}
-	\subsection{Work Cycle}
-	\subsection{User Manual}
+	\section{System Design} %All the design things completed before like usecase blah blah etc..
+	\subsection{User Manual}% How it works with the user
 	\section{Implementation} %Above sections can be completed for now when it gets to implementation contribution from programmers will be needed
-	This section shall present the implementation steps taken to create our application. 
+This section of the of the report shall dicuss the implementation of the car simulation, it will begin dicussing the initial prototypes that were developed and a tehncical dicussion of the final implmented system. 
+	\subsection{Prototype Initial Development}
+This section shall present the implementation steps taken to create our application, initially 
 	%Protypes developed first then modelled into correct OOP -- most signficant concern was road developement - mention plan. 
-	
+\\
+As dicussed within the requirments section of the report we used an aigle development process before dicussing how the final implementation its important to illustrate the three protoypes of road development we created. This was done because after udnerstanding the general requirements for the proejcto to be successful we found that road development was our main concern therefore approached the project by taking the most essential aspect to the system are the roads. Therefore one of the programmers worked on developmenting quick prototypes which as a group we dicussed and then moved on to final developments.\\
+Our first concern was the roundabout prototype...\\
+%Image of the system here
+Our second concern was...\\
+%Image of the system here
+Our third concern of basic traffic light developmenet...\\
+%Image of the system here
+\\
+Following on from this section, shall continue to dicuss the final implemention fo the system based and how these prototypes were able to aid it..
+	\subsection{Final Development}
 	\textbf{Road Development}\\
 	%Talk about the three types of roads -- Straight, Curve, Roundabout.
 	\textbf{Traffic Light}\\
@@ -125,19 +136,18 @@ Measuring Traffic Flow: many researchers have been trying to find a good ways of
 	Initially we thought we may not need a lot of space for control panel but through discussion and prototype developments we changed the control panel from being at the bottom of the screen to the left. 
 	
 	\section{Evaluation} %Technical Evaluation of the system
+	%Include a comparsion table for what our system can do compared to one metioned in related work
 	\subsection{Testing} %How we tested the program (e.g Black/White Box)
 	\section{Group Dicussion}
 	\subsection{Team Organisation} %How each member contributed to the project and how the workload was divided 
-	Effective team organisation was essential to the success of the project. This section shall outline how each member contributed to the project and how the workload was divided among the members. 
-	
-	After initial planning and understanding of the project about the project we began to have discussions about the roles of each member and how they could contribute. This lead to the group being split into two teams. The first team are the programmers, Inyeol and Jie were the most experienced and most comfortable programmers. Jie would develop prototypes which Inyeol would then develop into object orientated programming, this process worked well because as prototypes were developed early and presented to all group members we were all up to date with the progress of the implementation of the system and make changes and alterations when need be. 
-	The second team was Tanda, Qiu and Mark working as system analysts in charge of all documentation and research.
-	Tanda as project coordinator worked to ensure that these two teams although separate would remain in constant communication during meetings or online. Thus meaning that system analysts would always know the progress of the programmers and with this be able to understand what the programmers are doing to write the final report . \\
+	Effective team organisation was essential to the success of the project. This section shall outline how each member contributed to the project and how the workload was divided among the members. \\
+	After initial planning and understanding of the project about the project we began to have discussions about the roles of each member and how they could contribute. This lead to the group being split into two teams. The first team are the programmers, Inyeol and Jie were the most experienced and most comfortable programmers. Jie would develop prototypes which Inyeol would then develop into object orientated programming, this process worked well because as prototypes were developed early and presented to all group members we were all up to date with the progress of the implementation of the system and make changes and alterations when need be. \\
+The second team was Tanda, Qiu and Mark working as system analysts in charge of all documentation and research. Tanda as project coordinator worked to ensure that these two teams although separate would remain in constant communication during meetings or online. Thus meaning that system analysts would always know the progress of the programmers and with this be able to understand what the programmers are doing to write the final report . \\
 	\textbf{Work Load Division:}\\ 
 	The work load...
 	
 	We hope this section has given evidence of the contribution of each member of the group and showed how we worked together to complete the project. 
-	\section{Conclusion}
+	\section{Conclusion} % on the project
 	\subsection{Lessons Learned} 
 	\textbf{Program Development Lessons Learned:}\\ %Dicussion on the implementation
 	
@@ -281,7 +291,21 @@ Measuring Traffic Flow: many researchers have been trying to find a good ways of
 			Outcome: & Qiu and Mark know how to add to the final report via Github and continuing to actively work on the report. Inyeol, Jie and Tanda working together to begin developing the View. The Traffic Light prototype created by Tanda and Jie needs to be adjusted to suit the final system. \\  \hline
 			\multicolumn{2}{ c}{} \\
 			\hline
-			\multicolumn{2}{ |l|}{ \textbf{Meeting 15}} \\  \hline
+			\multicolumn{2}{ |l|}{ \textbf{Meeting 16}} \\  \hline
+			Date: & 06/03/2015 (1pm) \\  \hline
+			Attendance: & Mark, Qiu, Inyeol, Jie, Tanda \\ \hline
+			Duration: &  30 Minutes\\  \hline
+			Agenda: & \\ Enforce the contribution from system anaylst to the final report and dicuss previous deadline set out for the report. Programmers present the progression of the system and how the view is coming along.\hline
+			Outcome: & On Monday should have a more complete introduction, requirments and related work section, programming of the view should have progressed.\\  \hline
+			\hline
+			\multicolumn{2}{ |l|}{ \textbf{Meeting 17}} \\  \hline
+			Date: & 02/03/2015 (3pm) \\  \hline
+			Attendance: & \\ \hline
+			Duration: &  \\  \hline
+			Agenda: & \\ \hline
+			Outcome: & \\  \hline
+			\hline
+			\multicolumn{2}{ |l|}{ \textbf{Meeting 18}} \\  \hline
 			Date: & 02/03/2015 (3pm) \\  \hline
 			Attendance: & \\ \hline
 			Duration: &  \\  \hline
