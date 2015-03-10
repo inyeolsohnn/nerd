@@ -1,8 +1,10 @@
 package view;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -25,7 +27,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		this.add(roundButton);
 		this.add(interButton);
 		this.add(fullSimulation);
-
+	
 	}
 
 	@Override

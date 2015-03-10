@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -27,23 +28,23 @@ class SimulationPanel extends JPanel implements ActionListener {
 		this.control = control;
 		this.mainFrame=mainFrame;
 
-		//setSize(800, 600);
-		FlowLayout experimentLayout = new FlowLayout();
-		this.setLayout(experimentLayout);
+		//setSize(500, 500);
+		BorderLayout borderLayout = new BorderLayout();
+		//FlowLayout experimentLayout = new FlowLayout();
+		this.setLayout(borderLayout);
 		
-		stopButton = new JButton("STOP");
-		stopButton.addActionListener(this);
-		startButton = new JButton("Start");
-		startButton.addActionListener(this);
-		returnButton= new JButton("Return");
-		this.add(stopButton);
-		this.add(startButton);
-		this.add(returnButton);
-		returnButton.addActionListener(this);
-		setPreferredSize(new Dimension(1280,800));
-		setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+		//stopButton = new JButton("STOP");
+		//stopButton.addActionListener(this);
+		//startButton = new JButton("Start");
+		//startButton.addActionListener(this);
+		//returnButton= new JButton("Return");
+		//this.add(stopButton);
+		//this.add(startButton);
+		//this.add(returnButton);
+		//returnButton.addActionListener(this);
+		//setPreferredSize(new Dimension(500,500));
 	
-		this.setPreferredSize(new Dimension(1100,800));
+		this.setPreferredSize(new Dimension(980,740));
 		this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
 		this.setBackground(Color.WHITE);
 
