@@ -41,6 +41,7 @@
 	\section{Introduction} %Introduce project and aim 
 	%Describe the context for the work and the problem you are addressing. Briely summarise what you achieved in the project
 Working together as a team NERD the aim of this project was to succsessful develop a traffic simulation system. The intention of this report is to present and demonstrate the progression, development and overall outcome of the Traffic Simulation application created and how our approach compares to the simulators currently avaliable. 
+Roads exist and at time can not be changed or model to suit the intetion, what needs to happen is for 'reearchs' to find the most optimal way to use traffic lights to support the flow of cars efficelty, this is our aim for the project and the concept we will be working towards through this project. 
 The report is structured into 11 sections, each with a purpose to provide further understanding into the steps taken throughout the project as a whole. 
 	\\ This first section is an introduction to the whole project and provides an understanding of what is to be expected throughout the entire report. The second section discusses the requirements needed for the project to be deemed successful and appropriate for the cause to fit what is needed. Section three looking into the different existing systems and how the system we are developing is different and any challenges brought about based upon what exists already. Section four discusses the system design including a user manual. In the fifth section of the report is discussion on the process of the actual implementation completed by the two main programmers in the team, which includes how prototypes were created and developed into the final application, as well as some discussion on any system design changes that happened. In the sixth section is a full technical evaluation of the system including the methods used to test the system. In the seventh section is a group evaluation of how the team has been organized throughout the project and then a discussion about the work load division, this section should give a clear insight into the team work throughout project. The eighth section of the report is a conclusion of the project as a whole specifically looking at the lessons learned about program development, what we learnt from about group work and lastly how we would progress in the future with the project. The tenth section is simply the bibliography references to sources we used throughout the report and lastly the eleventh section is the appendices of all additional relevant documents such as a group meetings, personal logs, project plans and documents that supported the system design of the application.\\
 	
@@ -96,13 +97,18 @@ This section of the of the report shall dicuss the implementation of the car sim
 	\subsection{Prototype Initial Development}
 This section shall present the implementation steps taken to create our application, initially 
 	%Protypes developed first then modelled into correct OOP -- most signficant concern was road developement - mention plan. 
+	\\Basically, Using Java Graphics to draw the basic prototype, such as car model, different types of road model and traffic light model etc.
 \\
 As dicussed within the requirments section of the report we used an aigle development process before dicussing how the final implementation its important to illustrate the three protoypes of road development we created. This was done because after udnerstanding the general requirements for the proejcto to be successful we found that road development was our main concern therefore approached the project by taking the most essential aspect to the system are the roads. Therefore one of the programmers worked on developmenting quick prototypes which as a group we dicussed and then moved on to final developments.\\
 Our first concern was the roundabout prototype...\\
+%TO BE EDDITED
 %Image of the system here
-Our second concern was...\\
+Roundabout Road Model is one of the basic road types in our system, the model needs to be created by several parameters: Center Point coordination, the radius and the numbers of roundabout lanes (which express how many inner circles are in the roundabout road). For the movement on the roundabout road, we calculate the next position coordination of the car by the changes of angles. And then repaint the car all the time.
+The simplistic concern \\
+Choose the rectangle to present a single car model. Using graphics. drawPolygon rather than graphics.drawRect to draw a rectangle, since cars have multiple moving choices such as going straight or turning direction (which means rotating in our system). Hence, we use four points coordination to draw a car model instead of the width and length.
 %Image of the system here
 Our third concern of basic traffic light developmenet...\\
+The traffic light would be painted and assigned by several parameters: the lane it belongs, the current color, the green interval, the red interval and the coordination of the traffic light. The interval may be modified by users interfaces provided by the system.
 %Image of the system here
 \\
 Following on from this section, shall continue to dicuss the final implemention fo the system based and how these prototypes were able to aid it..
@@ -295,7 +301,7 @@ The second team was Tanda, Qiu and Mark working as system analysts in charge of 
 			Date: & 06/03/2015 (1pm) \\  \hline
 			Attendance: & Mark, Qiu, Inyeol, Jie, Tanda \\ \hline
 			Duration: &  30 Minutes\\  \hline
-			Agenda: & \\ Enforce the contribution from system anaylst to the final report and dicuss previous deadline set out for the report. Programmers present the progression of the system and how the view is coming along.\hline
+			Agenda: & Enforce the contribution from system anaylst to the final report and dicuss previous deadline set out for the report. Programmers present the progression of the system and how the view is coming along. \\ \hline
 			Outcome: & On Monday should have a more complete introduction, requirments and related work section, programming of the view should have progressed.\\  \hline
 			\hline
 			\multicolumn{2}{ |l|}{ \textbf{Meeting 17}} \\  \hline
