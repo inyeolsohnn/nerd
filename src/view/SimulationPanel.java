@@ -1,66 +1,81 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 
+import model.Car;
+import model.Road;
 import control.WorldController;
 
-public class MainMenu extends JPanel implements ActionListener {
-	JButton tButton, roundButton, interButton, fullSimulation;
-	WorldController wControl;
-	CarSimView mainFrame;
-	JPanel buttonJPanel = new JPanel();
-	JTable table = new JTable(2,2);
-	
-	
+class SimulationPanel extends JPanel implements ActionListener {
 
-	public MainMenu(WorldController wControl, CarSimView mainFrame) {
-		this.wControl = wControl;
-		this.mainFrame = mainFrame;
-		tButton = new CustomJButton("T Junction");
-		roundButton = new CustomJButton("Roundabout");
-		interButton = new CustomJButton("Intersection");
-		fullSimulation = new CustomJButton("Full Simulation");
+	private WorldController control;
+	private CarSimView mainFrame;
+	private JButton stopButton, startButton, returnButton;
+
+	public SimulationPanel(WorldController control, CarSimView mainFrame) {
+
+		this.control = control;
+		this.mainFrame=mainFrame;
+
+		BorderLayout borderLayout = new BorderLayout();
+		//FlowLayout experimentLayout = new FlowLayout();
+		this.setLayout(borderLayout);
 		
-		this.setBorder(BorderFactory.createMatteBorder(2,2, 2, 2,Color.BLACK));
-		buttonJPanel.setBorder(BorderFactory.createMatteBorder(2,2, 2, 2,Color.BLACK));
-		buttonJPanel.setBackground(Color.WHITE);
-		tButton.addActionListener(this);
-		roundButton.addActionListener(this);
-		interButton.addActionListener(this);
-		fullSimulation.addActionListener(this);
-		this.add(buttonJPanel);	
+		//stopButton = new JButton("STOP");
+		//stopButton.addActionListener(this);
+		//startButton = new JButton("Start");
+		//startButton.addActionListener(this);
+		//returnButton= new JButton("Return");
+		//this.add(stopButton);
+		//this.add(startButton);
+		//this.add(returnButton);
+		//returnButton.addActionListener(this);
+		//setPreferredSize(new Dimension(500,500));
+	
+		this.setPreferredSize(new Dimension(980,740));
+		this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+		this.setBackground(Color.WHITE);
 
-		buttonJPanel.add(tButton);
-		buttonJPanel.add(roundButton);
-		buttonJPanel.add(interButton);
-		buttonJPanel.add(fullSimulation);
+	}
+
 
 	
+	protected void paintComponent(Graphics g) {
+		ArrayList<Road> roads = control.getRoads();
+		ArrayList<Car> cars = control.getCars();
+	
+
+
 	}
+
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getSource().equals(tButton)) { //T Junction choosen by user
+		if(e.getSource().equals(returnButton)){
+			this.control.pause();
 			
-			mainFrame.simulationView();
-			wControl.setTJunction();
-		}else if(e.getSource().equals(roundButton)){ //Roundabout example chosen by user
-			mainFrame.simulationView();
-			wControl.setRoundAbout();
-		}else if(e.getSource().equals(interButton)){ //Intersection chooen by user
-			mainFrame.simulationView();
-			//If there views set up for intersecton 
-		}else if(e.getSource().equals(fullSimulation)){ //Full simulation chosen by user. 
-			
+			System.out.println("main menu");
+			mainFrame.mainMenu();
+		}else if(e.getSource().equals(startButton)){
+			this.control.start();
+		}else if(e.getSource().equals(stopButton)){
+			this.control.pause();
 		}
+		
 	}
+
+
+
 }
