@@ -95,15 +95,14 @@ Measuring Traffic Flow: many researchers have been trying to find a good ways of
 	\section{Implementation} %Above sections can be completed for now when it gets to implementation contribution from programmers will be needed
 This section of the of the report shall dicuss the implementation of the car simulation, it will begin dicussing the initial prototypes that were developed and a tehncical dicussion of the final implmented system. 
 	\subsection{Prototype Initial Development}
-This section shall present the implementation steps taken to create our application, initially 
+This section shall present the initial prototype implementation steps taken to create our applicatin. As mentioned the group was very cauious about the the complexity of the road development therefore this was an issue during implementation we wanted to deal with first.  
 	%Protypes developed first then modelled into correct OOP -- most signficant concern was road developement - mention plan. 
-	\\Basically, Using Java Graphics to draw the basic prototype, such as car model, different types of road model and traffic light model etc.
-\\
 As dicussed within the requirments section of the report we used an aigle development process before dicussing how the final implementation its important to illustrate the three protoypes of road development we created. This was done because after udnerstanding the general requirements for the proejcto to be successful we found that road development was our main concern therefore approached the project by taking the most essential aspect to the system are the roads. Therefore one of the programmers worked on developmenting quick prototypes which as a group we dicussed and then moved on to final developments.\\
 Our first concern was the roundabout prototype...\\
+Using Java Graphics (word here) we simply drew different road, car and traffic light models, from these models the programmers then worked to turn them into acutal java objects. 
 %TO BE EDDITED
 %Image of the system here
-Roundabout Road Model is one of the basic road types in our system, the model needs to be created by several parameters: Center Point coordination, the radius and the numbers of roundabout lanes (which express how many inner circles are in the roundabout road). For the movement on the roundabout road, we calculate the next position coordination of the car by the changes of angles. And then repaint the car all the time.
+The most complex road model we dicussed would be a roundabout, the model needs to be created by several parameters: Center Point coordination, the radius and the numbers of roundabout lanes (which express how many inner circles are in the roundabout road). For the movement on the roundabout road, we calculate the next position coordination of the car by the changes of angle with this simply then repaint the car all the time.
 The simplistic concern \\
 Choose the rectangle to present a single car model. Using graphics. drawPolygon rather than graphics.drawRect to draw a rectangle, since cars have multiple moving choices such as going straight or turning direction (which means rotating in our system). Hence, we use four points coordination to draw a car model instead of the width and length.
 %Image of the system here
