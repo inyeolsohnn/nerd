@@ -115,6 +115,8 @@ public class WorldController {
 	
 	public void setRoundAbout(){
 		//first construct the world with road network
+		this.cWorld.setStatus("paused");
+		this.cWorld.flush();
 	
 	}
 	public CarWorld createWorld(){
