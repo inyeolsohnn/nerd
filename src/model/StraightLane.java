@@ -7,7 +7,7 @@ import java.awt.geom.Point2D.Float;
 public class StraightLane extends Lane {
 
 	private int noPoints;
-
+	private static final int[][] perpenMat = new int[][] { { 0, -1 }, { 1, 0 } };
 	public StraightLane(Point2D.Float startingPoint, Point2D.Float endPoint,
 			Road cRoad, CarWorld cWorld) {
 		super(startingPoint, endPoint, cRoad, cWorld);
@@ -44,8 +44,45 @@ public class StraightLane extends Lane {
 
 	@Override
 	public void paint(Graphics g) {
-		// TODO Auto-generated method stub
+		Point2D.Float start = this.getStart();
+		Point2D.Float end = this.getEnd();
+		Point2D.Float halfVector = gethalf(start, end);
+		Point2D.Float p1 = new Point2D.Float(end.x - halfVector.x,
+				end.y - halfVector.y);
+		Point2D.Float p2 = new Point2D.Float(start.x - halfVector.x,
+				start.y - halfVector.y);
+		
+		Point2D.Float p3 = new Point2D.Float(start.x + halfVector.x,
+				start.y+ halfVector.y);
+		Point2D.Float p4 = new Point2D.Float(end.x+ halfVector.x,
+				end.y + halfVector.y);
+		int xpoints[] = {(int)p1.x, (int)p2.x, (int)p3.x, (int)p4.x};
+		int ypoints[] = {(int)p1.y, (int)p2.y, (int)p3.y, (int)p4.y};
+		g.drawPolygon(xpoints, ypoints, 4);
+
 		
 	}
+
+	private Float gethalf(Float start, Float end) {
+		Point2D.Float vector = new Point2D.Float(end.x - start.x, end.y
+				- start.y);
+		
+		float vectorLength = (float) Math.sqrt(Math.pow(vector.x, 2.0)
+				+ Math.pow(vector.y, 2.0));
+		
+		Point2D.Float normalVector = new Point2D.Float(vector.x / vectorLength,
+				vector.y / vectorLength);
+		Point2D.Float perpenVector = new Point2D.Float(normalVector.x
+				* perpenMat[0][0] + normalVector.y * perpenMat[1][0],
+				normalVector.x * perpenMat[0][1] + normalVector.y
+						* perpenMat[1][1]);
+		// System.out.println("Perpen vector: " + perpenVector);
+		Point2D.Float halfScaled = new Point2D.Float(perpenVector.x
+				* Road.roadWidth / 2, perpenVector.y * Road.roadWidth / 2);
+		return halfScaled;
+
+	}
+
+	
 
 }
