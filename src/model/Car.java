@@ -1,14 +1,8 @@
 package model;
 
+import java.awt.Graphics;
 import java.awt.geom.Point2D; //test//
-import java.awt.geom.Point2D.Double;
-import java.awt.geom.Point2D.Float;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
-import control.WorldController;
 
 public class Car {
 	private static int carsCreated = 0;
@@ -196,5 +190,7 @@ public class Car {
 	public void setTravelled(float f) {
 		this.distanceTravelled = f;
 	}
-
+	public void paint(Graphics g){
+		g.drawOval((int)coordinate.x-1, (int)coordinate.y-1, 2, 2);
+	}
 }
