@@ -44,19 +44,20 @@ public class CarSimView extends JFrame  {
 		consolePanel = new ConsolePanel (this.wControl,this);
 		tabbedView = new TabbedView(this.wControl,this, mainContainer);
 		
-		//this.setResizable(false);
+		this.setResizable(false);
 		this.setSize(1280, 830);
 		mainContainer.setBackground(Color.WHITE);
 		consolePanel.setPreferredSize(new Dimension(200,790));
-		tabbedView.setPreferredSize(new Dimension(1000,800));
+		mainMenu.setPreferredSize(new Dimension(1000,790));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		
 		mainContainer.removeAll();
-		//mainContainer.add(mainMenu);
-		mainContainer.add(consolePanel, BorderLayout.WEST);
-		mainContainer.add(tabbedView.tabbedPane, BorderLayout.EAST);
+		mainContainer.add(mainMenu, BorderLayout.CENTER);
+		
+		//mainContainer.add(consolePanel, BorderLayout.WEST);
+		//mainContainer.add(tabbedView.tabbedPane, BorderLayout.EAST);
 	}
 	
 
@@ -75,7 +76,8 @@ public class CarSimView extends JFrame  {
 	public void simulationView() {
 		// TODO Auto-generated method stub
 		mainContainer.removeAll();
-		//mainContainer.add(simPanel);
+		mainContainer.add(simPanel, BorderLayout.CENTER);
+		mainContainer.add(consolePanel, BorderLayout.WEST);
 		mainContainer.revalidate();
 		mainContainer.repaint();
 		
