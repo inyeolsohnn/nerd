@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.util.Date;
 
@@ -13,6 +15,8 @@ public class TrafficLight {
 	private int id;
 	private static int totalLights = 0;
 	private double tempInterval=0.0;
+	private int lightBoxLength = 50;
+	private int lightBoxWidth = 25;
 	// testing stubs
 	public TrafficLight() {
 		this.greenInterval = 100;
@@ -70,7 +74,13 @@ public class TrafficLight {
 	public Lane getLane() {
 		return this.lane;
 	}
-
+	public void paint(Graphics g){
+		if(status.equalsIgnoreCase("green")){
+			 g.setColor(Color.BLACK);
+				g.fillOval((int)coordination.x+5, (int)coordination.x+5, 15, 15);
+				
+		}
+	}
 	public void update() {
 	/*	Date currentDate = new Date();
 		if (currentDate.getTime() - lastChanged.getTime() > interval) {
