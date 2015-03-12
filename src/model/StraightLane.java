@@ -1,6 +1,8 @@
 package model;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
 
@@ -58,6 +60,13 @@ public class StraightLane extends Lane {
 				end.y + halfVector.y);
 		int xpoints[] = {(int)p1.x, (int)p2.x, (int)p3.x, (int)p4.x};
 		int ypoints[] = {(int)p1.y, (int)p2.y, (int)p3.y, (int)p4.y};
+		Graphics2D g2D = (Graphics2D) g;
+        RenderingHints qualityHints = new RenderingHints(
+                                          RenderingHints.KEY_ANTIALIASING,
+                                          RenderingHints.VALUE_ANTIALIAS_ON);
+        qualityHints.put(RenderingHints.KEY_RENDERING,
+                        RenderingHints.VALUE_RENDER_QUALITY);
+        g2D.setRenderingHints(qualityHints);
 		g.drawPolygon(xpoints, ypoints, 4);
 
 		
