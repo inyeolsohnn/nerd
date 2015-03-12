@@ -44,7 +44,7 @@ public class CarSimView extends JFrame  {
 		consolePanel = new ConsolePanel (this.wControl,this);
 		tabbedView = new TabbedView(this.wControl,this, mainContainer);
 		
-		this.setResizable(false);
+		this.setResizable(true);
 		this.setSize(1280, 830);
 		mainContainer.setBackground(Color.WHITE);
 		consolePanel.setPreferredSize(new Dimension(200,790));

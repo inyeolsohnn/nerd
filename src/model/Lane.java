@@ -25,7 +25,7 @@ public abstract class Lane {
 	private static int lanesCreated = 0;
 
 	// store traffic lights that belong to this lane.
-	private ArrayList<TrafficLight> trafficLights = new ArrayList<TrafficLight>();
+	 ArrayList<TrafficLight> trafficLights = new ArrayList<TrafficLight>();
 
 	public Lane() {
 		// for special lanes
@@ -76,6 +76,7 @@ public abstract class Lane {
 	public void addTrafficLight(TrafficLight light) {
 		// needs to check if the point lies on the lane
 		// not yet implemented
+		this.trafficLights.add(light);
 
 	}
 
@@ -152,7 +153,12 @@ public abstract class Lane {
 	}
 
 	public abstract void paint(Graphics g);
-
+	
+	public void paintTrafficLights(Graphics g){
+		for(int i=0; i<this.trafficLights.size(); i++){
+			trafficLights.get(i).paint(g);
+		}
+	}
 	public void carEnters(Car car) {
 		// TODO Auto-generated method stub
 		int carId = car.getId();

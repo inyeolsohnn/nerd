@@ -37,17 +37,17 @@ public abstract class Road {
 		roadsCreated++;
 		this.roadType = roadType;
 	}
-	public void paint(Graphics g){
-		Iterator<Entry<Integer, Lane>> it = lanes
-				.entrySet().iterator();
+
+	public void paint(Graphics g) {
+		Iterator<Entry<Integer, Lane>> it = lanes.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
 			Lane currentLane = (Lane) pair.getValue();
 			currentLane.paint(g);
-			
-			
+
 		}
 	}
+
 	/**** road type dependent ****/
 
 	// contaaining all lanes
@@ -65,7 +65,7 @@ public abstract class Road {
 	}
 
 	public void update() {
-		//update all lanes belonging to this road
+		// update all lanes belonging to this road
 	}
 
 	public int getType() {
@@ -612,6 +612,7 @@ public abstract class Road {
 						intersectingControlPoint.y
 								+ ((endingL.getEnd().y - endingL.getStart().y)
 										/ tVecD * scd));
+				System.out.println("Points");
 				System.out.println(intersectingStartPoint);
 				System.out.println(intersectingControlPoint);
 				System.out.println(intersectingEndPoint);
@@ -621,6 +622,9 @@ public abstract class Road {
 				Connection cn = new Connection(currentRoad, startingL,
 						targetRoad, endingL, cp, intersectingStartPoint,
 						intersectingEndPoint, intersectingControlPoint);
+				TrafficLight tl = new TrafficLight(startingL, "green", 10f,
+						10f, intersectingStartPoint);
+				startingL.addTrafficLight(tl);
 				success = startingL.addConnectionPoint(cp, cn);
 			}
 
@@ -659,15 +663,26 @@ public abstract class Road {
 		return halfScaled;
 
 	}
+
 	/****************************/
 	public static ArrayList<Road> bfsParks(Road currentRoad,
 			CarPark destinationPark) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public CarWorld getWorld(){
+
+	public CarWorld getWorld() {
 		return this.world;
 	}
-	
+
+	public ArrayList<Connection> getConnections() {
+		// TODO Auto-generated method stub
+		ArrayList<Connection> cal = new ArrayList<Connection>();
+		Iterator<Entry<Integer, Lane>> lit = this.lanes.entrySet().iterator();
+		while (lit.hasNext()) {
+
+		}
+		return null;
+	}
+
 }

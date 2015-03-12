@@ -8,10 +8,10 @@ import java.util.Date;
 public class TrafficLight {
 	private Lane lane; // lane object it belongs to
 	private String status;
-	private long greenInterval;
-	private long redInterval;
+	private float greenInterval;
+	private float redInterval;
 	private Date lastChanged;
-	private Point2D.Double coordination;
+	private Point2D.Float coordination;
 	private int id;
 	private static int totalLights = 0;
 	private double tempInterval=0.0;
@@ -39,8 +39,9 @@ public class TrafficLight {
 
 	// testing stubs end
 
-	public TrafficLight(Lane lane,String status, long greenInterval,long redInterval, Point2D.Double coordination) {
+	public TrafficLight(Lane lane,String status, float greenInterval,float redInterval, Point2D.Float coordination) {
 		this.lane = lane;
+		System.out.println("traffic coord"+coordination);
 		this.redInterval = redInterval;
 		this.greenInterval = greenInterval; 
 		this.lastChanged = new Date();
@@ -50,11 +51,11 @@ public class TrafficLight {
 		totalLights++;
 	}
 
-	public void setCoordinate(Point2D.Double coordination) {
+	public void setCoordinate(Point2D.Float coordination) {
 		this.coordination = coordination;
 	}
 
-	public Point2D.Double getCoordinate() {
+	public Point2D.Float getCoordinate() {
 		return this.coordination;
 	}
 
@@ -77,7 +78,7 @@ public class TrafficLight {
 	public void paint(Graphics g){
 		if(status.equalsIgnoreCase("green")){
 			 g.setColor(Color.BLACK);
-				g.fillOval((int)coordination.x+5, (int)coordination.x+5, 15, 15);
+				g.fillOval((int)coordination.x-5, (int)coordination.y-5, 15, 15);
 				
 		}
 	}
