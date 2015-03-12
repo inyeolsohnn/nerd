@@ -18,7 +18,11 @@ public class Connection extends Lane {
 
 	// this is quadratic bezier curve that car will move onto while changing
 	// lane
-	Connection(Road sRoad, Lane sLane, Road tRoad, Lane tLane,
+	public Connection(){
+		//dummy
+		
+	}
+	public Connection(Road sRoad, Lane sLane, Road tRoad, Lane tLane,
 			ConnectionPoint cp, Point2D.Float interStartPoint,
 			Point2D.Float interEndPoint, Point2D.Float intersectingPoint)
 			throws UnknownConnectionError {
@@ -84,6 +88,10 @@ public class Connection extends Lane {
 
 	public Lane getTargetLane() {
 		return this.tLane;
+	}
+	
+	public Lane getStartLane(){
+		return this.sLane;
 	}
 
 	private Point2D.Float calculateBezier(float t) {

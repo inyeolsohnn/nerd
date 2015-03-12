@@ -3,6 +3,7 @@ package model;
 import java.awt.Graphics;
 import java.awt.geom.Point2D; //test//
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Car {
 	private static int carsCreated = 0;
@@ -12,7 +13,7 @@ public class Car {
 	private float currentSpeedLimit;
 	private float maxSpeed;
 	private float currentSpeed;
-
+	private Random rng = new Random();
 	private Road currentRoad;
 	private Lane currentLane;
 	private Lane targetLane;
@@ -86,20 +87,45 @@ public class Car {
 		if (this.currentLane != null) {
 			this.currentLane.carLeaves(this);
 		}
-		Road tRoad = lane.getRoad();
-		if (tRoad.equals(this.currentRoad)) {
-			enterRoad(tRoad);
-		}
-		this.currentLane = lane;
-		lane.carEnters(this);
+
 		this.coordinate = entryPoint;
 		System.out.println("Entry lane point: " + entryPoint);
+		Road tRoad = lane.getRoad();
+		this.currentLane = lane;
+		lane.carEnters(this);
+		if (!tRoad.equals(this.currentRoad)) {
+			System.out.println("Entering road");
+			enterRoad(tRoad);
+		}
+
 		// car entering a lane logic
 	}
 
 	private void enterRoad(Road tRoad) {
 		// TODO Auto-generated method stub
-		ArrayList<Connection> connections = tRoad.getConnections();
+		Connection dummy = new Connection();
+		ArrayList<Connection> connections = currentLane.getSameConnections();// gets
+																	// connections
+																	// that are
+																	// in the
+																	// same
+																	// direction
+																	// lanes of
+																	// the same
+																	// road
+		connections.add(dummy);
+		System.out.println("enter road: connections size" + connections.size());
+		int random = rng.nextInt(connections.size());
+		Connection chosen = connections.get(random);
+		if (chosen.equals(dummy)) {
+			System.out.println("dummy: true");
+			this.targetLane = this.currentLane;
+			this.targetConnection = null;
+		} else {
+			System.out.println("dummy: false");
+			this.targetLane = chosen.getStartLane();
+			this.targetConnection = chosen;
+		}
 
 	}
 

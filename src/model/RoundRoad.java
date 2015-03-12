@@ -30,7 +30,7 @@ public class RoundRoad extends Road {
 		int firstRadius = radius + 15;
 		for (int i = 0; i < numLanes; i++) {
 			Lane ra = new RoundAbout(centerPoint, firstRadius + (i * 30),
-					this, this.getWorld());
+					this, this.getWorld(), i);
 			this.lanes.put(i, ra);
 		}
 

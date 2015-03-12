@@ -24,7 +24,8 @@ public class StraightRoad extends Road {
 		this.endingPoint = endingPoint;
 		setUpLanes(startingPoint, endingPoint, numAddLane, numSubLane);
 		Iterator it = this.lanes.entrySet().iterator();
-		if ((numAddLane == 0 && numSubLane != 0)||(numAddLane!=0 && numSubLane==0))
+		if ((numAddLane == 0 && numSubLane != 0)
+				|| (numAddLane != 0 && numSubLane == 0))
 			this.setBilateral(false);
 		else
 			this.setBilateral(true);
@@ -44,20 +45,20 @@ public class StraightRoad extends Road {
 		// TODO Auto-generated method stub
 		Point2D.Float vector = new Point2D.Float(endingPoint.x
 				- startingPoint.x, endingPoint.y - startingPoint.y);
-		//System.out.println("Vector: " + vector);
+		// System.out.println("Vector: " + vector);
 		float vectorLength = (float) Math.sqrt(Math.pow(vector.x, 2.0)
 				+ Math.pow(vector.y, 2.0));
-		//System.out.println("Length: " + vectorLength);
+		// System.out.println("Length: " + vectorLength);
 		Point2D.Float normalVector = new Point2D.Float(vector.x / vectorLength,
 				vector.y / vectorLength);
-		//System.out.println("x calculation: " + normalVector.x + "*"
-		//		+ perpenMat[0][0] + " + " + normalVector.y + "*"
-		//		+ perpenMat[1][0]);
+		// System.out.println("x calculation: " + normalVector.x + "*"
+		// + perpenMat[0][0] + " + " + normalVector.y + "*"
+		// + perpenMat[1][0]);
 		Point2D.Float perpenVector = new Point2D.Float(normalVector.x
 				* perpenMat[0][0] + normalVector.y * perpenMat[1][0],
 				normalVector.x * perpenMat[0][1] + normalVector.y
 						* perpenMat[1][1]);
-		//System.out.println("Perpen vector: " + perpenVector);
+		// System.out.println("Perpen vector: " + perpenVector);
 		Point2D.Float scaledPerpen = new Point2D.Float(perpenVector.x
 				* Road.roadWidth, perpenVector.y * Road.roadWidth);
 		Point2D.Float halfScaled = new Point2D.Float(perpenVector.x
@@ -72,7 +73,8 @@ public class StraightRoad extends Road {
 			Point2D.Float newEnd = new Point2D.Float(endingPoint.x
 					+ halfScaled.x + scaledPerpen.x * i, endingPoint.y
 					+ halfScaled.y + i * scaledPerpen.y);
-			Lane newStraight = new StraightLane(newStart, newEnd, this, this.getWorld());
+			Lane newStraight = new StraightLane(newStart, newEnd, this,
+					this.getWorld(), laneNumber);
 			this.lanes.put(laneNumber, newStraight);
 		}
 
@@ -86,7 +88,8 @@ public class StraightRoad extends Road {
 			Point2D.Float newEnd = new Point2D.Float(startingPoint.x
 					- halfScaled.x - i * scaledPerpen.x, startingPoint.y
 					- halfScaled.y - i * scaledPerpen.y);
-			Lane newStraight = new StraightLane(newStart, newEnd, this, this.getWorld());
+			Lane newStraight = new StraightLane(newStart, newEnd, this,
+					this.getWorld(), laneNumber);
 			this.lanes.put(laneNumber, newStraight);
 		}
 

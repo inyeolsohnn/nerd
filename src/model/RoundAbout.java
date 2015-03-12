@@ -8,8 +8,8 @@ public class RoundAbout extends Lane {
 	private Point2D.Float center;
 	private float radius;
 
-	public RoundAbout(Point2D.Float center, float radius, Road cRoad, CarWorld world) {
-		super(center, center, cRoad, world);
+	public RoundAbout(Point2D.Float center, float radius, Road cRoad, CarWorld world, int lk) {
+		super(center, center, cRoad, world, lk);
 		this.center = center;
 		this.radius = radius;
 

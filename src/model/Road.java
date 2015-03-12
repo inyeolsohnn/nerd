@@ -680,9 +680,23 @@ public abstract class Road {
 		ArrayList<Connection> cal = new ArrayList<Connection>();
 		Iterator<Entry<Integer, Lane>> lit = this.lanes.entrySet().iterator();
 		while (lit.hasNext()) {
-
+			Map.Entry<Integer, Lane> lp = lit.next();
+			Lane currentLane = lp.getValue();
+			Iterator<Entry<Point2D.Float, ConnectionPoint>> cit = currentLane
+					.getConnectionPoints().entrySet().iterator();
+			while (cit.hasNext()) {
+				Map.Entry<Point2D.Float, ConnectionPoint> cp = cit.next();
+				ConnectionPoint currentPoint = cp.getValue();
+				Iterator<Entry<Lane, Connection>> conIt = currentPoint
+						.getConnections().entrySet().iterator();
+				while (conIt.hasNext()) {
+					Map.Entry<Lane, Connection> conP = conIt.next();
+					Connection currentConnection = conP.getValue();
+					cal.add(currentConnection);
+				}
+			}
 		}
-		return null;
+		return cal;
 	}
 
 }
