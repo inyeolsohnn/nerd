@@ -68,6 +68,8 @@ public class StraightLane extends Lane {
                         RenderingHints.VALUE_RENDER_QUALITY);
         g2D.setRenderingHints(qualityHints);
 		g.drawPolygon(xpoints, ypoints, 4);
+		
+		this.paintTrafficLights(g);
 
 		
 	}

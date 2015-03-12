@@ -15,6 +15,8 @@ public class Car {
 
 	private Road currentRoad;
 	private Lane currentLane;
+	private Lane targetLane;
+	private Connection targetConnection;
 	private CarWorld cWorld;
 	private float distanceTravelled; // distance travelled on the current road
 										// 0-roadSpan
@@ -84,15 +86,26 @@ public class Car {
 
 
 	public void enterLane(Lane lane, Point2D.Float entryPoint) {
+		Road tRoad= lane.getRoad();
+		if(tRoad.equals(this.currentRoad)){
+			enterRoad(tRoad);
+		}
 		this.currentLane = lane;
-		this.currentRoad= lane.getRoad();
 		lane.carEnters(this);
 		this.coordinate = entryPoint;
 		System.out.println("Entry lane point: " + entryPoint);
 		// car entering a lane logic
 	}
 
+	private void enterRoad(Road tRoad) {
+		// TODO Auto-generated method stub
+		ArrayList<Connection> connections = tRoad.getConnections();
+		
+	}
+
 	public void move() {
+		
+		detect();
 		// ///Initial Belief section//////
 		float currS = this.currentSpeed;
 		Car frontCar = this.currentLane.getFrontCar(this);
@@ -171,6 +184,12 @@ public class Car {
 				}
 			}
 		}
+	}
+
+	private void detect() {
+		// TODO Auto-generated method stub
+		
+		
 	}
 
 	private boolean checkCourse() {

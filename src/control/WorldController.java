@@ -109,6 +109,11 @@ public class WorldController {
 				new Point2D.Float(800, 100), 1, 1, this.getcWorld());
 		Road ar = new StraightRoad(new Point2D.Float(450, 130),
 				new Point2D.Float(450, 830), 1, 1, this.getcWorld());
+		try{
+		Road.connectLane(sr, 0, ar, 0);
+		}catch(Exception e){
+			
+		}
 		CarPark cp = null;
 	
 		
