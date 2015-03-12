@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,6 +11,7 @@ public class CarWorld {
 	private int width;
 	private ArrayList<Road> roads = new ArrayList<Road>();
 	private ArrayList<Car> cars = new ArrayList<Car>();
+	private ArrayList<TrafficLight> lights = new ArrayList<TrafficLight>();
 
 	public CarWorld() {
 		this.height = 1000;
@@ -78,6 +80,10 @@ public class CarWorld {
 		// TODO Auto-generated method stub
 		return roads;
 	}
+	public ArrayList<TrafficLight> getLights() {
+		// TODO Auto-generated method stub
+		return lights;
+	}
 
 	public void connectRoads() throws UnknownConnectionError {
 		// connection logic for each type of different pair of roads
@@ -130,6 +136,15 @@ public class CarWorld {
 		cars=new ArrayList<Car>();
 		// TODO Auto-generated method stub
 		
+	}
+	public void paint(Graphics g){
+		for(int i=0; i<roads.size(); i++)
+		{
+			roads.get(i).paint(g);
+		}
+		for(int i=0; i<cars.size(); i++){
+			cars.get(i).paint(g);
+		}
 	}
 
 }
