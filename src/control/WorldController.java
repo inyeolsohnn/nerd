@@ -122,7 +122,7 @@ public class WorldController {
 		
 		Car c1 = new Car(sr.getLanes().get(0).getStart(),10,sr.getLanes().get(0),
 				cp,this.cWorld,sr.getLanes().get(0).getStart());
-		c1.setCurrentSpeed(100);
+		c1.setCurrentSpeed(30);
 		this.cWorld.addCar(c1);
 		this.cWorld.addRoad(sr);
 		this.cWorld.addRoad(ar);

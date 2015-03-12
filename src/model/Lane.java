@@ -16,7 +16,7 @@ public abstract class Lane {
 
 	private int laneId; // its id
 	private int laneKey;
-	protected Road contained;
+	private Road contained;
 	protected float laneSpan;
 	private HashMap<Point2D.Float, ConnectionPoint> connectionPoints = new HashMap<Point2D.Float, ConnectionPoint>();
 	private HashMap<Integer, Car> carsInLane = new HashMap<Integer, Car>();
@@ -59,7 +59,9 @@ public abstract class Lane {
 		return this.laneId;
 	}
 
-	public abstract Road getRoad() ;
+	public Road getRoad() {
+		return this.contained;
+	}
 
 	public final void setLaneSpan(float laneSpan) {
 		this.laneSpan = laneSpan;
