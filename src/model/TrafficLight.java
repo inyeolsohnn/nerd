@@ -14,9 +14,10 @@ public class TrafficLight {
 	private Point2D.Float coordination;
 	private int id;
 	private static int totalLights = 0;
-	private double tempInterval=0.0;
+	private double tempInterval = 0.0;
 	private int lightBoxLength = 50;
 	private int lightBoxWidth = 25;
+
 	// testing stubs
 	public TrafficLight() {
 		this.greenInterval = 100;
@@ -30,7 +31,7 @@ public class TrafficLight {
 
 	public TrafficLight(Lane lane) {
 		this.lane = lane;
-		
+
 		this.lastChanged = new Date();
 		this.status = "Green";
 		this.id = totalLights;
@@ -39,11 +40,13 @@ public class TrafficLight {
 
 	// testing stubs end
 
-	public TrafficLight(Lane lane,String status, float greenInterval,float redInterval, Point2D.Float coordination) {
+	public TrafficLight(Lane lane, String status, float greenInterval,
+			float redInterval, Point2D.Float coordination) {
 		this.lane = lane;
-		System.out.println("traffic coord"+coordination);
+		System.out.println("traffic coord" + coordination);
+		
 		this.redInterval = redInterval;
-		this.greenInterval = greenInterval; 
+		this.greenInterval = greenInterval;
 		this.lastChanged = new Date();
 		this.status = status;
 		this.coordination = coordination;
@@ -70,52 +73,52 @@ public class TrafficLight {
 	public void setRedInterval(long interval) {
 		this.redInterval = interval;
 	}
-	
 
 	public Lane getLane() {
 		return this.lane;
 	}
-	public void paint(Graphics g){
-		if(status.equalsIgnoreCase("green")){
-			 g.setColor(Color.BLACK);
-				g.fillOval((int)coordination.x-5, (int)coordination.y-5, 15, 15);
-				
+
+	public void paint(Graphics g) {
+		
+		
+		if (status.equalsIgnoreCase("green")) {
+			System.out.println("paint traffic light");
+			g.setColor(Color.BLACK);
+			g.fillOval(
+					(int) (coordination.x - Math.sqrt(2 * (Math.pow(7.5/2, 2)))),
+					(int) (coordination.y - Math.sqrt(2 * (Math.pow(7.5/2, 2)))),
+					15, 15);
+
 		}
 	}
+
 	public void update() {
-	/*	Date currentDate = new Date();
-		if (currentDate.getTime() - lastChanged.getTime() > interval) {
-			System.out.println("changing");
-			System.out.println(currentDate.getTime() - lastChanged.getTime());
-			lastChanged = currentDate;
-			if (status.equals("Green")) {
-				this.status = "Red";
-			} else if (status.equals("Red")) {
-				this.status = "Green";
+		/*
+		 * Date currentDate = new Date(); if (currentDate.getTime() -
+		 * lastChanged.getTime() > interval) { System.out.println("changing");
+		 * System.out.println(currentDate.getTime() - lastChanged.getTime());
+		 * lastChanged = currentDate; if (status.equals("Green")) { this.status
+		 * = "Red"; } else if (status.equals("Red")) { this.status = "Green"; }
+		 * System.out.println(this.status); }
+		 */
+
+		if (this.status.equalsIgnoreCase("green")) {
+
+			if (tempInterval == greenInterval) {
+				this.status = "red";
+				tempInterval = 0.0;
+			} else {
+				tempInterval += 20;
 			}
-			System.out.println(this.status);
-		}*/
-	
-		if(this.status.equalsIgnoreCase("green")){
-			
-			if(tempInterval==greenInterval){
-				this.status ="red";
-				tempInterval=0.0;
-			}
-			else{
-				tempInterval+=20;
-			}
-		}
-		else{
-			if(tempInterval==redInterval){
-				this.status ="green";
-				tempInterval=0.0;
-			}
-			else{
-				tempInterval+=20;
+		} else {
+			if (tempInterval == redInterval) {
+				this.status = "green";
+				tempInterval = 0.0;
+			} else {
+				tempInterval += 20;
 			}
 		}
-		//System.out.println(getStatus());
+		// System.out.println(getStatus());
 	}
 
 }

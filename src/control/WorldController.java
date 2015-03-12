@@ -111,6 +111,8 @@ public class WorldController {
 				new Point2D.Float(450, 830), 1, 1, this.getcWorld());
 		try{
 		Road.connectLane(sr, 0, ar, 0);
+		Road.connectLane(sr, 1, ar, 0);
+		Road.connectLane(ar, 1, sr, 0);
 		}catch(Exception e){
 			
 		}
