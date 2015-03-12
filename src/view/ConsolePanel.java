@@ -43,7 +43,7 @@ public class ConsolePanel extends JPanel implements ActionListener{
 		lbl.setFont(font);
 		JLabel lbl2 = new JLabel("Adjust Traffic Ligts");
 		
-		carSpawnSlider.setVisible(true);
+
 		carSpawnSlider.setPaintTicks(true);
 		carSpawnSlider.setPaintLabels(true);
 		carSpawnSlider.setMinorTickSpacing(2);
@@ -73,7 +73,7 @@ public class ConsolePanel extends JPanel implements ActionListener{
 			mainFrame.mainMenu();
 		}else if(e.getSource() == trafficlightButton){	
 			System.out.println("Traffic Light Menu");
-			
+			mainFrame.TrafficPanel();
 		}
 	}
 }
