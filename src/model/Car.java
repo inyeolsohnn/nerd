@@ -191,6 +191,7 @@ public class Car {
 		this.distanceTravelled = f;
 	}
 	public void paint(Graphics g){
-		g.drawOval((int)coordinate.x-1, (int)coordinate.y-1, 2, 2);
+		g.drawOval((int)coordinate.x-4, (int)coordinate.y-4, 8, 8);
+		System.out.println("paint car");
 	}
 }
