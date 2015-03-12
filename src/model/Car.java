@@ -91,9 +91,16 @@ public class Car {
 		this.coordinate = entryPoint;
 		System.out.println("Entry lane point: " + entryPoint);
 		Road tRoad = lane.getRoad();
+		Lane previousLane = this.currentLane;
+		Road previousRoad;
+		if (previousLane == null) {
+			previousRoad = null;
+		} else {
+			previousRoad = previousLane.getRoad();
+		}
 		this.currentLane = lane;
 		lane.carEnters(this);
-		if (!tRoad.equals(this.currentRoad)) {
+		if (!tRoad.equals(previousRoad)) {
 			System.out.println("Entering road");
 			enterRoad(tRoad);
 		}
@@ -105,14 +112,14 @@ public class Car {
 		// TODO Auto-generated method stub
 		Connection dummy = new Connection();
 		ArrayList<Connection> connections = currentLane.getSameConnections();// gets
-																	// connections
-																	// that are
-																	// in the
-																	// same
-																	// direction
-																	// lanes of
-																	// the same
-																	// road
+		// connections
+		// that are
+		// in the
+		// same
+		// direction
+		// lanes of
+		// the same
+		// road
 		connections.add(dummy);
 		System.out.println("enter road: connections size" + connections.size());
 		int random = rng.nextInt(connections.size());
@@ -126,11 +133,14 @@ public class Car {
 			this.targetLane = chosen.getStartLane();
 			this.targetConnection = chosen;
 		}
-
+		this.currentRoad = tRoad;
 	}
 
 	public void move() {
+		if (this.targetConnection != null) {
+			System.out.println("dummy should be false");
 
+		}
 		detect();
 		// ///Initial Belief section//////
 		float currS = this.currentSpeed;
@@ -195,20 +205,16 @@ public class Car {
 				this.coordinate = nextPosition;
 				System.out.println("New Position: " + this.coordinate);
 			}
-			// taking connection point logic
-			if (this.currentLane.getConnectionPoints().size() == 0) {
-				System.out.println("no connection");
-			} else {
-				if (!(currentLane.getConnectionPoints().get(
-						new Point2D.Float((int) this.coordinate.x,
-								(int) this.coordinate.y)) == null)) {
-					System.out.println("connection found");
 
-					this.setCoordinate(new Point2D.Float(
-							(int) this.coordinate.x, (int) this.coordinate.y));
-
+			if (this.targetConnection != null) {
+				System.out.println("connection found");
+				if (Car.distance(this.getCoordinate(),
+						targetConnection.getStart()) < 1) {
+					this.setCurrentSpeed(0);
 				}
+
 			}
+
 		}
 	}
 
@@ -238,5 +244,10 @@ public class Car {
 	public void paint(Graphics g) {
 		g.drawOval((int) coordinate.x - 4, (int) coordinate.y - 4, 8, 8);
 		System.out.println("paint car");
+	}
+
+	public static float distance(Point2D.Float p1, Point2D.Float p2) {
+		return (float) Math.sqrt(Math.pow((p1.x - p2.x), 2.0)
+				+ Math.pow(p1.y - p2.y, 2.0));
 	}
 }

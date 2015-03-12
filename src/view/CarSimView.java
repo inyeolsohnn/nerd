@@ -22,7 +22,7 @@ import model.Road;
 import model.TrafficLight;
 import control.WorldController;
 
-public class CarSimView extends JFrame  {
+public class CarSimView extends JFrame {
 
 	private Container mainContainer;
 	private WorldController wControl;
@@ -30,48 +30,43 @@ public class CarSimView extends JFrame  {
 	private MainMenu mainMenu;
 	private SimulationPanel simPanel;
 	private ConsolePanel consolePanel;
-	private TabbedView tabbedView;
-	
+
 	public CarSimView(String title, WorldController wControl) {
 		super(title);
 		mainContainer = this.getContentPane();
 		BorderLayout borderLayout = new BorderLayout();
-		//FlowLayout experimentLayout = new FlowLayout();
+		// FlowLayout experimentLayout = new FlowLayout();
 		this.setLayout(borderLayout);
-		this.wControl=wControl;
-		simPanel= new SimulationPanel(this.wControl, this);
-		mainMenu= new MainMenu(this.wControl, this);
-		consolePanel = new ConsolePanel (this.wControl,this);
-		tabbedView = new TabbedView(this.wControl,this, mainContainer);
-		
+		this.wControl = wControl;
+		simPanel = new SimulationPanel(this.wControl, this);
+		mainMenu = new MainMenu(this.wControl, this);
+		consolePanel = new ConsolePanel(this.wControl, this);
+
 		this.setResizable(true);
 		this.setSize(1280, 830);
 		mainContainer.setBackground(Color.WHITE);
-		consolePanel.setPreferredSize(new Dimension(200,790));
-		mainMenu.setPreferredSize(new Dimension(1000,790));
+		consolePanel.setPreferredSize(new Dimension(200, 790));
+		mainMenu.setPreferredSize(new Dimension(1000, 790));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		
+
 		mainContainer.removeAll();
 		mainContainer.add(mainMenu, BorderLayout.CENTER);
-		
-		//mainContainer.add(consolePanel, BorderLayout.WEST);
-		//mainContainer.add(tabbedView.tabbedPane, BorderLayout.EAST);
+
+		// mainContainer.add(consolePanel, BorderLayout.WEST);
+		// mainContainer.add(tabbedView.tabbedPane, BorderLayout.EAST);
 	}
-	
 
 	public void mainMenu() {
 		// TODO Auto-generated method stub
-		//change panel  main menu
+		// change panel main menu
 		mainContainer.removeAll();
 		mainContainer.add(mainMenu);
 		mainContainer.revalidate();
 		mainContainer.repaint();
-		
+
 	}
-
-
 
 	public void simulationView() {
 		// TODO Auto-generated method stub
@@ -80,6 +75,6 @@ public class CarSimView extends JFrame  {
 		mainContainer.add(consolePanel, BorderLayout.WEST);
 		mainContainer.revalidate();
 		mainContainer.repaint();
-		
+
 	}
 }

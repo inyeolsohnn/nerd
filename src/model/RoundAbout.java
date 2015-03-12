@@ -8,7 +8,8 @@ public class RoundAbout extends Lane {
 	private Point2D.Float center;
 	private float radius;
 
-	public RoundAbout(Point2D.Float center, float radius, Road cRoad, CarWorld world, int lk) {
+	public RoundAbout(Point2D.Float center, float radius, Road cRoad,
+			CarWorld world, int lk) {
 		super(center, center, cRoad, world, lk);
 		this.center = center;
 		this.radius = radius;
@@ -63,7 +64,13 @@ public class RoundAbout extends Lane {
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public Road getRoad() {
+		// TODO Auto-generated method stub
+		return this.contained;
 	}
 
 }

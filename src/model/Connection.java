@@ -18,10 +18,11 @@ public class Connection extends Lane {
 
 	// this is quadratic bezier curve that car will move onto while changing
 	// lane
-	public Connection(){
-		//dummy
-		
+	public Connection() {
+		// dummy
+
 	}
+
 	public Connection(Road sRoad, Lane sLane, Road tRoad, Lane tLane,
 			ConnectionPoint cp, Point2D.Float interStartPoint,
 			Point2D.Float interEndPoint, Point2D.Float intersectingPoint)
@@ -45,6 +46,7 @@ public class Connection extends Lane {
 		return 0;
 	}
 
+	
 	@Override
 	public Point2D.Float nextPosition(Car car, float targetDistance,
 			float distanceTravelled) {
@@ -54,7 +56,7 @@ public class Connection extends Lane {
 		float finalDistance = targetDistance + distanceTravelled;
 		System.out.println("Final distance" + finalDistance);
 		float fdRound = round(finalDistance).floatValue();
-		System.out.println("FdRound: "+fdRound);
+		System.out.println("FdRound: " + fdRound);
 
 		int index = binarySearch(this.bezierDistanceTable, fdRound,
 				targetDistance);
@@ -89,9 +91,13 @@ public class Connection extends Lane {
 	public Lane getTargetLane() {
 		return this.tLane;
 	}
-	
-	public Lane getStartLane(){
+
+	public Lane getStartLane() {
 		return this.sLane;
+	}
+
+	public Road getRoad() {
+		return this.sRoad;
 	}
 
 	private Point2D.Float calculateBezier(float t) {
@@ -134,7 +140,7 @@ public class Connection extends Lane {
 			System.out.println(this.bezierDistanceTable[j]);
 		}
 		System.out.println("Last point = " + bezierPointTable[1000]);
-		
+
 	}
 
 	private static BigDecimal round(float finalDistance) {
@@ -146,7 +152,7 @@ public class Connection extends Lane {
 	}
 
 	private int binarySearch(float[] table, float target, float errorBound) {
-		int firstKey = (table.length/2);
+		int firstKey = (table.length / 2);
 		if (table[firstKey] - target < errorBound) {
 			return firstKey;
 		} else if (table[firstKey] > target) {
@@ -162,9 +168,9 @@ public class Connection extends Lane {
 
 	private int binarySearch(float[] table, int lowerBound, int upperBound,
 			float target, float errorBound) {
-		System.out.println("lower bound: "+ lowerBound);
-		System.out.println("upper bound: "+ upperBound);
-	
+		System.out.println("lower bound: " + lowerBound);
+		System.out.println("upper bound: " + upperBound);
+
 		int halfPoint = (lowerBound + upperBound) / 2;
 		if (lowerBound == upperBound) {
 			return halfPoint;
@@ -175,7 +181,7 @@ public class Connection extends Lane {
 			System.out.println(table[halfPoint] - target < errorBound);
 			System.out.println("case2");
 			return halfPoint;
-			
+
 		} else if (table[halfPoint] > target) {
 			System.out.println("case3");
 			return binarySearch(table, lowerBound, halfPoint - 1, target,

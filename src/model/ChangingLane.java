@@ -4,22 +4,26 @@ import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
 
-public class ChangingLane extends Lane{
-	//special lane that will be created dynamically when ever a car changes
+public class ChangingLane extends Lane {
+	// special lane that will be created dynamically when ever a car changes
 	private Lane startLane;
 	private Lane targetLane;
 	private Point2D.Float startPoint, endPoint;
-	public ChangingLane(Lane sl, Lane tl, Point2D.Float sp){
+
+	public ChangingLane(Lane sl, Lane tl, Road road, Point2D.Float sp) {
 		super();
-		this.startLane=sl;
-		this.targetLane=tl;
-		this.startPoint=sp;
-		this.endPoint=setUpChangingLane(sl, tl, sp);
+		this.contained=road;
+		this.startLane = sl;
+		this.targetLane = tl;
+		this.startPoint = sp;
+		this.endPoint = setUpChangingLane(sl, tl, sp);
 	}
+
 	private Float setUpChangingLane(Lane sl, Lane tl, Float sp) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public float calculateLaneSpan() {
 		// TODO Auto-generated method stub
@@ -32,6 +36,7 @@ public class ChangingLane extends Lane{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public Point2D.Float getStart() {
 		return this.startPoint;
@@ -46,7 +51,13 @@ public class ChangingLane extends Lane{
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public Road getRoad() {
+		// TODO Auto-generated method stub
+		return this.contained;
 	}
 
 }
