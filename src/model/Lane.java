@@ -6,13 +6,16 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public abstract class Lane {
 
-	
 	private static final float SMALL_NUM = (float) 0.00000001;
 
 	private int laneId; // its id
+	private int laneKey;
 	private Road contained;
 	protected float laneSpan;
 	private HashMap<Point2D.Float, ConnectionPoint> connectionPoints = new HashMap<Point2D.Float, ConnectionPoint>();
@@ -25,19 +28,21 @@ public abstract class Lane {
 	private static int lanesCreated = 0;
 
 	// store traffic lights that belong to this lane.
-	 ArrayList<TrafficLight> trafficLights = new ArrayList<TrafficLight>();
+	ArrayList<TrafficLight> trafficLights = new ArrayList<TrafficLight>();
 
 	public Lane() {
 		// for special lanes
 	}
 
-	public Lane(Point2D.Float start, Point2D.Float end, Road cRoad, CarWorld cWorld) {
+	public Lane(Point2D.Float start, Point2D.Float end, Road cRoad,
+			CarWorld cWorld, int lk) {
 		this.startPoint = start;
 		this.endPoint = end;
 		this.contained = cRoad;
 		this.laneId = lanesCreated;
-		this.world=cWorld;
+		this.world = cWorld;
 		lanesCreated++;
+		this.laneKey = lk;
 
 	}
 
@@ -81,7 +86,7 @@ public abstract class Lane {
 	}
 
 	public void addCarPark(int type) {
-		CarPark newPark= new CarPark(this, type, this.world);
+		CarPark newPark = new CarPark(this, type, this.world);
 		parks.put(newPark.getId(), newPark);
 	}
 
@@ -148,17 +153,18 @@ public abstract class Lane {
 		}
 	}
 
-	public HashMap<Float, ConnectionPoint> getConnectionPoints() {
+	public HashMap<Point2D.Float, ConnectionPoint> getConnectionPoints() {
 		return this.connectionPoints;
 	}
 
 	public abstract void paint(Graphics g);
-	
-	public void paintTrafficLights(Graphics g){
-		for(int i=0; i<this.trafficLights.size(); i++){
+
+	public void paintTrafficLights(Graphics g) {
+		for (int i = 0; i < this.trafficLights.size(); i++) {
 			trafficLights.get(i).paint(g);
 		}
 	}
+
 	public void carEnters(Car car) {
 		// TODO Auto-generated method stub
 		int carId = car.getId();
@@ -178,6 +184,39 @@ public abstract class Lane {
 	public Car getTailCar(Car car) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public int getLaneKey() {
+		return this.laneKey;
+	}
+
+	public ArrayList<Connection> getSameConnections() {
+		// TODO Auto-generated method stub
+		int currentKey = this.getLaneKey();
+		ArrayList<Connection> cal = new ArrayList<Connection>();
+		Iterator<Entry<Integer, Lane>> lit = this.contained.lanes.entrySet()
+				.iterator();
+		while (lit.hasNext()) {
+			Map.Entry<Integer, Lane> lp = lit.next();
+			Lane currentLane = lp.getValue();
+			if (currentLane.laneKey % 2 == this.laneKey % 2) {
+				Iterator<Entry<Point2D.Float, ConnectionPoint>> cit = currentLane
+						.getConnectionPoints().entrySet().iterator();
+				while (cit.hasNext()) {
+					Map.Entry<Point2D.Float, ConnectionPoint> cp = cit.next();
+					ConnectionPoint currentPoint = cp.getValue();
+					Iterator<Entry<Lane, Connection>> conIt = currentPoint
+							.getConnections().entrySet().iterator();
+					while (conIt.hasNext()) {
+						Map.Entry<Lane, Connection> conP = conIt.next();
+						Connection currentConnection = conP.getValue();
+						cal.add(currentConnection);
+					}
+				}
+			}
+		}
+		return cal;
+
 	}
 
 }

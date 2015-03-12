@@ -11,8 +11,8 @@ public class StraightLane extends Lane {
 	private int noPoints;
 	private static final int[][] perpenMat = new int[][] { { 0, -1 }, { 1, 0 } };
 	public StraightLane(Point2D.Float startingPoint, Point2D.Float endPoint,
-			Road cRoad, CarWorld cWorld) {
-		super(startingPoint, endPoint, cRoad, cWorld);
+			Road cRoad, CarWorld cWorld, int lk) {
+		super(startingPoint, endPoint, cRoad, cWorld, lk);
 		this.setLaneSpan(calculateLaneSpan());
 	}
 
