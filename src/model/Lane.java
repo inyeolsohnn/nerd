@@ -166,7 +166,7 @@ public abstract class Lane {
 
 	}
 
-	public void carLeavs(Car car) {
+	public void carLeaves(Car car) {
 		carsInLane.remove(car.getId());
 	}
 

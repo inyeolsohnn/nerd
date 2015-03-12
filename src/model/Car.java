@@ -74,8 +74,6 @@ public class Car {
 		this.currentSpeed = currentSpeed;
 	}
 
-	
-
 	public Lane getCurrentLane() {
 		return currentLane;
 	}
@@ -84,10 +82,12 @@ public class Car {
 		this.currentLane = currentLane;
 	}
 
-
 	public void enterLane(Lane lane, Point2D.Float entryPoint) {
-		Road tRoad= lane.getRoad();
-		if(tRoad.equals(this.currentRoad)){
+		if (this.currentLane != null) {
+			this.currentLane.carLeaves(this);
+		}
+		Road tRoad = lane.getRoad();
+		if (tRoad.equals(this.currentRoad)) {
 			enterRoad(tRoad);
 		}
 		this.currentLane = lane;
@@ -100,11 +100,11 @@ public class Car {
 	private void enterRoad(Road tRoad) {
 		// TODO Auto-generated method stub
 		ArrayList<Connection> connections = tRoad.getConnections();
-		
+
 	}
 
 	public void move() {
-		
+
 		detect();
 		// ///Initial Belief section//////
 		float currS = this.currentSpeed;
@@ -188,8 +188,7 @@ public class Car {
 
 	private void detect() {
 		// TODO Auto-generated method stub
-		
-		
+
 	}
 
 	private boolean checkCourse() {
@@ -209,8 +208,9 @@ public class Car {
 	public void setTravelled(float f) {
 		this.distanceTravelled = f;
 	}
-	public void paint(Graphics g){
-		g.drawOval((int)coordinate.x-4, (int)coordinate.y-4, 8, 8);
+
+	public void paint(Graphics g) {
+		g.drawOval((int) coordinate.x - 4, (int) coordinate.y - 4, 8, 8);
 		System.out.println("paint car");
 	}
 }
