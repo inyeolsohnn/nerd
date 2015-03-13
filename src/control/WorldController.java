@@ -106,15 +106,37 @@ public class WorldController {
 		this.cWorld.setStatus("paused");
 		this.cWorld.flush();
 		// add new roads and such
-		Road sr = new StraightRoad(new Point2D.Float(100, 100),
-				new Point2D.Float(800, 100), 1, 1, this.getcWorld());
+		Road sr = new StraightRoad(new Point2D.Float(100, 400),
+				new Point2D.Float(800, 400), 2, 1, this.getcWorld());
 		Road ar = new StraightRoad(new Point2D.Float(450, 130),
 				new Point2D.Float(450, 830), 1, 1, this.getcWorld());
+		Road nr = new StraightRoad(new Point2D.Float(100, 500),
+				new Point2D.Float(800, 500), 1, 1, this.getcWorld());
 		try {
 			Road.connectLane(sr, 0, ar, 0);
+			Road.connectLane(sr, 0, ar, 1);
+			Road.connectLane(sr, 2, ar, 0);
+			Road.connectLane(sr, 2, ar, 1);
 			Road.connectLane(sr, 1, ar, 0);
+			Road.connectLane(sr, 1, ar, 1);
+			
 			Road.connectLane(ar, 1, sr, 0);
+			Road.connectLane(ar, 0, sr, 0);
 			Road.connectLane(ar, 1, sr, 1);
+			Road.connectLane(ar, 0, sr, 1);
+			Road.connectLane(ar, 0, sr, 2);
+			Road.connectLane(ar, 1, sr, 2);
+			
+			Road.connectLane(nr, 0, ar, 0);
+			Road.connectLane(nr, 0, ar, 1);
+			Road.connectLane(nr, 1, ar, 0);
+			Road.connectLane(nr, 1, ar, 1);
+			Road.connectLane(ar, 1, nr, 0);
+			Road.connectLane(ar, 0, nr, 0);
+			Road.connectLane(ar, 1, nr, 1);
+			Road.connectLane(ar, 0, nr, 1);
+			
+		
 
 		} catch (Exception e) {
 
@@ -122,13 +144,21 @@ public class WorldController {
 		sr.setCarParks(0);
 		sr.setCarParks(1);
 		ar.setCarParks(1);
+		ar.setCarParks(0);
+		
+		nr.setCarParks(0);
+		nr.setCarParks(1);
 		
 		sr.setEnding(0, true);
 		sr.setEnding(1, true);
 		ar.setEnding(0, true);
+		ar.setEnding(1, true);
+		nr.setEnding(0, true);
+		nr.setEnding(1, true);
 	
 		this.cWorld.addRoad(sr);
 		this.cWorld.addRoad(ar);
+		this.cWorld.addRoad(nr);
 
 	}
 
