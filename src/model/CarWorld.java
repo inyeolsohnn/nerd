@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,8 +11,9 @@ public class CarWorld {
 	private int height;
 	private int width;
 	private ArrayList<Road> roads = new ArrayList<Road>();
-	private ArrayList<Car> cars = new ArrayList<Car>();
+	private HashMap<Integer, Car> cars = new HashMap<Integer, Car>();
 	private ArrayList<TrafficLight> lights = new ArrayList<TrafficLight>();
+	private ArrayList<CarPark> parks = new ArrayList<CarPark>();
 
 	public CarWorld() {
 		this.height = 1000;
@@ -38,7 +40,7 @@ public class CarWorld {
 	}
 
 	public void addCar(Car car) {
-		cars.add(car);
+		cars.put(car.getId(), car);
 	}
 
 	public void removeRoad(String roadId) {
@@ -60,9 +62,13 @@ public class CarWorld {
 		return this.status;
 	}
 
-	public ArrayList<Car> getCars() {
+	public HashMap<Integer, Car> getCars() {
 		// TODO Auto-generated method stub
 		return cars;
+	}
+
+	public void removeCar(Car car) {
+		cars.remove(car.getId());
 	}
 
 	public Road getRoad(int roadId) {
@@ -80,6 +86,7 @@ public class CarWorld {
 		// TODO Auto-generated method stub
 		return roads;
 	}
+
 	public ArrayList<TrafficLight> getLights() {
 		// TODO Auto-generated method stub
 		return lights;
@@ -132,19 +139,36 @@ public class CarWorld {
 	}
 
 	public void flush() {
-		roads=new ArrayList<Road>();
-		cars=new ArrayList<Car>();
+		roads = new ArrayList<Road>();
+		cars = new HashMap<Integer, Car>();
+		parks = new ArrayList<CarPark>();
 		// TODO Auto-generated method stub
-		
+
 	}
-	public void paint(Graphics g){
-		for(int i=0; i<roads.size(); i++)
-		{
+
+	public void paint(Graphics g) {
+		for (int i = 0; i < roads.size(); i++) {
 			roads.get(i).paint(g);
 		}
-		for(int i=0; i<cars.size(); i++){
+		for (int i = 0; i < cars.size(); i++) {
 			cars.get(i).paint(g);
 		}
+	}
+
+	public void addPark(CarPark cp) {
+		System.out.println("adding car park");
+		parks.add(cp);
+	}
+
+	public ArrayList<CarPark> getParks() {
+		// TODO Auto-generated method stub
+		return this.parks;
+	}
+
+	public void addLight(TrafficLight light) {
+		// TODO Auto-generated method stub
+		this.lights.add(light);
+		
 	}
 
 }

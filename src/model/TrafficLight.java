@@ -44,7 +44,7 @@ public class TrafficLight {
 			float redInterval, Point2D.Float coordination) {
 		this.lane = lane;
 		System.out.println("traffic coord" + coordination);
-		
+
 		this.redInterval = redInterval;
 		this.greenInterval = greenInterval;
 		this.lastChanged = new Date();
@@ -79,15 +79,13 @@ public class TrafficLight {
 	}
 
 	public void paint(Graphics g) {
-		
-		
+
 		if (status.equalsIgnoreCase("green")) {
-			System.out.println("paint traffic light");
+
 			g.setColor(Color.BLACK);
-			g.fillOval(
-					(int) (coordination.x - Math.sqrt(2 * (Math.pow(7.5/2, 2)))),
-					(int) (coordination.y - Math.sqrt(2 * (Math.pow(7.5/2, 2)))),
-					15, 15);
+			g.fillOval((int) (coordination.x - Math.sqrt(2 * (Math.pow(7.5 / 2,
+					2)))), (int) (coordination.y - Math.sqrt(2 * (Math.pow(
+					7.5 / 2, 2)))), 15, 15);
 
 		}
 	}
@@ -119,6 +117,18 @@ public class TrafficLight {
 			}
 		}
 		// System.out.println(getStatus());
+	}
+
+	public int getId() {
+		return this.id;
+	}
+	
+	public float getGreen(){
+		return this.greenInterval;
+	}
+	
+	public float getRed(){
+		return this.redInterval;
 	}
 
 }

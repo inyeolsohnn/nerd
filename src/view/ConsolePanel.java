@@ -1,12 +1,12 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,22 +14,30 @@ import javax.swing.JSlider;
 
 import control.WorldController;
 
-public class ConsolePanel extends JPanel implements ActionListener{
-	private JButton startButton,stopButton, returnButton, trafficlightButton;
-	private JSlider carSpawnSlider = new JSlider(0,10,3);
-	
+public class ConsolePanel extends JPanel implements ActionListener {
+
 	private WorldController wController;
 	private CarSimView mainFrame;
-	private Font font = new Font("Tahoma",Font.BOLD ,20);
-	
+	private Font font = new Font("Tahoma", Font.BOLD, 20);
+	private JButton startButton, stopButton, returnButton, trafficlightButton,
+			helpButton;
+	private JPanel bottomButtonPanel, topButtonPanel;
+	private JSlider carSpawnSlider = new JSlider(0, 10, 3);
+	private BorderLayout borderLayout = new BorderLayout();
 
-	public ConsolePanel(WorldController wController, CarSimView mainFrame){
+	public ConsolePanel(WorldController wController, CarSimView mainFrame) {
 		this.mainFrame = mainFrame;
 		this.wController = wController;
-		
-		this.setPreferredSize(new Dimension(200,800));
+		this.setPreferredSize(new Dimension(200, 800));
 		this.setBackground(Color.WHITE);
-		
+		this.setLayout(borderLayout);
+
+		topButtonPanel = new JPanel();
+		bottomButtonPanel = new JPanel();
+
+		this.add(topButtonPanel, BorderLayout.NORTH);
+		this.add(bottomButtonPanel, BorderLayout.SOUTH);
+		// JButton setup!
 		stopButton = new CustomJButton("Stop");
 		stopButton.addActionListener(this);
 		startButton = new CustomJButton("Start");
@@ -38,26 +46,30 @@ public class ConsolePanel extends JPanel implements ActionListener{
 		returnButton.addActionListener(this);
 		trafficlightButton = new CustomJButton("Adjust Traffic Lights");
 		trafficlightButton.addActionListener(this);
-		
-		JLabel lbl = new JLabel("Controller Panel");
-		lbl.setFont(font);
-		JLabel lbl2 = new JLabel("Adjust Traffic Ligts");
-		
+		helpButton = new CustomJButton("Help?");
+		helpButton.addActionListener(this);
+
+		JLabel controlTitleLabel = new JLabel("Control Panel");
+		controlTitleLabel.setFont(font);
+		JLabel trafficTitleLabel = new JLabel("Adjust Traffic Ligts");
 
 		carSpawnSlider.setPaintTicks(true);
 		carSpawnSlider.setPaintLabels(true);
 		carSpawnSlider.setMinorTickSpacing(2);
-		carSpawnSlider.setBackground(Color.WHITE);
-		this.add(lbl);
-		this.add(stopButton);
-		this.add(startButton);
-		this.add(returnButton);
-		this.add(lbl2);
-		this.add(trafficlightButton);
-		this.add(new JLabel("Car Spawn Rate"));
-		this.add(carSpawnSlider);
-		
-		
+
+		topButtonPanel.add(controlTitleLabel);
+		topButtonPanel.add(stopButton);
+		topButtonPanel.add(startButton);
+		topButtonPanel.add(trafficTitleLabel);
+		topButtonPanel.add(trafficlightButton);
+		topButtonPanel.add(new JLabel("Car Spawn Rate"));
+		topButtonPanel.add(carSpawnSlider);
+		bottomButtonPanel.add(returnButton);
+		bottomButtonPanel.add(helpButton);
+
+		topButtonPanel.setPreferredSize(new Dimension(200, 700));
+		bottomButtonPanel.setPreferredSize(new Dimension(200, 80));
+
 		mainFrame.add(this);
 	}
 
@@ -67,13 +79,17 @@ public class ConsolePanel extends JPanel implements ActionListener{
 			this.wController.pause();
 		} else if (e.getSource() == startButton) {
 			this.wController.start();
-		}else if(e.getSource() == returnButton){
+		} else if (e.getSource() == returnButton) {
 			this.wController.pause();
 			System.out.println("Main Menu");
 			mainFrame.mainMenu();
-		}else if(e.getSource() == trafficlightButton){	
+		} else if (e.getSource() == trafficlightButton) {
 			System.out.println("Traffic Light Menu");
+			this.wController.pause();
 			mainFrame.TrafficPanel();
+		} else if (e.getSource() == helpButton) {
+			this.wController.pause();
+			mainFrame.HelpPanel();
 		}
 	}
 }

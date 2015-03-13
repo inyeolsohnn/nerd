@@ -16,7 +16,7 @@ public class CarPark {
 	public CarPark(Lane bLane, int type, CarWorld cWorld) {
 		this.parkId = parksCreated;
 		this.lane = bLane;
-		this.spawnRate = 0.6d;
+		this.spawnRate = 0.01d;
 		this.type = type;
 		this.world = cWorld;
 		if (type == START) {
@@ -35,18 +35,25 @@ public class CarPark {
 	}
 
 	public void update() {
+		System.out.println("updating park at : " + this.parkId);
+
 		if (this.type == START) {
 			// spawn cars
 			double range = this.spawnRate / 2;
 			double dice = Math.random();
 			if (dice >= 0.5d - range && dice <= 0.5d + range) {
+
 				/*
 				 * public Car(Point2D.Float coordinate, float maxSpeed, Lane
 				 * initialLane, CarPark destinationPark, CarWorld cWorld,
 				 * Point2D.Float entryPoint)
 				 */
-				Car newCar = new Car();
+				Car c1 = new Car(this.lane.getStart(), 10, this.lane,
+						this.world, this.lane.getStart());
+				c1.setCurrentSpeed(100);
+				this.world.addCar(c1);
 			}
 		}
 	}
+
 }

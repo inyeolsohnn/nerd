@@ -100,4 +100,11 @@ public class StraightLane extends Lane {
 		return this.contained;
 	}
 
+	@Override
+	public float findDistance(Car car) {
+		// TODO Auto-generated method stub
+		
+		return Car.distance(this.getStart(), car.getCoordinate());
+	}
+
 }

@@ -2,6 +2,7 @@ package control;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 
@@ -55,11 +56,10 @@ public class WorldController {
 	public void simulate() throws InterruptedException {
 
 		while (true) {
-			
+
 			if (cWorld.getStatus().equals("running")) {
 				update();
-			
-				
+
 				Thread.sleep(20); // the timing mechanism
 									// needs improvement
 			} else if (cWorld.getStatus().equals("paused")) {
@@ -70,7 +70,7 @@ public class WorldController {
 		}
 	}
 
-	public ArrayList<Car> getCars() {
+	public HashMap<Integer, Car> getCars() {
 		// TODO Auto-generated method stub
 		return this.cWorld.getCars();
 	}
@@ -79,24 +79,25 @@ public class WorldController {
 		// TODO Auto-generated method stub
 		return this.cWorld.getRoads();
 	}
+
 	public ArrayList<TrafficLight> getLights() {
 		// TODO Auto-generated method stub
 		return this.cWorld.getLights();
 	}
 
 	private void update() {
-		System.out.println("updating everything in the world");
-		for(int i=0;i<cWorld.getCars().size();i++){
-			cWorld.getCars().get(i).move();
-			
+		
+		for (int i = 0; i < cWorld.getParks().size(); i++) {
+			cWorld.getParks().get(i).update();
+		}
+
+		ArrayList<Car> cars = new ArrayList<Car>(cWorld.getCars().values());
+		for (int i = 0; i < cars.size(); i++) {
+			cars.get(i).move();
+
 		}
 		this.carView.repaint();
 
-	}
-
-	public static ArrayList<Road> bfsRoads(Road road, Road destinationRoad) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	// example case setup
@@ -109,26 +110,29 @@ public class WorldController {
 				new Point2D.Float(800, 100), 1, 1, this.getcWorld());
 		Road ar = new StraightRoad(new Point2D.Float(450, 130),
 				new Point2D.Float(450, 830), 1, 1, this.getcWorld());
-		try{
-		Road.connectLane(sr, 0, ar, 0);
-		Road.connectLane(sr, 1, ar, 0);
-		Road.connectLane(ar, 1, sr, 0);
-		}catch(Exception e){
-			
+		try {
+			Road.connectLane(sr, 0, ar, 0);
+			Road.connectLane(sr, 1, ar, 0);
+			Road.connectLane(ar, 1, sr, 0);
+			Road.connectLane(ar, 1, sr, 1);
+
+		} catch (Exception e) {
+
 		}
-		CarPark cp = null;
+		sr.setCarParks(0);
+		sr.setCarParks(1);
+		ar.setCarParks(1);
+		
+		sr.setEnding(0, true);
+		sr.setEnding(1, true);
+		ar.setEnding(0, true);
 	
-		
-		
-		Car c1 = new Car(sr.getLanes().get(0).getStart(),10,sr.getLanes().get(0),
-				cp,this.cWorld,sr.getLanes().get(0).getStart());
-		c1.setCurrentSpeed(100);
-		this.cWorld.addCar(c1);
 		this.cWorld.addRoad(sr);
 		this.cWorld.addRoad(ar);
 
 	}
-	public void setIntersection(){
+
+	public void setIntersection() {
 		this.cWorld.setStatus("paused");
 		this.cWorld.flush();
 		// add new roads and such

@@ -33,14 +33,14 @@ public class Car {
 	}
 
 	public Car(Point2D.Float coordinate, float maxSpeed, Lane initialLane,
-			CarPark destinationPark, CarWorld cWorld, Point2D.Float entryPoint) {
+			CarWorld cWorld, Point2D.Float entryPoint) {
 		this.coordinate = coordinate;
 		this.maxSpeed = maxSpeed;
 		this.enterLane(initialLane, entryPoint);
 		this.id = Car.carsCreated;
 		this.cWorld = cWorld;
 		Car.carsCreated++;
-		plan = Road.bfsParks(currentRoad, destinationPark);
+
 	}
 
 	public Point2D.Float getCoordinate() {
@@ -87,7 +87,11 @@ public class Car {
 		if (this.currentLane != null) {
 			this.currentLane.carLeaves(this);
 		}
-
+		if (lane instanceof StraightLane) {
+			this.setTravelled(lane.findDistance(this));
+		} else if (lane instanceof Connection) {
+			this.setTravelled(0);
+		}
 		this.coordinate = entryPoint;
 		System.out.println("Entry lane point: " + entryPoint);
 		Road tRoad = lane.getRoad();
@@ -112,6 +116,8 @@ public class Car {
 		// TODO Auto-generated method stub
 		Connection dummy = new Connection();
 		ArrayList<Connection> connections = currentLane.getSameConnections();// gets
+
+		boolean ending = currentLane.isEnding(); // same lanes of this road has ending lanes
 		// connections
 		// that are
 		// in the
@@ -120,13 +126,19 @@ public class Car {
 		// lanes of
 		// the same
 		// road
-		connections.add(dummy);
+		if (ending) {
+			connections.add(dummy);
+		}
 		System.out.println("enter road: connections size" + connections.size());
 		int random = rng.nextInt(connections.size());
 		Connection chosen = connections.get(random);
+
 		if (chosen.equals(dummy)) {
+			ArrayList<Lane> sameLanes = currentLane.getSameLanes();
 			System.out.println("dummy: true");
-			this.targetLane = this.currentLane;
+			int nr = rng.nextInt(sameLanes.size());
+			Lane chosenLane = sameLanes.get(nr);
+			this.targetLane = chosenLane;
 			this.targetConnection = null;
 		} else {
 			System.out.println("dummy: false");
@@ -186,7 +198,7 @@ public class Car {
 			 * System.out.println(this.currentLane.getClass().getName());
 			 */
 
-			if (!(this.currentLane instanceof RoundAbout)
+			if ((this.currentLane instanceof StraightLane)
 					&& (dToEnd.x < nextDisplacement.x || dToEnd.y < nextDisplacement.y)) {
 				this.coordinate = this.currentLane.getEnd(); // reached the
 																// end
@@ -200,22 +212,39 @@ public class Car {
 				 * System.out
 				 * .println("Car has reached the end of it's current lane");
 				 */
-				this.setCurrentSpeed(0);
+				this.remove();
+			} else if ((this.currentLane instanceof Connection)) {
+				Point2D.Float lastPoint = this.currentLane.getEnd();
+				if (Car.distance(this.coordinate, lastPoint) < 2) {
+					this.enterLane(
+							((Connection) this.currentLane).getTargetLane(),
+							((Connection) this.currentLane).getEnd());
+				}
 			} else {
-				this.coordinate = nextPosition;
-				System.out.println("New Position: " + this.coordinate);
 			}
+			this.coordinate = nextPosition;
+			System.out.println("New Position: " + this.coordinate);
 
 			if (this.targetConnection != null) {
 				System.out.println("connection found");
 				if (Car.distance(this.getCoordinate(),
 						targetConnection.getStart()) < 1) {
-					this.setCurrentSpeed(0);
+					System.out.println("Entering connection");
+					this.enterLane(targetConnection,
+							targetConnection.getStart());
 				}
 
 			}
 
 		}
+	}
+
+	private void remove() {
+		// TODO Auto-generated method stub
+		this.cWorld.removeCar(this);
+		this.currentLane.removeCar(this);
+		System.gc();
+
 	}
 
 	private void detect() {
@@ -243,11 +272,15 @@ public class Car {
 
 	public void paint(Graphics g) {
 		g.drawOval((int) coordinate.x - 4, (int) coordinate.y - 4, 8, 8);
-		System.out.println("paint car");
+
 	}
 
 	public static float distance(Point2D.Float p1, Point2D.Float p2) {
 		return (float) Math.sqrt(Math.pow((p1.x - p2.x), 2.0)
 				+ Math.pow(p1.y - p2.y, 2.0));
+	}
+
+	public static int totalCar() {
+		return Car.carsCreated;
 	}
 }

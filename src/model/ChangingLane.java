@@ -60,4 +60,10 @@ public class ChangingLane extends Lane {
 		return this.contained;
 	}
 
+	@Override
+	public float findDistance(Car car) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

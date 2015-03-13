@@ -20,10 +20,11 @@ public abstract class Lane {
 	protected float laneSpan;
 	private HashMap<Point2D.Float, ConnectionPoint> connectionPoints = new HashMap<Point2D.Float, ConnectionPoint>();
 	private HashMap<Integer, Car> carsInLane = new HashMap<Integer, Car>();
-	private HashMap<Integer, CarPark> parks = new HashMap<Integer, CarPark>();
+	private boolean hasPark = false;
 	private CarWorld world;
 	protected Point2D.Float startPoint;
 	protected Point2D.Float endPoint;
+	private boolean isEnding = false;
 
 	private static int lanesCreated = 0;
 
@@ -59,7 +60,7 @@ public abstract class Lane {
 		return this.laneId;
 	}
 
-	public abstract Road getRoad() ;
+	public abstract Road getRoad();
 
 	public final void setLaneSpan(float laneSpan) {
 		this.laneSpan = laneSpan;
@@ -80,12 +81,8 @@ public abstract class Lane {
 		// needs to check if the point lies on the lane
 		// not yet implemented
 		this.trafficLights.add(light);
+		this.world.addLight(light);
 
-	}
-
-	public void addCarPark(int type) {
-		CarPark newPark = new CarPark(this, type, this.world);
-		parks.put(newPark.getId(), newPark);
 	}
 
 	public void update() {
@@ -217,4 +214,36 @@ public abstract class Lane {
 
 	}
 
+	public void setHasPark(boolean b) {
+		this.hasPark = b;
+	}
+
+	public boolean getHasPark() {
+		return this.hasPark;
+	}
+
+	public abstract float findDistance(Car car);
+
+	public void setEnding(boolean b) {
+		this.isEnding = b;
+	}
+	
+	public boolean isEnding(){
+		return this.isEnding;
+	}
+
+	public ArrayList<Lane> getSameLanes() {
+		int currentKey = this.getLaneKey();
+		ArrayList<Lane> sal = new ArrayList<Lane>();
+		Iterator<Entry<Integer, Lane>> lit = this.contained.lanes.entrySet()
+				.iterator();
+		while (lit.hasNext()) {
+			Map.Entry<Integer, Lane> lp = lit.next();
+			Lane currentLane = lp.getValue();
+			if (currentKey % 2 == this.laneKey % 2) {
+				sal.add(currentLane);
+			}
+		}
+		return sal;
+	}
 }

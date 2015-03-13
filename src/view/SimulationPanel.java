@@ -21,31 +21,18 @@ class SimulationPanel extends JPanel implements ActionListener {
 
 	private WorldController control;
 	private CarSimView mainFrame;
-	private JButton stopButton, startButton, returnButton;
+	private JButton stopButton, startButton, returnButton; // not used
+	private BorderLayout borderLayout;
 
 	public SimulationPanel(WorldController control, CarSimView mainFrame) {
 
 		this.control = control;
 		this.mainFrame = mainFrame;
-
-		BorderLayout borderLayout = new BorderLayout();
-		// FlowLayout experimentLayout = new FlowLayout();
-		this.setLayout(borderLayout);
-
-		// stopButton = new JButton("STOP");
-		// stopButton.addActionListener(this);
-		// startButton = new JButton("Start");
-		// startButton.addActionListener(this);
-		// returnButton= new JButton("Return");
-		// this.add(stopButton);
-		// this.add(startButton);
-		// this.add(returnButton);
-		// returnButton.addActionListener(this);
-		// setPreferredSize(new Dimension(500,500));
-
 		this.setPreferredSize(new Dimension(980, 740));
-		this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+		this.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLACK));
 		this.setBackground(Color.WHITE);
+		borderLayout = new BorderLayout();
+		this.setLayout(borderLayout);
 
 	}
 
@@ -56,21 +43,21 @@ class SimulationPanel extends JPanel implements ActionListener {
 			roads.get(i).paint(g);
 
 		}
-		ArrayList<Car> cars = control.getCars();
-		for(int i = 0; i < cars.size(); i++){
+		ArrayList<Car> cars = new ArrayList<Car>(control.getCars().values());
+		for (int i = 0; i < cars.size(); i++) {
 			cars.get(i).paint(g);
-			
+
 		}
 		ArrayList<TrafficLight> lights = control.getLights();
 	}
 
+	// Can this be remove there not used?
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource().equals(returnButton)) {
-			this.control.pause();
-
 			System.out.println("main menu");
+			this.control.pause();
 			mainFrame.mainMenu();
 		} else if (e.getSource().equals(startButton)) {
 			this.control.start();
