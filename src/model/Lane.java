@@ -129,7 +129,8 @@ public abstract class Lane {
 		// the lane
 		// if it does add connection to the existing connection point
 
-		if (connectionPoints.get(cp.getPointCoordinate()) == null) {
+		if (connectionPoints.get(new Point2D.Float((int) cp
+				.getPointCoordinate().x, (int) cp.getPointCoordinate().y)) == null) {
 
 			System.out
 					.println("Connection point not found, adding new connection point");
@@ -141,8 +142,9 @@ public abstract class Lane {
 		} else {
 			System.out
 					.println("connection point found, adding new connection to the existing connection point");
-			ConnectionPoint existingCp = connectionPoints.get(cp
-					.getPointCoordinate());
+			ConnectionPoint existingCp = connectionPoints
+					.get(new Point2D.Float((int) cp.getPointCoordinate().x,
+							(int) cp.getPointCoordinate().y));
 			existingCp.addConnection(cn);
 			return true;
 		}
@@ -227,8 +229,8 @@ public abstract class Lane {
 	public void setEnding(boolean b) {
 		this.isEnding = b;
 	}
-	
-	public boolean isEnding(){
+
+	public boolean isEnding() {
 		return this.isEnding;
 	}
 

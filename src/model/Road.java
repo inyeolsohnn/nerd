@@ -386,6 +386,8 @@ public abstract class Road {
 			}
 			// now see if a1-a2, a3-a4 intersects with b1-b2 or b3-b4
 			// or if b1-b2 and b3-b4 overlaps with a1-a2 or a3-a4
+
+			System.out.println("/////Listing findings about the roads///////");
 			System.out.println(highest);
 			System.out.println(nextHighest);
 			System.out.println(tHighest);
@@ -402,6 +404,8 @@ public abstract class Road {
 			Line2D.Float line2 = new Line2D.Float(a3, a4);
 			Line2D.Float line3 = new Line2D.Float(b1, b2);
 			Line2D.Float line4 = new Line2D.Float(b3, b4);
+			System.out
+					.println("/////END: Listing findings about the roads///////");
 
 			// if the line overlaps check if the overlapped segment is closest
 			// to the starting lane's starting point
@@ -469,6 +473,14 @@ public abstract class Road {
 						slStarting.y - halfVector.y);
 				sla4 = new Point2D.Float(slEnding.x - halfVector.x, slEnding.y
 						- halfVector.y);
+				System.out.println("////Starting lane points////");
+				System.out.println(sla1);
+				System.out.println(sla2);
+				System.out.println(sla3);
+				System.out.println(sla4);
+				Line2D.Float sLine1 = new Line2D.Float(sla1, sla2);
+				Line2D.Float sLine2 = new Line2D.Float(sla3, sla4);
+				System.out.println("////END: Starting lane points////");
 				Point2D.Float i1 = linesolver.checkIntersection(slStarting,
 						slEnding, (Point2D.Float) line3.getP1(),
 						(Point2D.Float) line3.getP2());
@@ -496,13 +508,13 @@ public abstract class Road {
 					Point2D.Float ii1 = linesolver.checkIntersection(
 							(Point2D.Float) line4.getP1(),
 							(Point2D.Float) line4.getP2(),
-							(Point2D.Float) line1.getP1(),
-							(Point2D.Float) line1.getP2());
+							(Point2D.Float) sLine1.getP1(),
+							(Point2D.Float) sLine1.getP2());
 					Point2D.Float ii2 = linesolver.checkIntersection(
 							(Point2D.Float) line4.getP1(),
 							(Point2D.Float) line4.getP2(),
-							(Point2D.Float) line2.getP1(),
-							(Point2D.Float) line2.getP2());
+							(Point2D.Float) sLine2.getP1(),
+							(Point2D.Float) sLine2.getP2());
 					System.out.println(ii1);
 					System.out.println(ii2);
 					float dd1 = (float) Math.sqrt(Math.pow(
@@ -518,20 +530,20 @@ public abstract class Road {
 						// lies on line2
 						System.out.println(line2.getP1());
 						closestPoint = ii2;
-						closestLine = line2;
+						closestLine = sLine2;
 
 					} else if (dd2 > dd1) {
 						// ii1 is the closest intersection point
 						// lies on line1
 						System.out.println(line1.getP1());
 						closestPoint = ii1;
-						closestLine = line1;
+						closestLine = sLine1;
 					} else {
 						// they are the same so chose which ever point
 						// lies on line1
 						System.out.println(line1.getP1());
 						closestPoint = ii1;
-						closestLine = line1;
+						closestLine = sLine1;
 					}
 				} else if (d2 > d1) {
 					// line 3 is the shorted outer line
@@ -541,15 +553,15 @@ public abstract class Road {
 					Point2D.Float ii1 = linesolver.checkIntersection(
 							(Point2D.Float) line3.getP1(),
 							(Point2D.Float) line3.getP2(),
-							(Point2D.Float) line1.getP1(),
-							(Point2D.Float) line1.getP2());
+							(Point2D.Float) sLine1.getP1(),
+							(Point2D.Float) sLine1.getP2());
 					Point2D.Float ii2 = linesolver.checkIntersection(
 							(Point2D.Float) line3.getP1(),
 							(Point2D.Float) line3.getP2(),
-							(Point2D.Float) line2.getP1(),
-							(Point2D.Float) line2.getP2());
-					System.out.println(ii1);
-					System.out.println(ii2);
+							(Point2D.Float) sLine2.getP1(),
+							(Point2D.Float) sLine2.getP2());
+					System.out.println("ii1: " + ii1);
+					System.out.println("ii2: " + ii2);
 					float dd1 = (float) Math.sqrt(Math.pow(
 							(slStarting.x - ii1.x), 2.0)
 							+ Math.pow(slStarting.y - ii1.y, 2.0));
@@ -561,22 +573,22 @@ public abstract class Road {
 					if (dd1 > dd2) {
 						// ii2 is the closest intersection point
 						// lies on line2
-						System.out.println(line2.getP1());
+						
 						closestPoint = ii2;
-						closestLine = line2;
+						closestLine = sLine2;
 
 					} else if (dd2 > dd1) {
 						// ii1 is the closest intersection point
 						// lies on line1
-						System.out.println(line1.getP1());
+						
 						closestPoint = ii1;
-						closestLine = line1;
+						closestLine = sLine1;
 					} else {
 						// they are the same so chose which ever point
 						// lies on line1
-						System.out.println(line1.getP1());
+						
 						closestPoint = ii1;
-						closestLine = line1;
+						closestLine = sLine1;
 					}
 				} else {
 					throw new UnknownConnectionError();
@@ -725,8 +737,8 @@ public abstract class Road {
 		}
 
 	}
-	
-	public void setEnding(int s, boolean b){
+
+	public void setEnding(int s, boolean b) {
 		if (this instanceof StraightRoad) {
 			System.out.println("Straight road detected");
 			int remainder = s % 2;
