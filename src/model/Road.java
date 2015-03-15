@@ -317,7 +317,7 @@ public abstract class Road {
 					// highest is odd-> next highest should be even since
 					// bilateral
 					for (int i = sortedT.size() - 2; i >= 0; i--) {
-						if (sortedT.get(i) == 0) {
+						if (sortedT.get(i)%2 == 0) {
 							tNextHighest = sortedT.get(i);
 							break;
 						}
