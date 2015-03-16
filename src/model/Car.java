@@ -21,10 +21,6 @@ public class Car {
 	private CarWorld cWorld;
 	private float distanceTravelled; // distance travelled on the current road
 										// 0-roadSpan
-	private float changeInSpeed;
-	private float acceleration;
-	private float breaking;
-	private boolean signalled = false;
 
 	public Car() {
 		// dummy constructor for testing
@@ -34,12 +30,13 @@ public class Car {
 
 	public Car(Point2D.Float coordinate, float maxSpeed, Lane initialLane,
 			CarWorld cWorld, Point2D.Float entryPoint) {
+		this.id = Car.carsCreated;
+		Car.carsCreated++;
 		this.coordinate = coordinate;
 		this.maxSpeed = maxSpeed;
 		this.enterLane(initialLane, entryPoint);
-		this.id = Car.carsCreated;
+
 		this.cWorld = cWorld;
-		Car.carsCreated++;
 
 	}
 
@@ -117,7 +114,8 @@ public class Car {
 		Connection dummy = new Connection();
 		ArrayList<Connection> connections = currentLane.getSameConnections();// gets
 
-		boolean ending = currentLane.isEnding(); // same lanes of this road has ending lanes
+		boolean ending = currentLane.isEnding(); // same lanes of this road has
+													// ending lanes
 		// connections
 		// that are
 		// in the
@@ -155,10 +153,21 @@ public class Car {
 		}
 		detect();
 		// ///Initial Belief section//////
-		float currS = this.currentSpeed;
+
 		Car frontCar = this.currentLane.getFrontCar(this);
-		Car tailCar = this.currentLane.getTailCar(this);
+		if (frontCar == null) {
+			System.out.println("Car id : " + this.id + " is the front car");
+		} else {
+			System.out.println("For car id : " + this.id + " car id : "
+					+ frontCar.id + " is the front car");
+			if (Car.distance(frontCar.getCoordinate(), this.getCoordinate()) < 20) {
+				this.setCurrentSpeed(60f);
+			} else {
+				this.setCurrentSpeed(120);
+			}
+		}
 		boolean onCourse = checkCourse();
+		System.out.println("Car id : " + this.id + " on course " + onCourse);
 		// ////Initial Beleif section/////
 
 		// if oncourse & acceptable speed//
@@ -175,10 +184,7 @@ public class Car {
 		if (this.currentSpeed == 0) {
 			System.out.println("Car is not moving");
 		} else {
-			float speedChange = checkSpeedChange();
-			if (speedChange != 0) {
 
-			}
 			float tempDistance = this.currentSpeed * 0.02f;
 
 			Point2D.Float nextPosition = this.currentLane.nextPosition(this,
@@ -254,7 +260,7 @@ public class Car {
 
 	private boolean checkCourse() {
 		// TODO Auto-generated method stub
-		return false;
+		return (this.currentLane.equals(this.targetLane));
 	}
 
 	private float checkSpeedChange() {
@@ -282,5 +288,14 @@ public class Car {
 
 	public static int totalCar() {
 		return Car.carsCreated;
+	}
+
+	public Road getRoad() {
+		return this.currentRoad;
+	}
+
+	public float getTravelled() {
+		// TODO Auto-generated method stub
+		return this.distanceTravelled;
 	}
 }

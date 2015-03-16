@@ -19,7 +19,7 @@ public abstract class Lane {
 	protected Road contained;
 	protected float laneSpan;
 	private HashMap<Point2D.Float, ConnectionPoint> connectionPoints = new HashMap<Point2D.Float, ConnectionPoint>();
-	private HashMap<Integer, Car> carsInLane = new HashMap<Integer, Car>();
+	protected HashMap<Integer, Car> carsInLane = new HashMap<Integer, Car>();
 	private boolean hasPark = false;
 	private CarWorld world;
 	protected Point2D.Float startPoint;
@@ -166,6 +166,8 @@ public abstract class Lane {
 		// TODO Auto-generated method stub
 		int carId = car.getId();
 		carsInLane.put(carId, car);
+		System.out.println("car added. Current numbers of cars in lane : "
+				+ carsInLane.size() + " car id : " + car.getId());
 
 	}
 
@@ -173,15 +175,7 @@ public abstract class Lane {
 		carsInLane.remove(car.getId());
 	}
 
-	public Car getFrontCar(Car car) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Car getTailCar(Car car) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract Car getFrontCar(Car car);
 
 	public int getLaneKey() {
 		return this.laneKey;

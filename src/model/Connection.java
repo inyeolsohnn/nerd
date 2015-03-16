@@ -207,4 +207,10 @@ public class Connection extends Lane {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public Car getFrontCar(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

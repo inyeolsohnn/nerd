@@ -112,7 +112,7 @@ public class WorldController {
 				new Point2D.Float(500, 600), 2, 2, this.getcWorld());
 
 		try {
-		
+
 			Road.connectLane(sr, 0, ar, 0);
 			Road.connectLane(sr, 2, ar, 3);
 			Road.connectLane(sr, 3, ar, 2);
@@ -136,13 +136,13 @@ public class WorldController {
 
 		}
 		sr.setCarParks(0);
-		sr.setCarParks(1);
-		sr.setCarParks(2);
-		sr.setCarParks(3);
-		ar.setCarParks(1);
-		ar.setCarParks(0);
-		ar.setCarParks(2);
-		ar.setCarParks(3);
+		 sr.setCarParks(1);
+		 sr.setCarParks(2);
+		 sr.setCarParks(3);
+		 ar.setCarParks(1);
+		 ar.setCarParks(0);
+		 ar.setCarParks(2);
+		 ar.setCarParks(3);
 
 		sr.setEnding(0, true);
 		sr.setEnding(1, true);

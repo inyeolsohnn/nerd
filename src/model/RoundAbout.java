@@ -79,4 +79,10 @@ public class RoundAbout extends Lane {
 		return 0;
 	}
 
+	@Override
+	public Car getFrontCar(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -715,14 +715,14 @@ public abstract class Road {
 	public void setCarParks(int s) {
 		if (this instanceof StraightRoad) {
 			System.out.println("Straight road detected");
-			int remainder = s % 2;
+			
 			Iterator<Entry<Integer, Lane>> lit = this.lanes.entrySet()
 					.iterator();
 			while (lit.hasNext()) {
 				Map.Entry<Integer, Lane> lp = lit.next();
 				Lane cl = lp.getValue();
 				int laneKey = cl.getLaneKey();
-				if (laneKey % 2 == remainder && !cl.getHasPark()) {
+				if (laneKey  == s && !cl.getHasPark()) {
 
 					CarPark newPark = new CarPark(cl, CarPark.START, this.world);
 					this.world.getParks().add(newPark);

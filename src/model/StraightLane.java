@@ -5,6 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class StraightLane extends Lane {
 
@@ -42,6 +45,7 @@ public class StraightLane extends Lane {
 		Point2D.Float newPoint = new Point2D.Float(car.getCoordinate().x
 				+ displacement.x, car.getCoordinate().y + displacement.y);
 		System.out.println("New point: " + newPoint);
+		car.setTravelled(car.getTravelled()+targetDistance);
 		return newPoint;
 	}
 
@@ -103,8 +107,34 @@ public class StraightLane extends Lane {
 	@Override
 	public float findDistance(Car car) {
 		// TODO Auto-generated method stub
-		
+
 		return Car.distance(this.getStart(), car.getCoordinate());
+	}
+
+	@Override
+	public Car getFrontCar(Car car) {
+
+		float closest = 100f;
+		Car closestCar = null;
+		Iterator<Entry<Integer, Car>> cit = this.carsInLane.entrySet()
+				.iterator();
+		
+		while (cit.hasNext()) {
+			Map.Entry<Integer, Car> cPair = cit.next();
+			Car cCar = cPair.getValue();
+			System.out.println("id : "+ cCar.getTravelled());
+			if (cCar.getTravelled() > car.getTravelled()) {
+				// cCar is somewhere ahead of the car in the same lane
+				if (((cCar.getTravelled() - car.getTravelled()) < closest)
+						&& !car.equals(cCar)) {
+					closest = cCar.getTravelled() - car.getTravelled();
+					closestCar = cCar;
+				}
+			}
+		}
+		// if closest car is null it means the parameter car is the leading
+		// car
+		return closestCar;
 	}
 
 }
