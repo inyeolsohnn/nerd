@@ -635,9 +635,7 @@ public abstract class Road {
 				Connection cn = new Connection(currentRoad, startingL,
 						targetRoad, endingL, cp, intersectingStartPoint,
 						intersectingEndPoint, intersectingControlPoint);
-				TrafficLight tl = new TrafficLight(startingL, "green", 10f,
-						10f, intersectingStartPoint);
-				startingL.addTrafficLight(tl);
+				
 				success = startingL.addConnectionPoint(cp, cn);
 			}
 

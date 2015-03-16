@@ -138,6 +138,9 @@ public abstract class Lane {
 			connectionPoints.put(
 					new Point2D.Float(((int) cp.getPointCoordinate().x),
 							((int) cp.getPointCoordinate().y)), cp);
+			TrafficLight tl = new TrafficLight(cp.getLane(), "green", 10f,
+					10f, cp.getPointCoordinate());
+			cp.getLane().addTrafficLight(tl);
 			return true;
 		} else {
 			System.out
