@@ -113,7 +113,8 @@ public class StraightLane extends Lane {
 
 	@Override
 	public Car getFrontCar(Car car) {
-
+		// also need to see cars infront of it in the nearest connections
+		// starting from its lane
 		float closest = 100f;
 		Car closestCar = null;
 		Iterator<Entry<Integer, Car>> cit = this.carsInLane.entrySet()

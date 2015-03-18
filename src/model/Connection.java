@@ -5,6 +5,9 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
 import java.math.BigDecimal;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Connection extends Lane {
 	private Road sRoad, tRoad;
@@ -56,7 +59,7 @@ public class Connection extends Lane {
 
 		float fdRound = round(finalDistance).floatValue();
 
-		int index = binarySearch(this.bezierDistanceTable, fdRound,
+		int index = binarySearch(this.bezierDistanceTable, finalDistance,
 				targetDistance);
 		System.out.println("index : " + index);
 		System.out.println("car id : " + car.getId());
@@ -210,8 +213,31 @@ public class Connection extends Lane {
 
 	@Override
 	public Car getFrontCar(Car car) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		//also needs to see cars infront of it from originating lane
+		
+		float closest = 100f;
+		Car closestCar = null;
+		Iterator<Entry<Integer, Car>> cit = this.carsInLane.entrySet()
+				.iterator();
+
+		while (cit.hasNext()) {
+			Map.Entry<Integer, Car> cPair = cit.next();
+			Car cCar = cPair.getValue();
+			System.out.println("id : " + cCar.getId()
+					+ " distance travelled : " + cCar.getTravelled());
+			if (cCar.getTravelled() > car.getTravelled()) {
+				// cCar is somewhere ahead of the car in the same lane
+				if (((cCar.getTravelled() - car.getTravelled()) < closest)
+						&& !car.equals(cCar)) {
+					closest = cCar.getTravelled() - car.getTravelled();
+					closestCar = cCar;
+				}
+			}
+		}
+		// if closest car is null it means the parameter car is the leading
+		// car
+		return closestCar;
 	}
 
 	@Override

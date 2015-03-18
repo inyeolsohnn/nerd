@@ -16,8 +16,6 @@ public class TrafficLight {
 	private int id;
 	private static int totalLights = 0;
 	private double tempInterval = 0.0;
-	private int lightBoxLength = 50;
-	private int lightBoxWidth = 25;
 
 	// testing stubs
 	public TrafficLight() {
@@ -108,18 +106,18 @@ public class TrafficLight {
 
 		if (this.status.equalsIgnoreCase("green")) {
 
-			if (tempInterval == greenInterval) {
+			if (tempInterval >= greenInterval) {
 				this.status = "red";
 				tempInterval = 0.0;
 			} else {
-				tempInterval += 20;
+				tempInterval += 0.02;
 			}
 		} else {
-			if (tempInterval == redInterval) {
+			if (tempInterval >= redInterval) {
 				this.status = "green";
 				tempInterval = 0.0;
 			} else {
-				tempInterval += 20;
+				tempInterval += 0.02;
 			}
 		}
 		// System.out.println(getStatus());

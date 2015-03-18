@@ -88,7 +88,8 @@ public class Car {
 		if (lane instanceof StraightLane) {
 			this.setTravelled(lane.findDistance(this));
 		} else if (lane instanceof Connection) {
-			this.setTravelled(0);
+			this.setTravelled(1);
+			
 		}
 		this.coordinate = entryPoint;
 		System.out.println("Entry lane point: " + entryPoint);

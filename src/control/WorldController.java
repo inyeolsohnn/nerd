@@ -99,6 +99,10 @@ public class WorldController {
 			cars.get(i).move();
 
 		}
+		ArrayList<TrafficLight> lights = cWorld.getLights();
+		for (int i = 0; i < lights.size(); i++) {
+			lights.get(i).update();
+		}
 		((CarSimView) carView).getDynamicChart().updateData();
 
 		this.carView.repaint();
@@ -141,13 +145,13 @@ public class WorldController {
 
 		}
 		sr.setCarParks(0);
-		sr.setCarParks(1);
+		//sr.setCarParks(1);
 		sr.setCarParks(2);
-		sr.setCarParks(3);
-		ar.setCarParks(1);
-		ar.setCarParks(0);
-		ar.setCarParks(2);
-		ar.setCarParks(3);
+		//sr.setCarParks(3);
+	//	ar.setCarParks(1);
+		//ar.setCarParks(0);
+		//ar.setCarParks(2);
+		//ar.setCarParks(3);
 
 		sr.setEnding(0, true);
 		sr.setEnding(1, true);
