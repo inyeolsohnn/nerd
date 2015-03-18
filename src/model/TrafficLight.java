@@ -10,6 +10,7 @@ public class TrafficLight {
 	private String status;
 	private float greenInterval;
 	private float redInterval;
+	private float initInterval;
 	private Date lastChanged;
 	private Point2D.Float coordination;
 	private int id;
@@ -44,7 +45,7 @@ public class TrafficLight {
 			float redInterval, Point2D.Float coordination) {
 		this.lane = lane;
 		System.out.println("traffic coord" + coordination);
-
+		this.initInterval = 0;
 		this.redInterval = redInterval;
 		this.greenInterval = greenInterval;
 		this.lastChanged = new Date();
@@ -82,12 +83,17 @@ public class TrafficLight {
 
 		if (status.equalsIgnoreCase("green")) {
 
-			g.setColor(Color.BLACK);
-			g.fillOval((int) (coordination.x - Math.sqrt(2 * (Math.pow(7.5 / 2,
-					2)))), (int) (coordination.y - Math.sqrt(2 * (Math.pow(
-					7.5 / 2, 2)))), 15, 15);
+			g.setColor(Color.GREEN);
 
+		} else if (status.equalsIgnoreCase("red")) {
+			g.setColor(Color.RED);
 		}
+		g.fillOval(
+				(int) (coordination.x - Math.sqrt(2 * (Math.pow(7.5 / 2, 2)))),
+				(int) (coordination.y - Math.sqrt(2 * (Math.pow(7.5 / 2, 2)))),
+				15, 15);
+		g.setColor(Color.BLACK);
+
 	}
 
 	public void update() {
@@ -122,13 +128,25 @@ public class TrafficLight {
 	public int getId() {
 		return this.id;
 	}
-	
-	public float getGreen(){
+
+	public float getGreen() {
 		return this.greenInterval;
 	}
-	
-	public float getRed(){
+
+	public float getRed() {
 		return this.redInterval;
+	}
+
+	public float getInit() {
+		return this.initInterval;
+	}
+
+	public void setGreen(float f) {
+		this.greenInterval = f;
+	}
+
+	public void setInit(float f) {
+		this.initInterval = f;
 	}
 
 }

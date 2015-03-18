@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
+import view.DynamicChart;
 import control.WorldController;
 
 public class ConsolePanel extends JPanel implements ActionListener {
@@ -24,7 +25,7 @@ public class ConsolePanel extends JPanel implements ActionListener {
 	private JPanel bottomButtonPanel, topButtonPanel;
 	private JSlider carSpawnSlider = new JSlider(0, 10, 3);
 	private BorderLayout borderLayout = new BorderLayout();
-
+	DynamicChart demo;
 	public ConsolePanel(WorldController wController, CarSimView mainFrame) {
 		this.mainFrame = mainFrame;
 		this.wController = wController;
@@ -34,9 +35,11 @@ public class ConsolePanel extends JPanel implements ActionListener {
 
 		topButtonPanel = new JPanel();
 		bottomButtonPanel = new JPanel();
-
+		demo = new DynamicChart("", this.wController);
 		this.add(topButtonPanel, BorderLayout.NORTH);
+		//topButtonPanel
 		this.add(bottomButtonPanel, BorderLayout.SOUTH);
+		
 		// JButton setup!
 		stopButton = new CustomJButton("Stop");
 		stopButton.addActionListener(this);
@@ -64,6 +67,7 @@ public class ConsolePanel extends JPanel implements ActionListener {
 		topButtonPanel.add(trafficlightButton);
 		topButtonPanel.add(new JLabel("Car Spawn Rate"));
 		topButtonPanel.add(carSpawnSlider);
+		topButtonPanel.add(demo.content);
 		bottomButtonPanel.add(returnButton);
 		bottomButtonPanel.add(helpButton);
 
@@ -91,5 +95,10 @@ public class ConsolePanel extends JPanel implements ActionListener {
 			this.wController.pause();
 			mainFrame.HelpPanel();
 		}
+	}
+
+	public DynamicChart getDynamicChart() {
+		// TODO Auto-generated method stub
+		return this.demo;
 	}
 }

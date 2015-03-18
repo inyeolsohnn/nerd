@@ -3,9 +3,12 @@ package control;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.swing.JFrame;
 
+import view.CarSimView;
 import model.Car;
 import model.CarPark;
 import model.CarWorld;
@@ -96,6 +99,8 @@ public class WorldController {
 			cars.get(i).move();
 
 		}
+		((CarSimView) carView).getDynamicChart().updateData();
+
 		this.carView.repaint();
 
 	}
@@ -136,13 +141,13 @@ public class WorldController {
 
 		}
 		sr.setCarParks(0);
-		 sr.setCarParks(1);
-		 sr.setCarParks(2);
-		 sr.setCarParks(3);
-		 ar.setCarParks(1);
-		 ar.setCarParks(0);
-		 ar.setCarParks(2);
-		 ar.setCarParks(3);
+		sr.setCarParks(1);
+		sr.setCarParks(2);
+		sr.setCarParks(3);
+		ar.setCarParks(1);
+		ar.setCarParks(0);
+		ar.setCarParks(2);
+		ar.setCarParks(3);
 
 		sr.setEnding(0, true);
 		sr.setEnding(1, true);
@@ -186,5 +191,23 @@ public class WorldController {
 		} else {
 			return this.cWorld;
 		}
+	}
+
+	public double getAverageSpeed() {
+		// TODO Auto-generated method stub
+		Iterator<Entry<Integer, Car>> cit = this.cWorld.getCars().entrySet()
+				.iterator();
+		float sum = 0;
+		float count = 0;
+		while (cit.hasNext()) {
+			Car currentCar = cit.next().getValue();
+			sum += currentCar.getCurrentSpeed();
+			count++;
+
+		}
+		if (count == 0)
+			return 0;
+		else
+			return sum / count;
 	}
 }

@@ -82,4 +82,10 @@ public class CarSimView extends JFrame {
 		mainContainer.repaint();
 
 	}
+
+	public DynamicChart getDynamicChart() {
+
+		return consolePanel.getDynamicChart();
+	}
+
 }

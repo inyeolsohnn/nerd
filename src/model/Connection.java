@@ -213,4 +213,10 @@ public class Connection extends Lane {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public TrafficLight getNextTrafficLight(Car car) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

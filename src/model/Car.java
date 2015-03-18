@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Point2D; //test//
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class Car {
 	private Point2D.Float coordinate;
 	private final int id;
 	private float currentSpeedLimit;
-	private float maxSpeed;
+	private float desiredSpeed;
 	private float currentSpeed;
 	private Random rng = new Random();
 	private Road currentRoad;
@@ -28,12 +29,12 @@ public class Car {
 		carsCreated++;
 	}
 
-	public Car(Point2D.Float coordinate, float maxSpeed, Lane initialLane,
+	public Car(Point2D.Float coordinate, float ds, Lane initialLane,
 			CarWorld cWorld, Point2D.Float entryPoint) {
 		this.id = Car.carsCreated;
 		Car.carsCreated++;
 		this.coordinate = coordinate;
-		this.maxSpeed = maxSpeed;
+		this.desiredSpeed = ds;
 		this.enterLane(initialLane, entryPoint);
 
 		this.cWorld = cWorld;
@@ -56,12 +57,12 @@ public class Car {
 		this.currentSpeedLimit = currentSpeedLimit;
 	}
 
-	public float getMaxSpeed() {
-		return maxSpeed;
+	public float getDesiredSpeed() {
+		return desiredSpeed;
 	}
 
-	public void setMaxSpeed(float maxSpeed) {
-		this.maxSpeed = maxSpeed;
+	public void setDesiredSpeed(float ds) {
+		this.desiredSpeed = ds;
 	}
 
 	public float getCurrentSpeed() {
@@ -155,17 +156,44 @@ public class Car {
 		// ///Initial Belief section//////
 
 		Car frontCar = this.currentLane.getFrontCar(this);
-		if (frontCar == null) {
-			System.out.println("Car id : " + this.id + " is the front car");
-		} else {
-			System.out.println("For car id : " + this.id + " car id : "
-					+ frontCar.id + " is the front car");
-			if (Car.distance(frontCar.getCoordinate(), this.getCoordinate()) < 20) {
-				this.setCurrentSpeed(60f);
-			} else {
-				this.setCurrentSpeed(120);
-			}
+		TrafficLight tfl = this.currentLane.getNextTrafficLight(this);
+		float cd = 100;
+		float td = 100;
+		if (frontCar != null) {
+			cd = Car.distance(frontCar.getCoordinate(), this.getCoordinate());
 		}
+		if (tfl != null) {
+			td = Car.distance(tfl.getCoordinate(), this.getCoordinate());
+		}
+		// current---car---trafficlight(red/green)----100m :: react to the car
+		// current----trafficlight(green)---car--100m :: react to the car
+		// current---trafficlight(red)----car ---100m :: react to the light
+		// current -----100m----x-----y :: free run
+		if (cd >= 100 && td >= 100) {
+			// free run
+			System.out.println("branch 1");
+			accelerate();
+		} else if (td < cd && td < 100 && tfl.getStatus().equals("red")) {
+			// react to the light
+			System.out.println("branch 2");
+			if (td < 15)
+				this.setCurrentSpeed(0);
+			else if (td < 70)
+				this.setCurrentSpeed(td);
+
+		} else if ((td < cd && td < 100 && tfl.getStatus().equals("green"))
+				|| (cd < td && cd < 100)) {
+			System.out.println("branch 3");
+			if (cd < 15) {
+				this.setCurrentSpeed(0);
+			} else if (cd < 70) {
+				this.setCurrentSpeed(cd);
+			} else if (cd > 90) {
+				accelerate();
+			}
+			// react to the car
+		}
+
 		boolean onCourse = checkCourse();
 		System.out.println("Car id : " + this.id + " on course " + onCourse);
 		// ////Initial Beleif section/////
@@ -245,6 +273,13 @@ public class Car {
 		}
 	}
 
+	private void accelerate() {
+		// TODO Auto-generated method stub
+		if (this.currentSpeed < 100) {
+			this.currentSpeed += 10 * 0.02;
+		}
+	}
+
 	private void remove() {
 		// TODO Auto-generated method stub
 		this.cWorld.removeCar(this);
@@ -277,7 +312,20 @@ public class Car {
 	}
 
 	public void paint(Graphics g) {
-		g.drawOval((int) coordinate.x - 4, (int) coordinate.y - 4, 8, 8);
+		if (this.currentSpeed >= 80) {
+			g.setColor(Color.RED);
+		} else if (this.currentSpeed < 80 && this.currentSpeed >= 60) {
+			g.setColor(Color.ORANGE);
+		} else if (this.currentSpeed < 60 && this.currentSpeed >= 40) {
+			g.setColor(Color.YELLOW);
+		} else if (this.currentSpeed < 40 && this.currentSpeed >= 20) {
+			g.setColor(Color.MAGENTA);
+		} else if (this.currentSpeed < 20 && this.currentSpeed > 0) {
+			g.setColor(Color.BLUE);
+		} else if (this.currentSpeed == 0) {
+			g.setColor(Color.BLACK);
+		}
+		g.fillOval((int) coordinate.x - 4, (int) coordinate.y - 4, 8, 8);
 
 	}
 

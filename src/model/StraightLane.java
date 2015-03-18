@@ -45,7 +45,7 @@ public class StraightLane extends Lane {
 		Point2D.Float newPoint = new Point2D.Float(car.getCoordinate().x
 				+ displacement.x, car.getCoordinate().y + displacement.y);
 		System.out.println("New point: " + newPoint);
-		car.setTravelled(car.getTravelled()+targetDistance);
+		car.setTravelled(car.getTravelled() + targetDistance);
 		return newPoint;
 	}
 
@@ -118,11 +118,12 @@ public class StraightLane extends Lane {
 		Car closestCar = null;
 		Iterator<Entry<Integer, Car>> cit = this.carsInLane.entrySet()
 				.iterator();
-		
+
 		while (cit.hasNext()) {
 			Map.Entry<Integer, Car> cPair = cit.next();
 			Car cCar = cPair.getValue();
-			System.out.println("id : "+ cCar.getTravelled());
+			System.out.println("id : " + cCar.getId()
+					+ " distance travelled : " + cCar.getTravelled());
 			if (cCar.getTravelled() > car.getTravelled()) {
 				// cCar is somewhere ahead of the car in the same lane
 				if (((cCar.getTravelled() - car.getTravelled()) < closest)
@@ -137,4 +138,25 @@ public class StraightLane extends Lane {
 		return closestCar;
 	}
 
+	@Override
+	public TrafficLight getNextTrafficLight(Car car) {
+		// TODO Auto-generated method stub
+		float closest = 100;
+		TrafficLight ctl = null;
+		System.out.println("Number of lights : " + this.trafficLights.size());
+		for (int i = 0; i < this.trafficLights.size(); i++) {
+			TrafficLight currentLight = trafficLights.get(i);
+			float td = Car.distance(currentLight.getCoordinate(),
+					car.getCoordinate());
+			System.out.println("distance of the current light : " + td);
+			if (td < closest) {
+				System.out.println("Found a close light");
+				closest = td;
+				ctl = currentLight;
+
+			}
+		}
+
+		return ctl;
+	}
 }

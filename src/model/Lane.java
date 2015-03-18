@@ -89,11 +89,7 @@ public abstract class Lane {
 		// update car parks, and traffic lights belonging to this lane
 	}
 
-	public TrafficLight getNextTrafficLight(Car car) {
-		// not yet implemented
-		Point2D.Float carPos = car.getCoordinate();
-		return null;
-	}
+	public abstract TrafficLight getNextTrafficLight(Car car);
 
 	public float getSpan() {
 		// TODO Auto-generated method stub
@@ -138,9 +134,10 @@ public abstract class Lane {
 			connectionPoints.put(
 					new Point2D.Float(((int) cp.getPointCoordinate().x),
 							((int) cp.getPointCoordinate().y)), cp);
-			TrafficLight tl = new TrafficLight(cp.getLane(), "green", 10f,
-					10f, cp.getPointCoordinate());
+			TrafficLight tl = new TrafficLight(cp.getLane(), "green", 10f, 10f,
+					cp.getPointCoordinate());
 			cp.getLane().addTrafficLight(tl);
+
 			return true;
 		} else {
 			System.out

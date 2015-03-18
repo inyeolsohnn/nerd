@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.geom.Point2D;
+import java.util.Random;
 
 public class CarPark {
 	public static final int START = 0;
@@ -9,14 +10,16 @@ public class CarPark {
 	private int type;
 	private Point2D.Float coordinate;
 	private static int parksCreated = 0;
+	private Random rng = new Random();
 	private double spawnRate;
 	private Lane lane;
 	private CarWorld world;
+	private Car previousCar = null;
 
 	public CarPark(Lane bLane, int type, CarWorld cWorld) {
 		this.parkId = parksCreated;
 		this.lane = bLane;
-		this.spawnRate = 0.01d;
+		this.spawnRate = 0.005d;
 		this.type = type;
 		this.world = cWorld;
 		if (type == START) {
@@ -36,11 +39,12 @@ public class CarPark {
 
 	public void update() {
 		System.out.println("updating park at : " + this.parkId);
-
+		// if (Car.totalCar() < 1) {
 		if (this.type == START) {
 			// spawn cars
 			double range = this.spawnRate / 2;
 			double dice = Math.random();
+			int speed = rng.nextInt((100 - 80) + 1) + 80;
 			if (dice >= 0.5d - range && dice <= 0.5d + range) {
 
 				/*
@@ -48,12 +52,24 @@ public class CarPark {
 				 * initialLane, CarPark destinationPark, CarWorld cWorld,
 				 * Point2D.Float entryPoint)
 				 */
-				Car c1 = new Car(this.lane.getStart(), 10, this.lane,
-						this.world, this.lane.getStart());
-				c1.setCurrentSpeed(100);
-				this.world.addCar(c1);
+				if (previousCar == null) {
+					Car c = new Car(this.lane.getStart(), speed, this.lane,
+							this.world, this.lane.getStart());
+					c.setCurrentSpeed(40);
+					previousCar = c;
+					this.world.addCar(c);
+				} else {
+					if (Car.distance(previousCar.getCoordinate(),
+							this.coordinate) > 15) {
+						Car c = new Car(this.lane.getStart(), speed, this.lane,
+								this.world, this.lane.getStart());
+						c.setCurrentSpeed(40);
+						previousCar = c;
+						this.world.addCar(c);
+					}
+				}
 			}
 		}
 	}
-
+	// }
 }

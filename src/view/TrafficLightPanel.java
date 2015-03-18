@@ -71,9 +71,10 @@ public class TrafficLightPanel extends JPanel {
 					public void stateChanged(ChangeEvent e) {
 						
 						JSlider source = (JSlider)e.getSource();
+					
 						// TODO Auto-generated method stub
 						//arrays.get(currentTrafficlight-1).setGreenInterval(source.getValue());
-						System.out.println(TrifficLightID+"greenInterval:"+source.getValue());
+						System.out.println(source.getName()+source.getValue());
 						
 					}
 					
