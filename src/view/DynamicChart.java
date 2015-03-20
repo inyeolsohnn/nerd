@@ -9,7 +9,6 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
@@ -28,7 +27,7 @@ public class DynamicChart extends ApplicationFrame {
 	public DynamicChart(final String title, WorldController wc) {
 
 		super(title);
-		this.series = new TimeSeries("Random Data", Millisecond.class);
+		this.series = new TimeSeries("", Millisecond.class);
 		this.wc = wc;
 
 		final TimeSeriesCollection dataset = new TimeSeriesCollection(
@@ -71,8 +70,8 @@ public class DynamicChart extends ApplicationFrame {
 
 	private JFreeChart createChart(final XYDataset dataset) {
 		final JFreeChart result = ChartFactory.createTimeSeriesChart(
-				"Speed Chart", "Time", "Speed", dataset, true, true, false);
-
+				"Average Car Speed", "Time", "Speed", dataset, true, true, false);
+		
 		final XYPlot plot = result.getXYPlot();
 
 		plot.setBackgroundPaint(new Color(0xffffe0));
@@ -80,6 +79,7 @@ public class DynamicChart extends ApplicationFrame {
 		plot.setDomainGridlinePaint(Color.lightGray);
 		plot.setRangeGridlinesVisible(true);
 		plot.setRangeGridlinePaint(Color.lightGray);
+	
 
 		ValueAxis xaxis = plot.getDomainAxis();
 		xaxis.setAutoRange(true);

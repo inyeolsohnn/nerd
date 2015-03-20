@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 
 import control.WorldController;
 
@@ -17,7 +19,7 @@ public class MainMenu extends JPanel implements ActionListener {
 	WorldController wControl;
 	CarSimView mainFrame;
 	private JPanel buttonJPanel;
-	private JTable table = new JTable(2, 2);
+	private ImageIcon title_img;
 
 	public MainMenu(WorldController wControl, CarSimView mainFrame) {
 		this.wControl = wControl;
@@ -33,7 +35,11 @@ public class MainMenu extends JPanel implements ActionListener {
 		fullSimulation = new CustomJButton("Full Simulation");
 		fullSimulation.addActionListener(this);
 		
-		
+		title_img = new ImageIcon("src" + File.separator + "gfx"
+				+ File.separator + "title_gfx.gif");
+		JLabel titleSimulationTitle = new JLabel();
+		titleSimulationTitle.setIcon(title_img);
+		this.add(titleSimulationTitle);
 
 		this.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3,
 				Color.BLACK));

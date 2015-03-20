@@ -32,13 +32,13 @@ public class CarSimView extends JFrame {
 		mainMenu = new MainMenu(this.wControl, this);
 		consolePanel = new ConsolePanel(this.wControl, this);
 		tlp = new TrafficLightPanel(this.wControl, this);
-		usrHelpPanel = new UserHelpPanel();
+		usrHelpPanel = new UserHelpPanel(this.wControl, this);
 
 		this.setResizable(true);
-		this.setSize(1280, 830);
+		this.setSize(1280, 670);
 		mainContainer.setBackground(Color.WHITE);
-		consolePanel.setPreferredSize(new Dimension(200, 790));
-		mainMenu.setPreferredSize(new Dimension(1000, 790));
+		consolePanel.setPreferredSize(new Dimension(200, 660));
+		mainMenu.setPreferredSize(new Dimension(1000, 660));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);

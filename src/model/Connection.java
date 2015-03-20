@@ -241,9 +241,11 @@ public class Connection extends Lane {
 				.iterator();
 		while (elCars.hasNext()) {
 			Car eCar = elCars.next().getValue();
-			if (eCar.getTravelled() > Car.distance(this.interEndPoint,
+			if (eCar.getTravelled() > Car.distance(this.intersectingPoint,
 					this.tLane.getStart())
-					&& Car.distance(eCar.getCoordinate(), car.getCoordinate()) < 100f) {
+					&& Car.distance(eCar.getCoordinate(), car.getCoordinate()) < 100f
+					&& (Car.distance(eCar.getCoordinate(), this.interEndPoint) < Car
+							.distance(car.getCoordinate(), this.interEndPoint))) {
 				closest = Car.distance(eCar.getCoordinate(),
 						car.getCoordinate());
 				closestCar = eCar;

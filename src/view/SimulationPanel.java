@@ -28,7 +28,7 @@ class SimulationPanel extends JPanel implements ActionListener {
 
 		this.control = control;
 		this.mainFrame = mainFrame;
-		this.setPreferredSize(new Dimension(980, 740));
+		this.setPreferredSize(new Dimension(980, 670));
 		this.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLACK));
 		this.setBackground(Color.WHITE);
 		borderLayout = new BorderLayout();

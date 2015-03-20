@@ -4,9 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.geom.Point2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,29 +18,37 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import control.WorldController;
 import model.TrafficLight;
+import control.WorldController;
 
-public class TrafficLightPanel extends JPanel {
-	JPanel panel = new JPanel();
+public class TrafficLightPanel extends JPanel implements ActionListener {
+	JPanel panel,btnHolderPanel;
 	JScrollPane jsp;
 	BorderLayout bl = new BorderLayout();
-	JButton btn;
+	JButton rtrnButton;
 	static final int INTERVAL_MIN = 0;
 	static final int INTERVAL_MAX = 20;
 	ArrayList<TrafficLight> lights;
 	WorldController wController;
 	CarSimView mainFrame;
 	String TrifficLightID;
+	private ImageIcon traffic_img;
 	
 	public TrafficLightPanel(WorldController wController, CarSimView mainFrame) {
 		this.wController = wController;
 		this.mainFrame = mainFrame;
-		btn = new CustomJButton("Return");
-		this.add(btn);
+		panel = new JPanel();
+		btnHolderPanel = new JPanel();
+		rtrnButton = new CustomJButton("Return");
+		rtrnButton.addActionListener(this);
 		lights = wController.getLights();
 		System.out.println(lights.size());
-	
+		
+		JLabel trafficLightTitle = new JLabel();
+		traffic_img = new ImageIcon("src" + File.separator + "gfx"
+				+ File.separator + "adjustTrafficLight_gfx.png");
+		trafficLightTitle.setIcon(traffic_img);
+		
 		int trafficLightSize = lights.size();
 		GridLayout gl = new GridLayout(trafficLightSize+1,3,2,3);
 		panel.setLayout(gl);
@@ -65,6 +76,7 @@ public class TrafficLightPanel extends JPanel {
 				greenSlider.setPaintTicks(true);
 				greenSlider.setPaintLabels(true);
 				greenSlider.setMinorTickSpacing(2);
+				greenSlider.setBackground(Color.WHITE);
 				greenSlider.addChangeListener(new ChangeListener(){
 
 					@Override
@@ -87,6 +99,7 @@ public class TrafficLightPanel extends JPanel {
 				redSlider.setPaintTicks(true);
 				redSlider.setPaintLabels(true);
 				redSlider.setMinorTickSpacing(2);
+				redSlider.setBackground(Color.WHITE);
 				redSlider.addChangeListener(new ChangeListener(){
 
 					@Override
@@ -120,14 +133,26 @@ public class TrafficLightPanel extends JPanel {
 		slider1.setMinorTickSpacing(2);*/
 		panel.setLayout(gl);
 		
-		
 		jsp = new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		panel.setBackground(Color.WHITE);
-		panel.setPreferredSize(new Dimension(500,700));
-		jsp.setPreferredSize(new Dimension(1000,700));
-		
+		btnHolderPanel.setPreferredSize(new Dimension(1000,200));
+		jsp.setPreferredSize(new Dimension(700,500));
+		jsp.setBackground(Color.WHITE);
+		this.add(trafficLightTitle);
 		this.add(jsp);
+		this.add(btnHolderPanel);
+		btnHolderPanel.add(rtrnButton);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource() == rtrnButton) { // T Junction choosen by user
+			this.wController.pause();
+			mainFrame.simulationView(); //Need to confirm where user goes back too
+		}
 		
 	}
 

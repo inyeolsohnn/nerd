@@ -111,14 +111,16 @@ public class TrafficLight {
 		else if (this.status.equalsIgnoreCase("green")) {
 
 			if (tempInterval >= greenInterval + initInterval) {
-				this.status = "red";
-				tempInterval = initInterval - 1;
+				if (redInterval != 0)
+					this.status = "red";
+				tempInterval = initInterval;
 			} else {
 				tempInterval += 0.02;
 			}
 		} else {
 			if (tempInterval >= redInterval + initInterval) {
-				this.status = "green";
+				if (greenInterval != 0)
+					this.status = "green";
 				tempInterval = initInterval;
 			} else {
 				tempInterval += 0.02;

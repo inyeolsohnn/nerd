@@ -6,13 +6,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
-import view.DynamicChart;
 import control.WorldController;
 
 public class ConsolePanel extends JPanel implements ActionListener {
@@ -21,21 +22,37 @@ public class ConsolePanel extends JPanel implements ActionListener {
 	private CarSimView mainFrame;
 	private Font font = new Font("Tahoma", Font.BOLD, 20);
 	private JButton startButton, stopButton, returnButton, trafficlightButton,
-			helpButton;
+			helpButton, resetButton;
+	private JLabel cntrlPanel_gfx, carSpawnLabel, teamLabel;
 	private JPanel bottomButtonPanel, topButtonPanel;
 	private JSlider carSpawnSlider = new JSlider(0, 10, 3);
 	private BorderLayout borderLayout = new BorderLayout();
 	DynamicChart demo;
+	private ImageIcon cntrlPanel_img, teamlogo_img;
+	
 	public ConsolePanel(WorldController wController, CarSimView mainFrame) {
 		this.mainFrame = mainFrame;
 		this.wController = wController;
 		this.setPreferredSize(new Dimension(200, 800));
-		this.setBackground(Color.WHITE);
+		
 		this.setLayout(borderLayout);
 
 		topButtonPanel = new JPanel();
 		bottomButtonPanel = new JPanel();
 		demo = new DynamicChart("", this.wController);
+		
+		Font font = new Font("Tahoma", Font.BOLD, 14);
+		carSpawnLabel = new JLabel("Car Spawn Rate");
+		carSpawnLabel.setFont(font);
+		cntrlPanel_gfx = new JLabel();
+		cntrlPanel_img =new ImageIcon("src" + File.separator + "gfx"
+				+ File.separator + "cntrl_gfx.gif");
+		cntrlPanel_gfx.setIcon(cntrlPanel_img);
+		teamLabel = new JLabel();
+		teamlogo_img =new ImageIcon("src" + File.separator + "gfx"
+				+ File.separator + "teamNERD_img.gif");
+		teamLabel.setIcon(teamlogo_img);
+		
 		this.add(topButtonPanel, BorderLayout.NORTH);
 		//topButtonPanel
 		this.add(bottomButtonPanel, BorderLayout.SOUTH);
@@ -51,6 +68,8 @@ public class ConsolePanel extends JPanel implements ActionListener {
 		trafficlightButton.addActionListener(this);
 		helpButton = new CustomJButton("Help?");
 		helpButton.addActionListener(this);
+		resetButton = new CustomJButton("RESET");
+		resetButton.addActionListener(this);
 
 		JLabel controlTitleLabel = new JLabel("Control Panel");
 		controlTitleLabel.setFont(font);
@@ -60,19 +79,19 @@ public class ConsolePanel extends JPanel implements ActionListener {
 		carSpawnSlider.setPaintLabels(true);
 		carSpawnSlider.setMinorTickSpacing(2);
 
-		topButtonPanel.add(controlTitleLabel);
+		topButtonPanel.add(cntrlPanel_gfx);
 		topButtonPanel.add(stopButton);
 		topButtonPanel.add(startButton);
-		topButtonPanel.add(trafficTitleLabel);
+		topButtonPanel.add(resetButton);
 		topButtonPanel.add(trafficlightButton);
-		topButtonPanel.add(new JLabel("Car Spawn Rate"));
+		topButtonPanel.add(carSpawnLabel);
 		topButtonPanel.add(carSpawnSlider);
 		topButtonPanel.add(demo.content);
 		bottomButtonPanel.add(returnButton);
 		bottomButtonPanel.add(helpButton);
-
-		topButtonPanel.setPreferredSize(new Dimension(200, 700));
-		bottomButtonPanel.setPreferredSize(new Dimension(200, 80));
+		bottomButtonPanel.add(teamLabel);
+		topButtonPanel.setPreferredSize(new Dimension(200, 500));
+		bottomButtonPanel.setPreferredSize(new Dimension(200, 100));
 
 		mainFrame.add(this);
 	}
@@ -94,6 +113,8 @@ public class ConsolePanel extends JPanel implements ActionListener {
 		} else if (e.getSource() == helpButton) {
 			this.wController.pause();
 			mainFrame.HelpPanel();
+		}else if(e.getSource() == resetButton){
+			//RESET 
 		}
 	}
 
