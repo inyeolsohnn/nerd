@@ -1,5 +1,6 @@
 package control;
 
+import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,11 +82,6 @@ public class WorldController {
 	public ArrayList<Road> getRoads() {
 		// TODO Auto-generated method stub
 		return this.cWorld.getRoads();
-	}
-
-	public ArrayList<TrafficLight> getLights() {
-		// TODO Auto-generated method stub
-		return this.cWorld.getLights();
 	}
 
 	private void update() {
@@ -234,5 +230,24 @@ public class WorldController {
 			return 0;
 		else
 			return sum / count;
+	}
+
+	public int findLight(Point p) {
+		ArrayList<TrafficLight> lights = this.cWorld.getLights();
+		TrafficLight selected = null;
+		for (int i = 0; i < lights.size(); i++) {
+			TrafficLight cl = lights.get(i);
+			if ((p.x > cl.getCoordinate().x - 7.5 && p.x < cl.getCoordinate().x + 7.5)
+					&& (p.y > cl.getCoordinate().y - 7.5 && p.y < cl
+							.getCoordinate().y + 7.5)) {
+				selected = cl;
+				break;
+			}
+		}
+		if (selected == null)
+			return 0;
+
+		return selected.getId();
+
 	}
 }

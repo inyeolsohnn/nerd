@@ -10,11 +10,11 @@ public class Main {
 	public static void main(String[] args) {
 
 		WorldController wControl = new WorldController();
-		JFrame frame = new CarSimView("carSim", wControl);
-		wControl.setView(frame);
-
 		CarWorld cWorld = wControl.createWorld();
-		RoadController rControl = new RoadController(frame, cWorld);
+		TrafficLightController tlc = new TrafficLightController(cWorld);
+		JFrame frame = new CarSimView("carSim", wControl, tlc);
+		wControl.setView(frame);
+		tlc.setView(frame);
 
 		try {
 			wControl.simulate();

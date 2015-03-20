@@ -49,7 +49,7 @@ public class TrafficLight {
 		this.lastChanged = new Date();
 		this.status = status;
 		this.coordination = coordination;
-		this.id = totalLights;
+		this.id = totalLights+1;
 		totalLights++;
 	}
 

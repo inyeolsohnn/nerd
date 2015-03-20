@@ -8,12 +8,14 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import control.TrafficLightController;
 import control.WorldController;
 
 public class CarSimView extends JFrame {
 
 	private Container mainContainer;
 	private WorldController wControl;
+	private TrafficLightController tlc;
 	private JButton stopButton, startButton;
 	private MainMenu mainMenu;
 	private SimulationPanel simPanel;
@@ -21,17 +23,19 @@ public class CarSimView extends JFrame {
 	private TrafficLightPanel tlp;
 	private UserHelpPanel usrHelpPanel;
 
-	public CarSimView(String title, WorldController wControl) {
+	public CarSimView(String title, WorldController wControl,
+			TrafficLightController tlc) {
 		super(title);
 		mainContainer = this.getContentPane();
 		BorderLayout borderLayout = new BorderLayout();
 		// FlowLayout experimentLayout = new FlowLayout();
 		this.setLayout(borderLayout);
 		this.wControl = wControl;
+		this.tlc = tlc;
 		simPanel = new SimulationPanel(this.wControl, this);
 		mainMenu = new MainMenu(this.wControl, this);
 		consolePanel = new ConsolePanel(this.wControl, this);
-		tlp = new TrafficLightPanel(this.wControl, this);
+
 		usrHelpPanel = new UserHelpPanel(this.wControl, this);
 
 		this.setResizable(true);
@@ -48,9 +52,9 @@ public class CarSimView extends JFrame {
 
 	}
 
-	public void TrafficPanel() {
+	public void TrafficPanel(int id) {
 		mainContainer.removeAll();
-		mainContainer.add(new TrafficLightPanel(this.wControl, this));
+		mainContainer.add(new TrafficLightPanel(this.wControl, tlc, this, id));
 		mainContainer.revalidate();
 		mainContainer.repaint();
 	}

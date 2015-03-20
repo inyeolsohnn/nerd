@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -17,7 +19,7 @@ import model.Road;
 import model.TrafficLight;
 import control.WorldController;
 
-class SimulationPanel extends JPanel implements ActionListener {
+class SimulationPanel extends JPanel implements ActionListener, MouseListener {
 
 	private WorldController control;
 	private CarSimView mainFrame;
@@ -33,6 +35,7 @@ class SimulationPanel extends JPanel implements ActionListener {
 		this.setBackground(Color.WHITE);
 		borderLayout = new BorderLayout();
 		this.setLayout(borderLayout);
+		this.addMouseListener(this);
 
 	}
 
@@ -48,7 +51,7 @@ class SimulationPanel extends JPanel implements ActionListener {
 			cars.get(i).paint(g);
 
 		}
-		ArrayList<TrafficLight> lights = control.getLights();
+
 	}
 
 	// Can this be remove there not used?
@@ -64,6 +67,42 @@ class SimulationPanel extends JPanel implements ActionListener {
 		} else if (e.getSource().equals(stopButton)) {
 			this.control.pause();
 		}
+
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		// check if traffic light exists where it is clicked
+		int selected = control.findLight(e.getPoint());
+		if (selected != 0)
+			mainFrame.TrafficPanel(selected);
+		// create new trafficlight panel
+		// change color
+		// add to main panel
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 
