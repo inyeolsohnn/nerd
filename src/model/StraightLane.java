@@ -117,6 +117,54 @@ public class StraightLane extends Lane {
 		// starting from its lane
 		float closest = 100f;
 		Car closestCar = null;
+
+		float cClosest = 100f;
+		ConnectionPoint closestPoint = null;
+		// find closest connection point to the car that is <100f distance
+
+		Iterator<Entry<Point2D.Float, ConnectionPoint>> cpIt = this.connectionPoints
+				.entrySet().iterator();
+		while (cpIt.hasNext()) {
+			ConnectionPoint currentPoint = cpIt.next().getValue();
+			if (Car.distance(currentPoint.getPointCoordinate(),
+					car.getCoordinate()) < cClosest) {
+				closestPoint = currentPoint;
+				cClosest = Car.distance(currentPoint.getPointCoordinate(),
+						car.getCoordinate());
+			}
+		}
+		float dtp = -1f;
+		if (closestPoint != null) {
+			dtp = Car.distance(closestPoint.getPointCoordinate(),
+					this.getStart());
+			System.out.println("need to check cars in connection");
+			Iterator<Entry<Lane, Connection>> connectionIt = closestPoint
+					.getConnections().entrySet().iterator();
+			while (connectionIt.hasNext()) {
+				Iterator<Entry<Integer, Car>> connectionCarsIt = connectionIt
+						.next().getValue().carsInLane.entrySet().iterator();
+				while (connectionCarsIt.hasNext()) {
+					Car connectionCar = connectionCarsIt.next().getValue();
+					if ((connectionCar.getTravelled() + dtp) > car
+							.getTravelled()) {
+						if (Car.distance(connectionCar.getCoordinate(),
+								car.getCoordinate()) < closest
+								&& !car.equals(connectionCar)) {
+							closest = Car.distance(
+									connectionCar.getCoordinate(),
+									car.getCoordinate());
+							closestCar = connectionCar;
+						}
+					}
+				}
+			}
+		}
+
+		// retrieve cars in the connections that are starting from the closest
+		// connection point
+
+		// get cars in the connections that belongs to the closest connection
+		// point
 		Iterator<Entry<Integer, Car>> cit = this.carsInLane.entrySet()
 				.iterator();
 
@@ -150,7 +198,9 @@ public class StraightLane extends Lane {
 			float td = Car.distance(currentLight.getCoordinate(),
 					car.getCoordinate());
 			System.out.println("distance of the current light : " + td);
-			if (td < closest) {
+			if (td < closest
+					&& Car.distance(car.getCurrentLane().getStart(),
+							currentLight.getCoordinate()) > car.getTravelled()) {
 				System.out.println("Found a close light");
 				closest = td;
 				ctl = currentLight;

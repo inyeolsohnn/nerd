@@ -213,11 +213,43 @@ public class Connection extends Lane {
 
 	@Override
 	public Car getFrontCar(Car car) {
-		
-		//also needs to see cars infront of it from originating lane
-		
+
 		float closest = 100f;
 		Car closestCar = null;
+
+		float dtp = Car.distance(this.cp.getPointCoordinate(),
+				this.sLane.getStart());
+		// needs to see cars in front of it currently in originating lane, cars
+		// in current connection
+		// as well as cars after the connection
+
+		// in originating lane
+		Iterator<Entry<Integer, Car>> olCars = this.sLane.carsInLane.entrySet()
+				.iterator();
+		while (olCars.hasNext()) {
+			Car oCar = olCars.next().getValue();
+			if (oCar.getTravelled() > car.getTravelled() + dtp
+					&& (oCar.getTravelled() - (car.getTravelled() + dtp)) < 100f) {
+				closest = Car.distance(oCar.getCoordinate(),
+						car.getCoordinate());
+				closestCar = oCar;
+			}
+		}
+
+		// in ending lane
+		Iterator<Entry<Integer, Car>> elCars = this.tLane.carsInLane.entrySet()
+				.iterator();
+		while (elCars.hasNext()) {
+			Car eCar = elCars.next().getValue();
+			if (eCar.getTravelled() > Car.distance(this.interEndPoint,
+					this.tLane.getStart())
+					&& Car.distance(eCar.getCoordinate(), car.getCoordinate()) < 100f) {
+				closest = Car.distance(eCar.getCoordinate(),
+						car.getCoordinate());
+				closestCar = eCar;
+			}
+		}
+		// in current connection
 		Iterator<Entry<Integer, Car>> cit = this.carsInLane.entrySet()
 				.iterator();
 

@@ -277,7 +277,7 @@ public class Car {
 	private void accelerate() {
 		// TODO Auto-generated method stub
 		if (this.currentSpeed < 100) {
-			this.currentSpeed += 10 * 0.02;
+			this.currentSpeed += 20 * 0.02;
 		}
 	}
 

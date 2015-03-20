@@ -116,9 +116,12 @@ public class WorldController {
 		this.cWorld.flush();
 		// add new roads and such
 		Road sr = new StraightRoad(new Point2D.Float(100, 200),
-				new Point2D.Float(800, 400), 2, 2, this.getcWorld());
+				new Point2D.Float(1000, 400), 2, 2, this.getcWorld());
 		Road ar = new StraightRoad(new Point2D.Float(300, 100),
 				new Point2D.Float(500, 600), 2, 2, this.getcWorld());
+
+		Road cr = new StraightRoad(new Point2D.Float(700, 100),
+				new Point2D.Float(900, 600), 2, 2, this.getcWorld());
 
 		try {
 
@@ -126,12 +129,20 @@ public class WorldController {
 			Road.connectLane(sr, 2, ar, 3);
 			Road.connectLane(sr, 3, ar, 2);
 			Road.connectLane(sr, 1, ar, 1);
+			Road.connectLane(sr, 0, cr, 0);
+			Road.connectLane(sr, 2, cr, 3);
+			Road.connectLane(sr, 3, cr, 2);
+			Road.connectLane(sr, 1, cr, 1);
 
 			Road.connectLane(ar, 0, sr, 1);
 			Road.connectLane(ar, 2, sr, 2);
 			Road.connectLane(ar, 3, sr, 3);
 			Road.connectLane(ar, 1, sr, 0);
 
+			Road.connectLane(cr, 0, sr, 1);
+			Road.connectLane(cr, 2, sr, 2);
+			Road.connectLane(cr, 3, sr, 3);
+			Road.connectLane(cr, 1, sr, 0);
 			/*
 			 * Road.connectLane(sr, 1, ar, 0); Road.connectLane(sr, 1, ar, 1);
 			 * 
@@ -145,13 +156,18 @@ public class WorldController {
 
 		}
 		sr.setCarParks(0);
-		//sr.setCarParks(1);
+		sr.setCarParks(1);
+
 		sr.setCarParks(2);
-		//sr.setCarParks(3);
-	//	ar.setCarParks(1);
-		//ar.setCarParks(0);
-		//ar.setCarParks(2);
-		//ar.setCarParks(3);
+		sr.setCarParks(3);
+		ar.setCarParks(1);
+		ar.setCarParks(0);
+		ar.setCarParks(2);
+		ar.setCarParks(3);
+		cr.setCarParks(1);
+		cr.setCarParks(0);
+		cr.setCarParks(2);
+		cr.setCarParks(3);
 
 		sr.setEnding(0, true);
 		sr.setEnding(1, true);
@@ -161,9 +177,14 @@ public class WorldController {
 		ar.setEnding(1, true);
 		ar.setEnding(2, true);
 		ar.setEnding(3, true);
+		cr.setEnding(0, true);
+		cr.setEnding(1, true);
+		cr.setEnding(2, true);
+		cr.setEnding(3, true);
 
 		this.cWorld.addRoad(sr);
 		this.cWorld.addRoad(ar);
+		this.cWorld.addRoad(cr);
 
 	}
 

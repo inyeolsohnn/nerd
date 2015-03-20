@@ -19,8 +19,8 @@ public class TrafficLight {
 
 	// testing stubs
 	public TrafficLight() {
-		this.greenInterval = 100;
-		this.redInterval = 200;
+		this.greenInterval = 5;
+		this.redInterval = 5;
 		this.lastChanged = new Date();
 		System.out.println(this.lastChanged);
 		this.status = "Green";
@@ -40,10 +40,10 @@ public class TrafficLight {
 	// testing stubs end
 
 	public TrafficLight(Lane lane, String status, float greenInterval,
-			float redInterval, Point2D.Float coordination) {
+			float redInterval, float initInterval, Point2D.Float coordination) {
 		this.lane = lane;
 		System.out.println("traffic coord" + coordination);
-		this.initInterval = 0;
+		this.initInterval = initInterval;
 		this.redInterval = redInterval;
 		this.greenInterval = greenInterval;
 		this.lastChanged = new Date();
@@ -103,19 +103,23 @@ public class TrafficLight {
 		 * = "Red"; } else if (status.equals("Red")) { this.status = "Green"; }
 		 * System.out.println(this.status); }
 		 */
+		if (tempInterval < initInterval) {
+			this.status = "red";
+			tempInterval += 0.02;
+		}
 
-		if (this.status.equalsIgnoreCase("green")) {
+		else if (this.status.equalsIgnoreCase("green")) {
 
-			if (tempInterval >= greenInterval) {
+			if (tempInterval >= greenInterval + initInterval) {
 				this.status = "red";
-				tempInterval = 0.0;
+				tempInterval = initInterval - 1;
 			} else {
 				tempInterval += 0.02;
 			}
 		} else {
-			if (tempInterval >= redInterval) {
+			if (tempInterval >= redInterval + initInterval) {
 				this.status = "green";
-				tempInterval = 0.0;
+				tempInterval = initInterval;
 			} else {
 				tempInterval += 0.02;
 			}

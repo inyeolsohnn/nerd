@@ -18,7 +18,7 @@ public abstract class Lane {
 	private int laneKey;
 	protected Road contained;
 	protected float laneSpan;
-	private HashMap<Point2D.Float, ConnectionPoint> connectionPoints = new HashMap<Point2D.Float, ConnectionPoint>();
+	protected HashMap<Point2D.Float, ConnectionPoint> connectionPoints = new HashMap<Point2D.Float, ConnectionPoint>();
 	protected HashMap<Integer, Car> carsInLane = new HashMap<Integer, Car>();
 	private boolean hasPark = false;
 	private CarWorld world;
@@ -135,7 +135,7 @@ public abstract class Lane {
 					new Point2D.Float(((int) cp.getPointCoordinate().x),
 							((int) cp.getPointCoordinate().y)), cp);
 			TrafficLight tl = new TrafficLight(cp.getLane(), "green", 10f, 10f,
-					cp.getPointCoordinate());
+					1f, cp.getPointCoordinate());
 			cp.getLane().addTrafficLight(tl);
 
 			return true;
