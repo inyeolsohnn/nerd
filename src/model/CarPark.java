@@ -19,7 +19,7 @@ public class CarPark {
 	public CarPark(Lane bLane, int type, CarWorld cWorld) {
 		this.parkId = parksCreated;
 		this.lane = bLane;
-		this.spawnRate = 0.005d;
+		this.spawnRate = 0.003d;
 		this.type = type;
 		this.world = cWorld;
 		if (type == START) {
@@ -35,6 +35,10 @@ public class CarPark {
 
 	public int getId() {
 		return this.parkId;
+	}
+
+	public void setSpawn(int i) {
+		this.spawnRate = ((double) i / (double) 1000);
 	}
 
 	public void update() {

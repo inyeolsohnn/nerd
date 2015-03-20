@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import control.ParkController;
 import control.TrafficLightController;
 import control.WorldController;
 
@@ -16,6 +17,7 @@ public class CarSimView extends JFrame {
 	private Container mainContainer;
 	private WorldController wControl;
 	private TrafficLightController tlc;
+	private ParkController pc;
 	private JButton stopButton, startButton;
 	private MainMenu mainMenu;
 	private SimulationPanel simPanel;
@@ -24,7 +26,7 @@ public class CarSimView extends JFrame {
 	private UserHelpPanel usrHelpPanel;
 
 	public CarSimView(String title, WorldController wControl,
-			TrafficLightController tlc) {
+			TrafficLightController tlc, ParkController pc) {
 		super(title);
 		mainContainer = this.getContentPane();
 		BorderLayout borderLayout = new BorderLayout();
@@ -32,9 +34,10 @@ public class CarSimView extends JFrame {
 		this.setLayout(borderLayout);
 		this.wControl = wControl;
 		this.tlc = tlc;
+		this.pc=pc;
 		simPanel = new SimulationPanel(this.wControl, this);
 		mainMenu = new MainMenu(this.wControl, this);
-		consolePanel = new ConsolePanel(this.wControl, this);
+		consolePanel = new ConsolePanel(this.wControl, this, pc);
 
 		usrHelpPanel = new UserHelpPanel(this.wControl, this);
 

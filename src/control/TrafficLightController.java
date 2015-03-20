@@ -27,14 +27,22 @@ public class TrafficLightController {
 
 	public void setInterval(String color, int interval, int id) {
 		ArrayList<TrafficLight> lights = getLights();
-		TrafficLight selected;
+
 		for (int i = 0; i < lights.size(); i++) {
 			if (lights.get(i).getId() == id) {
+				TrafficLight selected = lights.get(i);
 				if (color.equals("red")) {
+					selected.setRedInterval(interval);
+					System.out.println("traffic light id : " + id
+							+ " red interval changed to : " + interval);
 				} else if (color.equals("green")) {
-
+					selected.setGreen(interval);
+					System.out.println("traffic light id : " + id
+							+ " green interval changed to : " + interval);
 				} else if (color.equals("initial")) {
-
+					selected.setInit(interval);
+					System.out.println("traffic light id : " + id
+							+ " initial interval changed to : " + interval);
 				}
 			}
 		}

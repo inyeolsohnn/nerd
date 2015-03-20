@@ -117,7 +117,7 @@ public class WorldController {
 				new Point2D.Float(500, 600), 2, 2, this.getcWorld());
 
 		Road cr = new StraightRoad(new Point2D.Float(700, 100),
-				new Point2D.Float(900, 600), 2, 2, this.getcWorld());
+				new Point2D.Float(700, 600), 2, 2, this.getcWorld());
 
 		try {
 
@@ -139,12 +139,14 @@ public class WorldController {
 			Road.connectLane(cr, 2, sr, 2);
 			Road.connectLane(cr, 3, sr, 3);
 			Road.connectLane(cr, 1, sr, 0);
-			/*
-			 * Road.connectLane(sr, 1, ar, 0); Road.connectLane(sr, 1, ar, 1);
-			 * 
-			 * Road.connectLane(ar, 1, sr, 0); Road.connectLane(ar, 0, sr, 0);
-			 * Road.connectLane(ar, 1, sr, 1); Road.connectLane(ar, 0, sr, 1);
-			 */
+
+			Road.connectLane(sr, 1, ar, 0);
+			Road.connectLane(sr, 1, ar, 1);
+
+			Road.connectLane(ar, 1, sr, 0);
+			Road.connectLane(ar, 0, sr, 0);
+			Road.connectLane(ar, 1, sr, 1);
+			Road.connectLane(ar, 0, sr, 1);
 
 		} catch (Exception e) {
 			System.out.println("error while connecting");
@@ -152,6 +154,7 @@ public class WorldController {
 
 		}
 		sr.setCarParks(0);
+
 		sr.setCarParks(1);
 
 		sr.setCarParks(2);

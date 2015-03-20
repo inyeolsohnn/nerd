@@ -12,7 +12,8 @@ public class Main {
 		WorldController wControl = new WorldController();
 		CarWorld cWorld = wControl.createWorld();
 		TrafficLightController tlc = new TrafficLightController(cWorld);
-		JFrame frame = new CarSimView("carSim", wControl, tlc);
+		ParkController pc= new ParkController(cWorld);
+		JFrame frame = new CarSimView("carSim", wControl, tlc, pc);
 		wControl.setView(frame);
 		tlc.setView(frame);
 

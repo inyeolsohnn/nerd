@@ -37,7 +37,7 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 	String TrifficLightID;
 	private ImageIcon traffic_img;
 
-	public TrafficLightPanel(WorldController wc, TrafficLightController tlc,
+	public TrafficLightPanel(WorldController wc, final TrafficLightController tlc,
 			CarSimView mainFrame, int id) {
 		this.wController = wc;
 
@@ -85,20 +85,24 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 						INTERVAL_MIN, INTERVAL_MAX, (int) lights.get(i - 1)
 								.getInit()); // THIS IS NEW
 
-				initialSlider.setName(TrifficLightID + "");
+				initialSlider.setName(TrifficLightID);
 				initialSlider.setPaintTicks(true);
 				initialSlider.setPaintLabels(true);
 				initialSlider.setMinorTickSpacing(2);
 				initialSlider.setBackground(Color.WHITE);
 				initialSlider.addChangeListener(new ChangeListener() {
 
+					private TrafficLightController tControl=tlc;
+
 					@Override
 					public void stateChanged(ChangeEvent e) {
 
 						JSlider source = (JSlider) e.getSource();
 
-						// TODO Auto-generated method stub
-						// arrays.get(currentTrafficlight-1).setGreenInterval(source.getValue());
+						//initial slider
+						int id= Integer.parseInt(source.getName());
+						int value= source.getValue();
+						tlc.setInterval("initial", value, id);
 						System.out.println(source.getName() + source.getValue());
 
 					}
@@ -109,7 +113,7 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 						INTERVAL_MIN, INTERVAL_MAX, (int) lights.get(i - 1)
 								.getGreen()); // THIS IS NEW
 
-				greenSlider.setName(TrifficLightID + "green");
+				greenSlider.setName(TrifficLightID);
 				greenSlider.setPaintTicks(true);
 				greenSlider.setPaintLabels(true);
 				greenSlider.setMinorTickSpacing(2);
@@ -121,8 +125,10 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 
 						JSlider source = (JSlider) e.getSource();
 
-						// TODO Auto-generated method stub
-						// arrays.get(currentTrafficlight-1).setGreenInterval(source.getValue());
+						//green slider
+						int id= Integer.parseInt(source.getName());
+						int value= source.getValue();
+						tlc.setInterval("green", value, id);
 						System.out.println(source.getName() + source.getValue());
 
 					}
@@ -133,7 +139,7 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 						INTERVAL_MIN, INTERVAL_MAX, (int) lights.get(i - 1)
 								.getRed()); // THIS IS NEW
 
-				redSlider.setName(TrifficLightID + "red");
+				redSlider.setName(TrifficLightID);
 				redSlider.setPaintTicks(true);
 				redSlider.setPaintLabels(true);
 				redSlider.setMinorTickSpacing(2);
@@ -144,8 +150,10 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 					public void stateChanged(ChangeEvent e) {
 
 						JSlider source = (JSlider) e.getSource();
-						// TODO Auto-generated method stub
-						// arrays.get(currentTrafficlight-1).setGreenInterval(source.getValue());
+						//red slider
+						int id= Integer.parseInt(source.getName());
+						int value= source.getValue();
+						tlc.setInterval("red", value, id);
 						System.out.println(TrifficLightID + "redInterval:"
 								+ source.getValue());
 
