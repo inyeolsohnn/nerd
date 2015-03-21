@@ -89,10 +89,10 @@ public class Car {
 			this.setTravelled(lane.findDistance(this));
 		} else if (lane instanceof Connection) {
 			this.setTravelled(1);
-			
+
 		}
 		this.coordinate = entryPoint;
-		System.out.println("Entry lane point: " + entryPoint);
+		
 		Road tRoad = lane.getRoad();
 		Lane previousLane = this.currentLane;
 		Road previousRoad;
@@ -129,19 +129,19 @@ public class Car {
 		if (ending) {
 			connections.add(dummy);
 		}
-		System.out.println("enter road: connections size" + connections.size());
+		
 		int random = rng.nextInt(connections.size());
 		Connection chosen = connections.get(random);
 
 		if (chosen.equals(dummy)) {
 			ArrayList<Lane> sameLanes = currentLane.getSameLanes();
-			System.out.println("dummy: true");
+		
 			int nr = rng.nextInt(sameLanes.size());
 			Lane chosenLane = sameLanes.get(nr);
 			this.targetLane = chosenLane;
 			this.targetConnection = null;
 		} else {
-			System.out.println("dummy: false");
+			
 			this.targetLane = chosen.getStartLane();
 			this.targetConnection = chosen;
 		}
@@ -149,11 +149,7 @@ public class Car {
 	}
 
 	public void move() {
-		if (this.targetConnection != null) {
-			System.out.println("dummy should be false");
-
-		}
-		detect();
+	
 		// ///Initial Belief section//////
 
 		Car frontCar = this.currentLane.getFrontCar(this);
@@ -172,11 +168,11 @@ public class Car {
 		// current -----100m----x-----y :: free run
 		if (cd >= 100 && td >= 100) {
 			// free run
-			System.out.println("branch 1");
+
 			accelerate();
 		} else if (td < cd && td < 100 && tfl.getStatus().equals("red")) {
 			// react to the light
-			System.out.println("branch 2");
+
 			if (td < 15)
 				this.setCurrentSpeed(0);
 			else if (td < 70)
@@ -184,7 +180,7 @@ public class Car {
 
 		} else if ((td < cd && td < 100 && tfl.getStatus().equals("green"))
 				|| (cd < td && cd < 100)) {
-			System.out.println("branch 3");
+
 			if (cd < 15) {
 				this.setCurrentSpeed(0);
 			} else if (cd < 70) {
@@ -196,7 +192,7 @@ public class Car {
 		}
 
 		boolean onCourse = checkCourse();
-		System.out.println("Car id : " + this.id + " on course " + onCourse);
+
 		// ////Initial Beleif section/////
 
 		// if oncourse & acceptable speed//
@@ -211,7 +207,7 @@ public class Car {
 		// if it can change,
 
 		if (this.currentSpeed == 0) {
-			System.out.println("Car is not moving");
+
 		} else {
 
 			float tempDistance = this.currentSpeed * 0.02f;
@@ -258,13 +254,12 @@ public class Car {
 			} else {
 			}
 			this.coordinate = nextPosition;
-			System.out.println("New Position: " + this.coordinate);
 
 			if (this.targetConnection != null) {
-				System.out.println("connection found");
+
 				if (Car.distance(this.getCoordinate(),
 						targetConnection.getStart()) < 1) {
-					System.out.println("Entering connection");
+
 					this.enterLane(targetConnection,
 							targetConnection.getStart());
 				}
@@ -281,7 +276,7 @@ public class Car {
 		}
 	}
 
-	private void remove() {
+	public void remove() {
 		// TODO Auto-generated method stub
 		this.cWorld.removeCar(this);
 		this.currentLane.removeCar(this);

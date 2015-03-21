@@ -63,9 +63,8 @@ public class DynamicChart extends ApplicationFrame {
 		this.lastValue = this.wc.getAverageSpeed();
 
 		final Millisecond now = new Millisecond();
-		this.series.add(new Millisecond(), this.lastValue);
-		System.out.println("Current Time in Milliseconds = " + now.toString()
-				+ ", Current Value : " + this.lastValue);
+		this.series.addOrUpdate(new Millisecond(), this.lastValue);
+		
 	}
 
 	private JFreeChart createChart(final XYDataset dataset) {

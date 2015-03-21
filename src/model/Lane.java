@@ -85,10 +85,6 @@ public abstract class Lane {
 
 	}
 
-	public void update() {
-		// update car parks, and traffic lights belonging to this lane
-	}
-
 	public abstract TrafficLight getNextTrafficLight(Car car);
 
 	public float getSpan() {
@@ -137,6 +133,7 @@ public abstract class Lane {
 			TrafficLight tl = new TrafficLight(cp.getLane(), "green", 5f, 5f,
 					1f, cp.getPointCoordinate());
 			cp.getLane().addTrafficLight(tl);
+			this.world.addLight(tl);
 
 			return true;
 		} else {
@@ -242,4 +239,6 @@ public abstract class Lane {
 		}
 		return sal;
 	}
+
+	public abstract void paintBorders(Graphics g);
 }

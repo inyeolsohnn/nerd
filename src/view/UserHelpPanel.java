@@ -90,7 +90,7 @@ public class UserHelpPanel extends JPanel implements ActionListener{
 		// TODO Auto-generated method stub
 		if (e.getSource() == rtrnButton) { // T Junction choosen by user
 			this.wController.pause();
-			mainFrame.mainMenu(); //Need to confirm where user goes back too
+			mainFrame.simulationView(); //Need to confirm where user goes back too
 		}
 
 	}

@@ -91,4 +91,10 @@ public class RoundAbout extends Lane {
 		return null;
 	}
 
+	@Override
+	public void paintBorders(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

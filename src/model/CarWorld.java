@@ -2,9 +2,14 @@ package model;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map.Entry;
+
+import javax.swing.JOptionPane;
 
 public class CarWorld {
 	private String status = "paused";
@@ -14,10 +19,12 @@ public class CarWorld {
 	private HashMap<Integer, Car> cars = new HashMap<Integer, Car>();
 	private ArrayList<TrafficLight> lights = new ArrayList<TrafficLight>();
 	private ArrayList<CarPark> parks = new ArrayList<CarPark>();
+	private QuadTree quad;
 
 	public CarWorld() {
 		this.height = 1000;
 		this.width = 800;
+		quad = new QuadTree(0, new Rectangle(this.width, this.height));
 	}
 
 	public CarWorld(int height, int width) {
@@ -63,7 +70,7 @@ public class CarWorld {
 	}
 
 	public HashMap<Integer, Car> getCars() {
-		// TODO Auto-generated method stub
+
 		return cars;
 	}
 
@@ -92,67 +99,12 @@ public class CarWorld {
 		return lights;
 	}
 
-	public void connectRoads() throws UnknownConnectionError {
-		// connection logic for each type of different pair of roads
-		// straight straight =0
-		// straight round= 1
-		// striahgt curve= 2
-		// round straight =1
-		// round round = 3
-		// round curve =5
-		// curve straight = 2
-		// curve round =5
-		// curve curve = 8
-		// 6 different logic in total
-
-		for (int i = 0; i < roads.size(); i++) {
-			Road currentRoad = roads.get(i);
-			for (int j = 0; j < roads.size(); j++) {
-				Road targetRoad = roads.get(j);
-				if (currentRoad.getId() != targetRoad.getId()) {
-					// first check what type of roads we are comparing against
-					int currentRoadType = currentRoad.getType();
-					int targetRoadType = targetRoad.getType();
-
-					int connectionLogic = (currentRoadType + targetRoadType)
-							+ currentRoadType * targetRoadType;
-					if (connectionLogic != 0 || connectionLogic != 1
-							|| connectionLogic != 2 || connectionLogic != 3
-							|| connectionLogic != 5 || connectionLogic != 8) {
-						throw new UnknownConnectionError();
-
-					}
-					switch (connectionLogic) {
-					case 0:
-					case 1:
-					case 2:
-					case 3:
-					case 5:
-					case 8:
-
-					}
-
-				}
-			}
-		}
-
-	}
-
 	public void flush() {
 		roads = new ArrayList<Road>();
 		cars = new HashMap<Integer, Car>();
 		parks = new ArrayList<CarPark>();
 		// TODO Auto-generated method stub
 
-	}
-
-	public void paint(Graphics g) {
-		for (int i = 0; i < roads.size(); i++) {
-			roads.get(i).paint(g);
-		}
-		for (int i = 0; i < cars.size(); i++) {
-			cars.get(i).paint(g);
-		}
 	}
 
 	public void addPark(CarPark cp) {
@@ -168,7 +120,74 @@ public class CarWorld {
 	public void addLight(TrafficLight light) {
 		// TODO Auto-generated method stub
 		this.lights.add(light);
-		
+
+	}
+
+	public void checkCollision() {
+		quad.clear();
+
+		Iterator<Entry<Integer, Car>> carIt = cars.entrySet().iterator();
+		while (carIt.hasNext()) {
+			quad.insert(carIt.next().getValue());
+		}
+		ArrayList<Car> returnObjects = new ArrayList<Car>();
+		carIt = cars.entrySet().iterator();
+		outerloop: {
+			while (carIt.hasNext()) {
+				returnObjects.clear();
+				Car currentCar = carIt.next().getValue();
+				quad.retrieve(returnObjects, currentCar);
+				for (int i = 0; i < returnObjects.size(); i++) {
+					if ((!returnObjects.get(i).equals(currentCar))
+							&& Car.distance(returnObjects.get(i)
+									.getCoordinate(), currentCar
+									.getCoordinate()) < 7) {
+						System.out.println("Collision detected");
+						this.status = "paused";
+						reset();
+						cars.put(currentCar.getId(), currentCar);
+						cars.put(returnObjects.get(i).getId(),
+								returnObjects.get(i));
+						JOptionPane
+								.showMessageDialog(null,
+										"Collision detected. Pressing ok will reset current simulation");
+
+						reset();
+						break outerloop;
+					}
+				}
+			}
+		}
+	}
+
+	private void reset() {
+		// TODO Auto-generated method stub
+		// remove cars from car world
+
+		// remove cars from straight lanes
+		// remove cars from connections
+		for (int i = 0; i < roads.size(); i++) {
+			Road cr = roads.get(i);
+			Iterator<Entry<Integer, Lane>> lIt = cr.lanes.entrySet().iterator();
+			while (lIt.hasNext()) {
+				lIt.next().getValue().carsInLane.clear();
+				Iterator<Entry<Point2D.Float, ConnectionPoint>> cpIt = lIt
+						.next().getValue().connectionPoints.entrySet()
+						.iterator();
+				while (cpIt.hasNext()) {
+					Iterator<Entry<Lane, Connection>> conIt = cpIt.next()
+							.getValue().connections.entrySet().iterator();
+					while (conIt.hasNext()) {
+						conIt.next().getValue().carsInLane.clear();
+					}
+				}
+			}
+		}
+		this.cars.clear();
+
+		// remove previous car from car park
+		// reset time intervals in traffic lights
+
 	}
 
 }

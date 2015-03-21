@@ -25,7 +25,7 @@ public class ConsolePanel extends JPanel implements ActionListener {
 	private CarSimView mainFrame;
 	private Font font = new Font("Tahoma", Font.BOLD, 20);
 	private JButton startButton, stopButton, returnButton, trafficlightButton,
-			helpButton, resetButton;
+			helpButton, resetButton, addLightBtn;
 	private JLabel cntrlPanel_gfx, carSpawnLabel, teamLabel;
 	private JPanel bottomButtonPanel, topButtonPanel;
 	private JSlider carSpawnSlider = new JSlider(0, 20, 3);
@@ -66,6 +66,8 @@ public class ConsolePanel extends JPanel implements ActionListener {
 		stopButton.addActionListener(this);
 		startButton = new CustomJButton("Start");
 		startButton.addActionListener(this);
+		addLightBtn = new CustomJButton("Add Traffic Light");
+		addLightBtn.addActionListener(this);
 		returnButton = new CustomJButton("Return To Main Menu");
 		returnButton.addActionListener(this);
 		trafficlightButton = new CustomJButton("Adjust Traffic Lights");
@@ -102,7 +104,10 @@ public class ConsolePanel extends JPanel implements ActionListener {
 		topButtonPanel.add(stopButton);
 		topButtonPanel.add(startButton);
 		topButtonPanel.add(resetButton);
+		
 		topButtonPanel.add(trafficlightButton);
+		
+		topButtonPanel.add(addLightBtn);
 		topButtonPanel.add(carSpawnLabel);
 		topButtonPanel.add(carSpawnSlider);
 		topButtonPanel.add(demo.content);

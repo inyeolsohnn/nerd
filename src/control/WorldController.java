@@ -100,7 +100,7 @@ public class WorldController {
 			lights.get(i).update();
 		}
 		((CarSimView) carView).getDynamicChart().updateData();
-
+		this.cWorld.checkCollision();
 		this.carView.repaint();
 
 	}
@@ -121,7 +121,7 @@ public class WorldController {
 
 		try {
 
-			Road.connectLane(sr, 0, ar, 0);
+			// Road.connectLane(sr, 0, ar, 0);
 			Road.connectLane(sr, 2, ar, 3);
 			Road.connectLane(sr, 3, ar, 2);
 			Road.connectLane(sr, 1, ar, 1);
@@ -252,5 +252,10 @@ public class WorldController {
 
 		return selected.getId();
 
+	}
+
+	public ArrayList<TrafficLight> getLights() {
+		// TODO Auto-generated method stub
+		return this.cWorld.getLights();
 	}
 }

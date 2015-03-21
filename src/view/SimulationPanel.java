@@ -46,10 +46,17 @@ class SimulationPanel extends JPanel implements ActionListener, MouseListener {
 			roads.get(i).paint(g);
 
 		}
+		for(int i=0; i<roads.size(); i++){
+			roads.get(i).paintBorders(g);
+		}
 		ArrayList<Car> cars = new ArrayList<Car>(control.getCars().values());
 		for (int i = 0; i < cars.size(); i++) {
 			cars.get(i).paint(g);
 
+		}
+		ArrayList<TrafficLight> lights = control.getLights();
+		for (int i = 0; i < lights.size(); i++) {
+			lights.get(i).paint(g);
 		}
 
 	}

@@ -42,14 +42,14 @@ public class CarPark {
 	}
 
 	public void update() {
-		System.out.println("updating park at : " + this.parkId);
+		
 		// if (Car.totalCar() < 1) {
 		if (this.type == START) {
 			// spawn cars
 			double range = this.spawnRate / 2;
 			double dice = Math.random();
 			int speed = rng.nextInt((100 - 80) + 1) + 80;
-			if (dice >= 0.5d - range && dice <= 0.5d + range) {
+			if (dice >= 0.5d - range && dice <= 0.5d + range&&this.world.getCars().size()<30) {
 
 				/*
 				 * public Car(Point2D.Float coordinate, float maxSpeed, Lane

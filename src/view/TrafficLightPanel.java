@@ -56,7 +56,7 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 		trafficLightTitle.setIcon(traffic_img);
 
 		int trafficLightSize = lights.size();
-		GridLayout gl = new GridLayout(trafficLightSize + 1, 4, 2, 3);
+		GridLayout gl = new GridLayout(trafficLightSize + 1, 5, 2, 3);
 		panel.setLayout(gl);
 
 		for (int i = 0; i < trafficLightSize + 1; i++) {
@@ -66,10 +66,12 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				JLabel lbl0 = new JLabel("initial interval");
 				JLabel lbl2 = new JLabel("greenInterval");
 				JLabel lbl3 = new JLabel("redInterval");
+				JLabel lbl4 = new JLabel("remove");
 				panel.add(lbl);
 				panel.add(lbl0);
 				panel.add(lbl2);
 				panel.add(lbl3);
+				panel.add(lbl4);
 			} else {
 				TrifficLightID = "" + lights.get(i - 1).getId(); // THIS IS NEW
 
@@ -160,11 +162,21 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 					}
 
 				});
-				
+				JButton removeBtn = new CustomJButton("remove");
+				removeBtn.setPreferredSize(new Dimension(30,20));
+				removeBtn.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				});
 				panel.add(initialSlider);
 				panel.add(greenSlider);
 				panel.add(redSlider);
-				
+				panel.add(removeBtn);
 
 			}
 
@@ -182,7 +194,7 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		panel.setBackground(Color.WHITE);
 		btnHolderPanel.setPreferredSize(new Dimension(1000, 200));
-		jsp.setPreferredSize(new Dimension(900, 500));
+		jsp.setPreferredSize(new Dimension(1200, 500));
 		jsp.setBackground(Color.WHITE);
 		this.add(trafficLightTitle);
 		this.add(jsp);

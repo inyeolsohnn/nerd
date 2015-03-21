@@ -279,4 +279,10 @@ public class Connection extends Lane {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void paintBorders(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
 }

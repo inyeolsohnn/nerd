@@ -22,7 +22,7 @@ public abstract class Road {
 	// definition of connection: contiguous legal movements possible
 	protected final int roadId;
 	protected final int roadType;
-	protected final static int roadWidth = 30; // each roads are 30 pixels wide
+	protected final static int roadWidth = 20; // each lanes are 20 pixels wide
 	private static int roadsCreated = 0;
 	public static final int STRAIGHT_LANE = 0;
 	public static final int ROUNDABOUT = 1;
@@ -47,6 +47,7 @@ public abstract class Road {
 			currentLane.paint(g);
 
 		}
+
 	}
 
 	/**** road type dependent ****/
@@ -317,7 +318,7 @@ public abstract class Road {
 					// highest is odd-> next highest should be even since
 					// bilateral
 					for (int i = sortedT.size() - 2; i >= 0; i--) {
-						if (sortedT.get(i)%2 == 0) {
+						if (sortedT.get(i) % 2 == 0) {
 							tNextHighest = sortedT.get(i);
 							break;
 						}
@@ -573,20 +574,20 @@ public abstract class Road {
 					if (dd1 > dd2) {
 						// ii2 is the closest intersection point
 						// lies on line2
-						
+
 						closestPoint = ii2;
 						closestLine = sLine2;
 
 					} else if (dd2 > dd1) {
 						// ii1 is the closest intersection point
 						// lies on line1
-						
+
 						closestPoint = ii1;
 						closestLine = sLine1;
 					} else {
 						// they are the same so chose which ever point
 						// lies on line1
-						
+
 						closestPoint = ii1;
 						closestLine = sLine1;
 					}
@@ -635,7 +636,7 @@ public abstract class Road {
 				Connection cn = new Connection(currentRoad, startingL,
 						targetRoad, endingL, cp, intersectingStartPoint,
 						intersectingEndPoint, intersectingControlPoint);
-				
+
 				success = startingL.addConnectionPoint(cp, cn);
 			}
 
@@ -713,14 +714,14 @@ public abstract class Road {
 	public void setCarParks(int s) {
 		if (this instanceof StraightRoad) {
 			System.out.println("Straight road detected");
-			
+
 			Iterator<Entry<Integer, Lane>> lit = this.lanes.entrySet()
 					.iterator();
 			while (lit.hasNext()) {
 				Map.Entry<Integer, Lane> lp = lit.next();
 				Lane cl = lp.getValue();
 				int laneKey = cl.getLaneKey();
-				if (laneKey  == s && !cl.getHasPark()) {
+				if (laneKey == s && !cl.getHasPark()) {
 
 					CarPark newPark = new CarPark(cl, CarPark.START, this.world);
 					this.world.getParks().add(newPark);
@@ -755,6 +756,16 @@ public abstract class Road {
 
 		} else {
 			System.out.println("road type doesn't support car park");
+		}
+	}
+
+	public void paintBorders(Graphics g) {
+		// TODO Auto-generated method stub
+		Iterator<Entry<Integer, Lane>> lit = lanes.entrySet().iterator();
+
+		while (lit.hasNext()) {
+			Lane currentLane = lit.next().getValue();
+			currentLane.paintBorders(g);
 		}
 	}
 

@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -40,11 +41,10 @@ public class StraightLane extends Lane {
 		Point2D.Float displacement = new Point2D.Float((end.x - start.x)
 				/ laneSpan * desiredDistance, (end.y - start.y) / laneSpan
 				* desiredDistance);
-		System.out.println("New displacement: " + displacement);
 
 		Point2D.Float newPoint = new Point2D.Float(car.getCoordinate().x
 				+ displacement.x, car.getCoordinate().y + displacement.y);
-		System.out.println("New point: " + newPoint);
+
 		car.setTravelled(car.getTravelled() + targetDistance);
 		return newPoint;
 	}
@@ -72,9 +72,8 @@ public class StraightLane extends Lane {
 		qualityHints.put(RenderingHints.KEY_RENDERING,
 				RenderingHints.VALUE_RENDER_QUALITY);
 		g2D.setRenderingHints(qualityHints);
-		g.drawPolygon(xpoints, ypoints, 4);
-
-		this.paintTrafficLights(g);
+		g.setColor(new Color(160, 160, 160));
+		g.fillPolygon(xpoints, ypoints, 4);
 
 	}
 
@@ -137,7 +136,7 @@ public class StraightLane extends Lane {
 		if (closestPoint != null) {
 			dtp = Car.distance(closestPoint.getPointCoordinate(),
 					this.getStart());
-			System.out.println("need to check cars in connection");
+
 			Iterator<Entry<Lane, Connection>> connectionIt = closestPoint
 					.getConnections().entrySet().iterator();
 			while (connectionIt.hasNext()) {
@@ -171,8 +170,7 @@ public class StraightLane extends Lane {
 		while (cit.hasNext()) {
 			Map.Entry<Integer, Car> cPair = cit.next();
 			Car cCar = cPair.getValue();
-			System.out.println("id : " + cCar.getId()
-					+ " distance travelled : " + cCar.getTravelled());
+
 			if (cCar.getTravelled() > car.getTravelled()) {
 				// cCar is somewhere ahead of the car in the same lane
 				if (((cCar.getTravelled() - car.getTravelled()) < closest)
@@ -192,16 +190,16 @@ public class StraightLane extends Lane {
 		// TODO Auto-generated method stub
 		float closest = 100;
 		TrafficLight ctl = null;
-		System.out.println("Number of lights : " + this.trafficLights.size());
+
 		for (int i = 0; i < this.trafficLights.size(); i++) {
 			TrafficLight currentLight = trafficLights.get(i);
 			float td = Car.distance(currentLight.getCoordinate(),
 					car.getCoordinate());
-			System.out.println("distance of the current light : " + td);
+
 			if (td < closest
 					&& Car.distance(car.getCurrentLane().getStart(),
 							currentLight.getCoordinate()) > car.getTravelled()) {
-				System.out.println("Found a close light");
+
 				closest = td;
 				ctl = currentLight;
 
@@ -209,5 +207,33 @@ public class StraightLane extends Lane {
 		}
 
 		return ctl;
+	}
+
+	@Override
+	public void paintBorders(Graphics g) {
+		// TODO Auto-generated method stub
+		Point2D.Float start = this.getStart();
+		Point2D.Float end = this.getEnd();
+		Point2D.Float halfVector = gethalf(start, end);
+		Point2D.Float p1 = new Point2D.Float(end.x - halfVector.x, end.y
+				- halfVector.y);
+		Point2D.Float p2 = new Point2D.Float(start.x - halfVector.x, start.y
+				- halfVector.y);
+
+		Point2D.Float p3 = new Point2D.Float(start.x + halfVector.x, start.y
+				+ halfVector.y);
+		Point2D.Float p4 = new Point2D.Float(end.x + halfVector.x, end.y
+				+ halfVector.y);
+		int xpoints[] = { (int) p1.x, (int) p2.x, (int) p3.x, (int) p4.x };
+		int ypoints[] = { (int) p1.y, (int) p2.y, (int) p3.y, (int) p4.y };
+		Graphics2D g2D = (Graphics2D) g;
+		RenderingHints qualityHints = new RenderingHints(
+				RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		qualityHints.put(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY);
+		g2D.setRenderingHints(qualityHints);
+		g.setColor(Color.white);
+		g.drawPolygon(xpoints, ypoints, 4);
 	}
 }
