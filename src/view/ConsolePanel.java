@@ -28,7 +28,7 @@ public class ConsolePanel extends JPanel implements ActionListener {
 			helpButton, resetButton, addLightBtn;
 	private JLabel cntrlPanel_gfx, carSpawnLabel, teamLabel;
 	private JPanel bottomButtonPanel, topButtonPanel;
-	private JSlider carSpawnSlider = new JSlider(0, 20, 3);
+	private JSlider carSpawnSlider = new JSlider(0, 10, 3);
 	private BorderLayout borderLayout = new BorderLayout();
 	DynamicChart demo;
 	private ImageIcon cntrlPanel_img, teamlogo_img;
@@ -143,21 +143,11 @@ public class ConsolePanel extends JPanel implements ActionListener {
 		} else if (e.getSource() == addLightBtn) {
 			if (mainFrame.getAddingLight()) {
 				mainFrame.setAddingLight(false);
-				startButton.setEnabled(true);
-				stopButton.setEnabled(true);
-				helpButton.setEnabled(true);
-				trafficlightButton.setEnabled(true);
-				helpButton.setEnabled(true);
-				resetButton.setEnabled(true);
+
 			} else if (!mainFrame.getAddingLight()) {
 				wController.pause();
 				mainFrame.setAddingLight(true);
-				startButton.setEnabled(false);
-				stopButton.setEnabled(false);
-				helpButton.setEnabled(false);
-				trafficlightButton.setEnabled(false);
-				helpButton.setEnabled(false);
-				resetButton.setEnabled(false);
+
 			}
 			mainFrame.repaint();
 		}
@@ -166,5 +156,24 @@ public class ConsolePanel extends JPanel implements ActionListener {
 	public DynamicChart getDynamicChart() {
 		// TODO Auto-generated method stub
 		return this.demo;
+	}
+
+	public void enableButtons() {
+		// TODO Auto-generated method stub
+		startButton.setEnabled(true);
+		stopButton.setEnabled(true);
+		helpButton.setEnabled(true);
+		trafficlightButton.setEnabled(true);
+		helpButton.setEnabled(true);
+		resetButton.setEnabled(true);
+	}
+
+	public void disableButtons() {
+		startButton.setEnabled(false);
+		stopButton.setEnabled(false);
+		helpButton.setEnabled(false);
+		trafficlightButton.setEnabled(false);
+		helpButton.setEnabled(false);
+		resetButton.setEnabled(false);
 	}
 }

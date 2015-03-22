@@ -36,7 +36,7 @@ public class CarSimView extends JFrame {
 		this.wControl = wControl;
 		this.tlc = tlc;
 		this.pc = pc;
-		simPanel = new SimulationPanel(this.wControl, this);
+		simPanel = new SimulationPanel(this.wControl, tlc, this);
 		mainMenu = new MainMenu(this.wControl, this);
 		consolePanel = new ConsolePanel(this.wControl, this, pc);
 
@@ -98,8 +98,14 @@ public class CarSimView extends JFrame {
 
 	public void setAddingLight(boolean b) {
 		// TODO Auto-generated method stub
-	
+
 		addingLight = b;
+		if (b == true) {
+			this.consolePanel.disableButtons();
+		} else {
+			this.consolePanel.enableButtons();
+		}
+
 	}
 
 	public boolean getAddingLight() {

@@ -1,5 +1,6 @@
 package control;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -56,5 +57,11 @@ public class TrafficLightController {
 			}
 		}
 
+	}
+
+	public void addNewLight(Integer selectedPark, Point point) {
+		// TODO Auto-generated method stub
+		this.world.addNewLight(selectedPark, point);
+		
 	}
 }

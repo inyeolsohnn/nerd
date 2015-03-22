@@ -80,6 +80,14 @@ public abstract class Lane {
 	public void addTrafficLight(TrafficLight light) {
 		// needs to check if the point lies on the lane
 		// not yet implemented
+		ArrayList<TrafficLight> lights = this.world.getLights();
+		for (int i = 0; i < lights.size(); i++) {
+			TrafficLight currentLight = lights.get(i);
+			if (Car.distance(currentLight.getCoordinate(),
+					light.getCoordinate()) < 5) {
+				return;
+			}
+		}
 		this.trafficLights.add(light);
 		this.world.addLight(light);
 

@@ -280,4 +280,19 @@ public class WorldController {
 		this.cWorld.reset();
 	}
 
+	public Integer findPark(Point p) {
+		// TODO Auto-generated method stub
+		ArrayList<CarPark> parks = this.cWorld.getParks();
+
+		for (int i = 0; i < parks.size(); i++) {
+			CarPark cp = parks.get(i);
+			if ((p.x > cp.getCoordinate().x - 7.5 && p.x < cp.getCoordinate().x + 7.5)
+					&& (p.y > cp.getCoordinate().y - 7.5 && p.y < cp
+							.getCoordinate().y + 7.5)) {
+				return cp.getId();
+			}
+		}
+		return null;
+	}
+
 }

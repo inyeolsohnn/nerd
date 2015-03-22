@@ -11,7 +11,7 @@ public class CarPark {
 	private int parkId;
 	private int type;
 	private Point2D.Float coordinate;
-	private static int parksCreated = 0;
+	public static int parksCreated = 0;
 	private Random rng = new Random();
 	private double spawnRate;
 	private Lane lane;
@@ -78,6 +78,7 @@ public class CarPark {
 			}
 		}
 	}
+
 	// }
 
 	public void paint(Graphics g) {
@@ -87,6 +88,14 @@ public class CarPark {
 				(int) (coordinate.x - Math.sqrt(2 * (Math.pow(7.5 / 2, 2)))),
 				(int) (coordinate.y - Math.sqrt(2 * (Math.pow(7.5 / 2, 2)))),
 				15, 15);
-		
+
+	}
+
+	public Point2D.Float getCoordinate() {
+		return this.coordinate;
+	}
+	
+	public Lane getLane(){
+		return this.lane;
 	}
 }

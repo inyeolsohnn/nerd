@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -98,9 +99,11 @@ public class CarWorld {
 	public void flush() {
 		TrafficLight.totalLights = 0;
 		Car.carsCreated = 0;
+		CarPark.parksCreated = 0;
 		roads = new ArrayList<Road>();
 		cars = new HashMap<Integer, Car>();
 		parks = new ArrayList<CarPark>();
+		this.lights = new ArrayList<TrafficLight>();
 		// TODO Auto-generated method stub
 
 	}
@@ -187,4 +190,68 @@ public class CarWorld {
 
 	}
 
+	public void addNewLight(Integer selectedPark, Point point) {
+		// TODO Auto-generated method stub
+		Lane selectedLane = null;
+		for (int i = 0; i < parks.size(); i++) {
+			if (parks.get(i).getId() == selectedPark) {
+				selectedLane = parks.get(i).getLane();
+				break;
+			}
+		}
+		Point2D.Float closest = getClosestPointOnSegment(
+				selectedLane.getStart(), selectedLane.getEnd(), point);
+		TrafficLight tl = new TrafficLight(selectedLane, "green", 5f, 5f, 1f,
+				closest);
+		selectedLane.addTrafficLight(tl);
+
+	}
+
+	public static Point2D.Float getClosestPointOnSegment(Point2D.Float ss,
+			Point2D.Float se, Point p) {
+		return getClosestPointOnSegment(ss.x, ss.y, se.x, se.y, p.x, p.y);
+	}
+
+	/**
+	 * Returns closest point on segment to point
+	 * 
+	 * @param sx1
+	 *            segment x coord 1
+	 * @param sy1
+	 *            segment y coord 1
+	 * @param sx2
+	 *            segment x coord 2
+	 * @param sy2
+	 *            segment y coord 2
+	 * @param px
+	 *            point x coord
+	 * @param py
+	 *            point y coord
+	 * @return closets point on segment to point
+	 */
+	public static Point2D.Float getClosestPointOnSegment(float sx1, float sy1,
+			float sx2, float sy2, int px, int py) {
+		double xDelta = sx2 - sx1;
+		double yDelta = sy2 - sy1;
+
+		if ((xDelta == 0) && (yDelta == 0)) {
+			throw new IllegalArgumentException(
+					"Segment start equals segment end");
+		}
+
+		double u = ((px - sx1) * xDelta + (py - sy1) * yDelta)
+				/ (xDelta * xDelta + yDelta * yDelta);
+
+		final Point2D.Float closestPoint;
+		if (u < 0) {
+			closestPoint = new Point2D.Float(sx1, sy1);
+		} else if (u > 1) {
+			closestPoint = new Point2D.Float(sx2, sy2);
+		} else {
+			closestPoint = new Point2D.Float((float) Math.round(sx1 + u
+					* xDelta), (float) Math.round(sy1 + u * yDelta));
+		}
+
+		return closestPoint;
+	}
 }
