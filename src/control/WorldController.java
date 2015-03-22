@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import view.CarSimView;
 import model.Car;
@@ -100,7 +101,18 @@ public class WorldController {
 			lights.get(i).update();
 		}
 		((CarSimView) carView).getDynamicChart().updateData();
-		this.cWorld.checkCollision();
+		ArrayList<Car> collided = this.cWorld.checkCollision();
+		if (collided.size() == 2) {
+
+			cWorld.reset();
+			for (int i = 0; i < collided.size(); i++) {
+				this.cWorld.addCar(collided.get(i));
+			}
+			this.carView.repaint();
+			JOptionPane.showMessageDialog(null, "Collision detected!");
+			cWorld.reset();
+		}
+
 		this.carView.repaint();
 
 	}

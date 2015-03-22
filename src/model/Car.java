@@ -92,7 +92,7 @@ public class Car {
 
 		}
 		this.coordinate = entryPoint;
-		
+
 		Road tRoad = lane.getRoad();
 		Lane previousLane = this.currentLane;
 		Road previousRoad;
@@ -129,19 +129,19 @@ public class Car {
 		if (ending) {
 			connections.add(dummy);
 		}
-		
+
 		int random = rng.nextInt(connections.size());
 		Connection chosen = connections.get(random);
 
 		if (chosen.equals(dummy)) {
 			ArrayList<Lane> sameLanes = currentLane.getSameLanes();
-		
+
 			int nr = rng.nextInt(sameLanes.size());
 			Lane chosenLane = sameLanes.get(nr);
 			this.targetLane = chosenLane;
 			this.targetConnection = null;
 		} else {
-			
+
 			this.targetLane = chosen.getStartLane();
 			this.targetConnection = chosen;
 		}
@@ -149,7 +149,7 @@ public class Car {
 	}
 
 	public void move() {
-	
+
 		// ///Initial Belief section//////
 
 		Car frontCar = this.currentLane.getFrontCar(this);
@@ -207,7 +207,9 @@ public class Car {
 		// if it can change,
 
 		if (this.currentSpeed == 0) {
-
+			if (frontCar != null) {
+				System.out.println("front car : " + frontCar.coordinate);
+			}
 		} else {
 
 			float tempDistance = this.currentSpeed * 0.02f;

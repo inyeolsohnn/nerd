@@ -123,57 +123,53 @@ public class CarWorld {
 
 	}
 
-	public void checkCollision() {
+	public ArrayList<Car> checkCollision() {
 		quad.clear();
-
+		ArrayList<Car> collided = new ArrayList<Car>();
 		Iterator<Entry<Integer, Car>> carIt = cars.entrySet().iterator();
 		while (carIt.hasNext()) {
 			quad.insert(carIt.next().getValue());
 		}
 		ArrayList<Car> returnObjects = new ArrayList<Car>();
 		carIt = cars.entrySet().iterator();
-		outerloop: {
-			while (carIt.hasNext()) {
-				returnObjects.clear();
-				Car currentCar = carIt.next().getValue();
-				quad.retrieve(returnObjects, currentCar);
-				for (int i = 0; i < returnObjects.size(); i++) {
-					if ((!returnObjects.get(i).equals(currentCar))
-							&& Car.distance(returnObjects.get(i)
-									.getCoordinate(), currentCar
-									.getCoordinate()) < 7) {
-						System.out.println("Collision detected");
-						this.status = "paused";
-						reset();
-						cars.put(currentCar.getId(), currentCar);
-						cars.put(returnObjects.get(i).getId(),
-								returnObjects.get(i));
-						JOptionPane
-								.showMessageDialog(null,
-										"Collision detected. Pressing ok will reset current simulation");
 
-						reset();
-						break outerloop;
-					}
+		while (carIt.hasNext()) {
+			returnObjects.clear();
+			Car currentCar = carIt.next().getValue();
+			quad.retrieve(returnObjects, currentCar);
+			for (int i = 0; i < returnObjects.size(); i++) {
+				if ((!returnObjects.get(i).equals(currentCar))
+						&& Car.distance(returnObjects.get(i).getCoordinate(),
+								currentCar.getCoordinate()) < 7) {
+					System.out.println("Collision detected");
+					this.status = "paused";
+					collided.add(currentCar);
+					collided.add(returnObjects.get(i));
+					return collided;
+
 				}
 			}
 		}
+		return collided;
 	}
 
-	private void reset() {
+	public void reset() {
 		// TODO Auto-generated method stub
 		// remove cars from car world
 
 		// remove cars from straight lanes
 		// remove cars from connections
+
 		for (int i = 0; i < roads.size(); i++) {
+
 			Road cr = roads.get(i);
+
 			Iterator<Entry<Integer, Lane>> lIt = cr.lanes.entrySet().iterator();
 			while (lIt.hasNext()) {
-				lIt.next().getValue().carsInLane.clear();
-				Iterator<Entry<Point2D.Float, ConnectionPoint>> cpIt = lIt
-						.next().getValue().connectionPoints.entrySet()
-						.iterator();
+				Lane currentLane = lIt.next().getValue();
+				currentLane.carsInLane.clear();
+				Iterator<Entry<Point2D.Float, ConnectionPoint>> cpIt = currentLane.connectionPoints
+						.entrySet().iterator();
 				while (cpIt.hasNext()) {
 					Iterator<Entry<Lane, Connection>> conIt = cpIt.next()
 							.getValue().connections.entrySet().iterator();
