@@ -104,9 +104,9 @@ public class ConsolePanel extends JPanel implements ActionListener {
 		topButtonPanel.add(stopButton);
 		topButtonPanel.add(startButton);
 		topButtonPanel.add(resetButton);
-		
+
 		topButtonPanel.add(trafficlightButton);
-		
+
 		topButtonPanel.add(addLightBtn);
 		topButtonPanel.add(carSpawnLabel);
 		topButtonPanel.add(carSpawnSlider);
@@ -139,6 +139,27 @@ public class ConsolePanel extends JPanel implements ActionListener {
 			mainFrame.HelpPanel();
 		} else if (e.getSource() == resetButton) {
 			// RESET
+			this.wController.reset();
+		} else if (e.getSource() == addLightBtn) {
+			if (mainFrame.getAddingLight()) {
+				mainFrame.setAddingLight(false);
+				startButton.setEnabled(true);
+				stopButton.setEnabled(true);
+				helpButton.setEnabled(true);
+				trafficlightButton.setEnabled(true);
+				helpButton.setEnabled(true);
+				resetButton.setEnabled(true);
+			} else if (!mainFrame.getAddingLight()) {
+				wController.pause();
+				mainFrame.setAddingLight(true);
+				startButton.setEnabled(false);
+				stopButton.setEnabled(false);
+				helpButton.setEnabled(false);
+				trafficlightButton.setEnabled(false);
+				helpButton.setEnabled(false);
+				resetButton.setEnabled(false);
+			}
+			mainFrame.repaint();
 		}
 	}
 

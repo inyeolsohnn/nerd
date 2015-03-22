@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
@@ -42,14 +44,15 @@ public class CarPark {
 	}
 
 	public void update() {
-		
+
 		// if (Car.totalCar() < 1) {
 		if (this.type == START) {
 			// spawn cars
 			double range = this.spawnRate / 2;
 			double dice = Math.random();
 			int speed = rng.nextInt((100 - 80) + 1) + 80;
-			if (dice >= 0.5d - range && dice <= 0.5d + range&&this.world.getCars().size()<30) {
+			if (dice >= 0.5d - range && dice <= 0.5d + range
+					&& this.world.getCars().size() < 50) {
 
 				/*
 				 * public Car(Point2D.Float coordinate, float maxSpeed, Lane
@@ -76,4 +79,14 @@ public class CarPark {
 		}
 	}
 	// }
+
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		g.setColor(Color.BLACK);
+		g.fillOval(
+				(int) (coordinate.x - Math.sqrt(2 * (Math.pow(7.5 / 2, 2)))),
+				(int) (coordinate.y - Math.sqrt(2 * (Math.pow(7.5 / 2, 2)))),
+				15, 15);
+		
+	}
 }

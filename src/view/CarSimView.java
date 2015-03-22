@@ -24,6 +24,7 @@ public class CarSimView extends JFrame {
 	private ConsolePanel consolePanel;
 	private TrafficLightPanel tlp;
 	private UserHelpPanel usrHelpPanel;
+	private boolean addingLight = false;
 
 	public CarSimView(String title, WorldController wControl,
 			TrafficLightController tlc, ParkController pc) {
@@ -34,7 +35,7 @@ public class CarSimView extends JFrame {
 		this.setLayout(borderLayout);
 		this.wControl = wControl;
 		this.tlc = tlc;
-		this.pc=pc;
+		this.pc = pc;
 		simPanel = new SimulationPanel(this.wControl, this);
 		mainMenu = new MainMenu(this.wControl, this);
 		consolePanel = new ConsolePanel(this.wControl, this, pc);
@@ -93,6 +94,16 @@ public class CarSimView extends JFrame {
 	public DynamicChart getDynamicChart() {
 
 		return consolePanel.getDynamicChart();
+	}
+
+	public void setAddingLight(boolean b) {
+		// TODO Auto-generated method stub
+	
+		addingLight = b;
+	}
+
+	public boolean getAddingLight() {
+		return this.addingLight;
 	}
 
 }

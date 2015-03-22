@@ -14,7 +14,7 @@ public class TrafficLight {
 	private Date lastChanged;
 	private Point2D.Float coordination;
 	private int id;
-	private static int totalLights = 0;
+	public static int totalLights = 0;
 	private double tempInterval = 0.0;
 
 	// testing stubs

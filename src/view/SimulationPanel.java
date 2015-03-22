@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import model.Car;
+import model.CarPark;
 import model.Road;
 import model.TrafficLight;
 import control.WorldController;
@@ -40,6 +41,7 @@ class SimulationPanel extends JPanel implements ActionListener, MouseListener {
 	}
 
 	protected void paintComponent(Graphics g) {
+		
 		ArrayList<Road> roads = control.getRoads();
 		System.out.println("Painting roads");
 		for (int i = 0; i < roads.size(); i++) {
@@ -58,6 +60,12 @@ class SimulationPanel extends JPanel implements ActionListener, MouseListener {
 		for (int i = 0; i < cars.size(); i++) {
 			cars.get(i).paint(g);
 
+		}
+		if(mainFrame.getAddingLight()){
+			ArrayList<CarPark> parks = this.control.getParks();
+			for(int i=0; i<parks.size(); i++){
+				parks.get(i).paint(g);
+			}
 		}
 	}
 

@@ -241,7 +241,11 @@ public class Connection extends Lane {
 				.iterator();
 		while (elCars.hasNext()) {
 			Car eCar = elCars.next().getValue();
-			if (eCar.getTravelled() > Car.distance(this.intersectingPoint,
+			if (eCar.getTravelled() > Car.distance(new Point2D.Float(
+					intersectingPoint.x
+							- (interEndPoint.x - intersectingPoint.x),
+					intersectingPoint.y
+							- (interEndPoint.y - intersectingPoint.y)),
 					this.tLane.getStart())
 					&& Car.distance(eCar.getCoordinate(), car.getCoordinate()) < 100f
 					&& (Car.distance(eCar.getCoordinate(), this.interEndPoint) < Car
@@ -283,6 +287,6 @@ public class Connection extends Lane {
 	@Override
 	public void paintBorders(Graphics g) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

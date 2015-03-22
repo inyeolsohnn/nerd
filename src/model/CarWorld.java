@@ -1,15 +1,11 @@
 package model;
 
-import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
-
-import javax.swing.JOptionPane;
 
 public class CarWorld {
 	private String status = "paused";
@@ -100,6 +96,8 @@ public class CarWorld {
 	}
 
 	public void flush() {
+		TrafficLight.totalLights = 0;
+		Car.carsCreated = 0;
 		roads = new ArrayList<Road>();
 		cars = new HashMap<Integer, Car>();
 		parks = new ArrayList<CarPark>();

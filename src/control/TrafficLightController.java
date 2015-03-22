@@ -47,4 +47,14 @@ public class TrafficLightController {
 			}
 		}
 	}
+
+	public void removeLight(int id) {
+		ArrayList<TrafficLight> lights = getLights();
+		for (int i = 0; i < lights.size(); i++) {
+			if (lights.get(i).getId() == id) {
+				lights.get(i).getLane().removeTrafficLight(id);
+			}
+		}
+
+	}
 }

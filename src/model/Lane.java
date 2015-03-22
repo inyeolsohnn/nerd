@@ -85,6 +85,25 @@ public abstract class Lane {
 
 	}
 
+	public void removeTrafficLight(int lid) {
+
+		for (int i = 0; i < trafficLights.size(); i++) {
+			if (trafficLights.get(i).getId() == lid) {
+
+				for (int j = 0; j < this.world.getLights().size(); j++) {
+					TrafficLight jr = this.world.getLights().get(j);
+					if (jr.getId() == lid) {
+						this.world.getLights().remove(j);
+						break;
+					}
+				}
+				trafficLights.remove(i);
+				break;
+
+			}
+		}
+	}
+
 	public abstract TrafficLight getNextTrafficLight(Car car);
 
 	public float getSpan() {
@@ -133,7 +152,6 @@ public abstract class Lane {
 			TrafficLight tl = new TrafficLight(cp.getLane(), "green", 5f, 5f,
 					1f, cp.getPointCoordinate());
 			cp.getLane().addTrafficLight(tl);
-			this.world.addLight(tl);
 
 			return true;
 		} else {

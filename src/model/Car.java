@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Car {
-	private static int carsCreated = 0;
-	private ArrayList<Road> plan = new ArrayList<Road>();
+	public static int carsCreated = 0;
+
 	private Point2D.Float coordinate;
 	private final int id;
 	private float currentSpeedLimit;
@@ -286,20 +286,13 @@ public class Car {
 
 	}
 
-	private void detect() {
-		// TODO Auto-generated method stub
-
-	}
 
 	private boolean checkCourse() {
 		// TODO Auto-generated method stub
 		return (this.currentLane.equals(this.targetLane));
 	}
 
-	private float checkSpeedChange() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
 
 	public int getId() {
 		return this.id;

@@ -133,7 +133,7 @@ public class WorldController {
 
 		try {
 
-			// Road.connectLane(sr, 0, ar, 0);
+			Road.connectLane(sr, 0, ar, 0);
 			Road.connectLane(sr, 2, ar, 3);
 			Road.connectLane(sr, 3, ar, 2);
 			Road.connectLane(sr, 1, ar, 1);
@@ -270,4 +270,14 @@ public class WorldController {
 		// TODO Auto-generated method stub
 		return this.cWorld.getLights();
 	}
+
+	public ArrayList<CarPark> getParks() {
+		// TODO Auto-generated method stub
+		return this.cWorld.getParks();
+	}
+
+	public void reset() {
+		this.cWorld.reset();
+	}
+
 }

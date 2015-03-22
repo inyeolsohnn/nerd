@@ -37,8 +37,8 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 	String TrifficLightID;
 	private ImageIcon traffic_img;
 
-	public TrafficLightPanel(WorldController wc, final TrafficLightController tlc,
-			CarSimView mainFrame, int id) {
+	public TrafficLightPanel(WorldController wc,
+			final TrafficLightController tlc, final CarSimView mainFrame, int id) {
 		this.wController = wc;
 
 		this.mainFrame = mainFrame;
@@ -58,7 +58,7 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 		int trafficLightSize = lights.size();
 		GridLayout gl = new GridLayout(trafficLightSize + 1, 5, 2, 3);
 		panel.setLayout(gl);
-
+		System.out.println("size" + trafficLightSize);
 		for (int i = 0; i < trafficLightSize + 1; i++) {
 
 			if (i == 0) {
@@ -94,16 +94,16 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				initialSlider.setBackground(Color.WHITE);
 				initialSlider.addChangeListener(new ChangeListener() {
 
-					private TrafficLightController tControl=tlc;
+					private TrafficLightController tControl = tlc;
 
 					@Override
 					public void stateChanged(ChangeEvent e) {
 
 						JSlider source = (JSlider) e.getSource();
 
-						//initial slider
-						int id= Integer.parseInt(source.getName());
-						int value= source.getValue();
+						// initial slider
+						int id = Integer.parseInt(source.getName());
+						int value = source.getValue();
 						tlc.setInterval("initial", value, id);
 						System.out.println(source.getName() + source.getValue());
 
@@ -127,9 +127,9 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 
 						JSlider source = (JSlider) e.getSource();
 
-						//green slider
-						int id= Integer.parseInt(source.getName());
-						int value= source.getValue();
+						// green slider
+						int id = Integer.parseInt(source.getName());
+						int value = source.getValue();
 						tlc.setInterval("green", value, id);
 						System.out.println(source.getName() + source.getValue());
 
@@ -152,9 +152,9 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 					public void stateChanged(ChangeEvent e) {
 
 						JSlider source = (JSlider) e.getSource();
-						//red slider
-						int id= Integer.parseInt(source.getName());
-						int value= source.getValue();
+						// red slider
+						int id = Integer.parseInt(source.getName());
+						int value = source.getValue();
 						tlc.setInterval("red", value, id);
 						System.out.println(TrifficLightID + "redInterval:"
 								+ source.getValue());
@@ -162,16 +162,20 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 					}
 
 				});
-				JButton removeBtn = new CustomJButton("remove");
-				removeBtn.setPreferredSize(new Dimension(30,20));
-				removeBtn.addActionListener(new ActionListener(){
+				JButton removeBtn = new LightRemoveButton("remove",
+						Integer.parseInt(TrifficLightID));
+				removeBtn.setPreferredSize(new Dimension(30, 20));
+				removeBtn.addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						
+						tlc.removeLight(((LightRemoveButton) e.getSource())
+								.getId());
+						mainFrame.TrafficPanel(0);
+
 					}
-					
+
 				});
 				panel.add(initialSlider);
 				panel.add(greenSlider);
