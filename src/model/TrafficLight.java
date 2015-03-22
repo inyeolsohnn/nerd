@@ -49,7 +49,7 @@ public class TrafficLight {
 		this.lastChanged = new Date();
 		this.status = status;
 		this.coordination = coordination;
-		this.id = totalLights+1;
+		this.id = totalLights + 1;
 		totalLights++;
 	}
 
@@ -151,6 +151,10 @@ public class TrafficLight {
 
 	public void setInit(float f) {
 		this.initInterval = f;
+	}
+
+	public void reset() {
+		this.tempInterval = 0d;
 	}
 
 }
