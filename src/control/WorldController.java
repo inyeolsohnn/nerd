@@ -153,40 +153,21 @@ public class WorldController {
 		// add new roads and such
 		Road sr = new StraightRoad(new Point2D.Float(100, 200),
 				new Point2D.Float(1000, 400), 2, 2, this.getcWorld());
-		Road ar = new StraightRoad(new Point2D.Float(300, 100),
-				new Point2D.Float(500, 600), 2, 2, this.getcWorld());
 
 		Road cr = new StraightRoad(new Point2D.Float(700, 100),
 				new Point2D.Float(700, 600), 2, 2, this.getcWorld());
 
 		try {
 
-			Road.connectLane(sr, 0, ar, 0);
-			Road.connectLane(sr, 2, ar, 3);
-			Road.connectLane(sr, 3, ar, 2);
-			Road.connectLane(sr, 1, ar, 1);
 			Road.connectLane(sr, 0, cr, 0);
 			Road.connectLane(sr, 2, cr, 3);
 			Road.connectLane(sr, 3, cr, 2);
 			Road.connectLane(sr, 1, cr, 1);
 
-			Road.connectLane(ar, 0, sr, 1);
-			Road.connectLane(ar, 2, sr, 2);
-			Road.connectLane(ar, 3, sr, 3);
-			Road.connectLane(ar, 1, sr, 0);
-
 			Road.connectLane(cr, 0, sr, 1);
 			Road.connectLane(cr, 2, sr, 2);
 			Road.connectLane(cr, 3, sr, 3);
 			Road.connectLane(cr, 1, sr, 0);
-
-			Road.connectLane(sr, 1, ar, 0);
-			Road.connectLane(sr, 1, ar, 1);
-
-			Road.connectLane(ar, 1, sr, 0);
-			Road.connectLane(ar, 0, sr, 0);
-			Road.connectLane(ar, 1, sr, 1);
-			Road.connectLane(ar, 0, sr, 1);
 
 		} catch (Exception e) {
 			System.out.println("error while connecting");
@@ -199,10 +180,7 @@ public class WorldController {
 
 		sr.setCarParks(2);
 		sr.setCarParks(3);
-		ar.setCarParks(1);
-		ar.setCarParks(0);
-		ar.setCarParks(2);
-		ar.setCarParks(3);
+
 		cr.setCarParks(1);
 		cr.setCarParks(0);
 		cr.setCarParks(2);
@@ -212,23 +190,15 @@ public class WorldController {
 		sr.setEnding(1, true);
 		sr.setEnding(2, true);
 		sr.setEnding(3, true);
-		ar.setEnding(0, true);
-		ar.setEnding(1, true);
-		ar.setEnding(2, true);
-		ar.setEnding(3, true);
+
 		cr.setEnding(0, true);
 		cr.setEnding(1, true);
 		cr.setEnding(2, true);
 		cr.setEnding(3, true);
 
 		this.cWorld.addRoad(sr);
-		this.cWorld.addRoad(ar);
+
 		this.cWorld.addRoad(cr);
-
-	}
-
-	public void setRoundAbout() {
-		// first construct the world with road network
 
 	}
 
@@ -306,7 +276,8 @@ public class WorldController {
 		}
 		return null;
 	}
-	public ArrayList<Lane> getLanes(){
+
+	public ArrayList<Lane> getLanes() {
 		return this.cWorld.getLanes();
 	}
 }

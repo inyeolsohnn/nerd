@@ -52,7 +52,7 @@ public class CarPark {
 			double dice = Math.random();
 			int speed = rng.nextInt((100 - 80) + 1) + 80;
 			if (dice >= 0.5d - range && dice <= 0.5d + range
-					&& this.world.getCars().size() < 50) {
+					&& this.world.getCars().size() < 80) {
 
 				/*
 				 * public Car(Point2D.Float coordinate, float maxSpeed, Lane

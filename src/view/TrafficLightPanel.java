@@ -61,11 +61,19 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 		JLabel gInterval = new JLabel("Green Interval");
 		JLabel rInterval = new JLabel("Red Interval");
 		
-		Font font = new Font("Tahoma",Font.BOLD,20);
+		Font font = new Font("Tahoma",Font.BOLD,10);
 		iInterval.setFont(font);
 		gInterval.setFont(font);
 		rInterval.setFont(font);
 
+		JPanel a = new JPanel();
+		a.setPreferredSize(new Dimension(920, 30));
+		a.add(iInterval);
+		a.add(gInterval);
+		a.add(rInterval);
+		a.add(new JLabel("                                                   "));
+		
+		panel.add(a);
 		int trafficLightSize = lights.size();
 		panel.setPreferredSize(new Dimension(920, 64 * trafficLightSize));
 	
@@ -73,7 +81,8 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 		for (int i = 0; i < trafficLightSize; i++) {
 
 			JPanel container = new JPanel();
-			
+			container.setBackground(Color.WHITE);
+			container.setPreferredSize(new Dimension(920, 58));
 			TrifficLightID = "" + lights.get(i).getId(); // THIS IS NEW
 
 			JLabel lbl = new JLabel(TrifficLightID);
@@ -93,82 +102,8 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 			JTextField redTField = new JTextField("" + lights.get(i).getRed(),
 					5);
 			redList.add(redTField);
-			container.setBackground(Color.WHITE);
+		
 
-			/*
-			 * JSlider initialSlider = new JSlider(JSlider.HORIZONTAL,
-			 * INTERVAL_MIN, INTERVAL_MAX, (int) lights.get(i) .getInit()); //
-			 * THIS IS NEW
-			 * 
-			 * initialSlider.setName(TrifficLightID);
-			 * initialSlider.setPaintTicks(true);
-			 * initialSlider.setPaintLabels(true);
-			 * initialSlider.setMinorTickSpacing(1);
-			 * initialSlider.setBackground(Color.WHITE);
-			 * initialSlider.setMajorTickSpacing(5);
-			 * initialSlider.addChangeListener(new ChangeListener() {
-			 * 
-			 * private TrafficLightController tControl = tlc;
-			 * 
-			 * @Override public void stateChanged(ChangeEvent e) {
-			 * 
-			 * JSlider source = (JSlider) e.getSource();
-			 * 
-			 * // initial slider int id = Integer.parseInt(source.getName());
-			 * int value = source.getValue(); tlc.setInterval("initial", value,
-			 * id); System.out.println(source.getName() + source.getValue());
-			 * 
-			 * }
-			 * 
-			 * });
-			 * 
-			 * 
-			 * JSlider greenSlider = new JSlider(JSlider.HORIZONTAL,
-			 * INTERVAL_MIN, INTERVAL_MAX, (int) lights.get(i).getGreen()); //
-			 * THIS IS // NEW
-			 * 
-			 * greenSlider.setName(TrifficLightID);
-			 * greenSlider.setPaintTicks(true);
-			 * greenSlider.setPaintLabels(true);
-			 * greenSlider.setMinorTickSpacing(1);
-			 * greenSlider.setBackground(Color.WHITE);
-			 * greenSlider.setMajorTickSpacing(5);
-			 * greenSlider.addChangeListener(new ChangeListener() {
-			 * 
-			 * @Override public void stateChanged(ChangeEvent e) {
-			 * 
-			 * JSlider source = (JSlider) e.getSource();
-			 * 
-			 * // green slider int id = Integer.parseInt(source.getName()); int
-			 * value = source.getValue(); tlc.setInterval("green", value, id);
-			 * System.out.println(source.getName() + source.getValue());
-			 * 
-			 * }
-			 * 
-			 * });
-			 * 
-			 * JSlider redSlider = new JSlider(JSlider.HORIZONTAL, INTERVAL_MIN,
-			 * INTERVAL_MAX, (int) lights.get(i).getRed()); // THIS IS NEW
-			 * 
-			 * redSlider.setName(TrifficLightID); redSlider.setPaintTicks(true);
-			 * redSlider.setPaintLabels(true); redSlider.setMinorTickSpacing(1);
-			 * redSlider.setBackground(Color.WHITE);
-			 * redSlider.setMajorTickSpacing(5);
-			 * 
-			 * redSlider.addChangeListener(new ChangeListener() {
-			 * 
-			 * @Override public void stateChanged(ChangeEvent e) {
-			 * 
-			 * JSlider source = (JSlider) e.getSource(); // red slider int id =
-			 * Integer.parseInt(source.getName()); int value =
-			 * source.getValue(); tlc.setInterval("red", value, id);
-			 * System.out.println(TrifficLightID + "redInterval:" +
-			 * source.getValue());
-			 * 
-			 * }
-			 * 
-			 * });
-			 */
 			JButton submitBtn = new LightButton("submit",
 					Integer.parseInt(TrifficLightID));
 			submitBtn.setPreferredSize(new Dimension(100, 25));
