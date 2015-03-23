@@ -119,6 +119,33 @@ public class WorldController {
 
 	// example case setup
 	public void setTJunction() {
+		this.cWorld.setStatus("paused");
+		this.cWorld.flush();
+		// add new roads and such
+		Road sr = new StraightRoad(new Point2D.Float(100, 100),
+				new Point2D.Float(1000, 100), 1, 1, this.getcWorld());
+		Road ar = new StraightRoad(new Point2D.Float(550, 80),
+				new Point2D.Float(550, 600), 1, 1, this.getcWorld());
+		try {
+			Road.connectLane(sr, 0, ar, 0);
+			Road.connectLane(sr, 1, ar, 0);
+			Road.connectLane(ar, 1, sr, 0);
+			Road.connectLane(ar, 1, sr, 1);
+		} catch (Exception e) {
+
+		}
+		sr.setCarParks(0);
+		sr.setCarParks(1);
+		ar.setCarParks(1);
+		
+		sr.setEnding(0, true);
+		sr.setEnding(1, true);
+		ar.setEnding(0, true);
+		this.cWorld.addRoad(sr);
+		this.cWorld.addRoad(ar);
+	}
+
+	public void setIntersection() {
 		// construct the world with road network
 		this.cWorld.setStatus("paused");
 		this.cWorld.flush();
@@ -197,21 +224,6 @@ public class WorldController {
 		this.cWorld.addRoad(ar);
 		this.cWorld.addRoad(cr);
 
-	}
-
-	public void setIntersection() {
-		this.cWorld.setStatus("paused");
-		this.cWorld.flush();
-		// add new roads and such
-		Road r1 = new StraightRoad(new Point2D.Float(50, 350),
-				new Point2D.Float(760, 350), 2, 1, this.getcWorld());
-		Road r2 = new StraightRoad(new Point2D.Float(380, 20),
-				new Point2D.Float(380, 700), 2, 1, this.getcWorld());
-		Road r3 = new StraightRoad(new Point2D.Float(790, 20),
-				new Point2D.Float(790, 700), 2, 1, this.getcWorld());
-		this.cWorld.addRoad(r1);
-		this.cWorld.addRoad(r2);
-		this.cWorld.addRoad(r3);
 	}
 
 	public void setRoundAbout() {

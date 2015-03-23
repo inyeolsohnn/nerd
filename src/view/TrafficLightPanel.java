@@ -56,42 +56,33 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 		trafficLightTitle.setIcon(traffic_img);
 
 		int trafficLightSize = lights.size();
-		GridLayout gl = new GridLayout(trafficLightSize + 1, 5, 2, 3);
-		panel.setLayout(gl);
+		panel.setPreferredSize(new Dimension(1000,64*trafficLightSize));
+		
 		System.out.println("size" + trafficLightSize);
-		for (int i = 0; i < trafficLightSize + 1; i++) {
+		for (int i = 0; i < trafficLightSize; i++) {
 
-			if (i == 0) {
-				JLabel lbl = new JLabel("");
-				JLabel lbl0 = new JLabel("initial interval");
-				JLabel lbl2 = new JLabel("greenInterval");
-				JLabel lbl3 = new JLabel("redInterval");
-				JLabel lbl4 = new JLabel("remove");
-				panel.add(lbl);
-				panel.add(lbl0);
-				panel.add(lbl2);
-				panel.add(lbl3);
-				panel.add(lbl4);
-			} else {
-				TrifficLightID = "" + lights.get(i - 1).getId(); // THIS IS NEW
+			 	JPanel container = new JPanel();
+			 	container.setPreferredSize(new Dimension(900,58));
+				TrifficLightID = "" + lights.get(i).getId(); // THIS IS NEW
 
 				JLabel lbl = new JLabel(TrifficLightID);
 				lbl.setForeground(Color.black);
-				if (lights.get(i - 1).getId() == id) {
+				if (lights.get(i).getId() == id) {
 					lbl.setOpaque(true);
-					lbl.setBackground(Color.red);
+					container.setBackground(Color.red);
 					lbl.setForeground(Color.blue);
 				}
-				panel.add(lbl);
+				container.add(lbl);
 				JSlider initialSlider = new JSlider(JSlider.HORIZONTAL,
-						INTERVAL_MIN, INTERVAL_MAX, (int) lights.get(i - 1)
+						INTERVAL_MIN, INTERVAL_MAX, (int) lights.get(i)
 								.getInit()); // THIS IS NEW
 
 				initialSlider.setName(TrifficLightID);
 				initialSlider.setPaintTicks(true);
 				initialSlider.setPaintLabels(true);
-				initialSlider.setMinorTickSpacing(2);
+				initialSlider.setMinorTickSpacing(1);
 				initialSlider.setBackground(Color.WHITE);
+				initialSlider.setMajorTickSpacing(5);
 				initialSlider.addChangeListener(new ChangeListener() {
 
 					private TrafficLightController tControl = tlc;
@@ -112,14 +103,15 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				});
 
 				JSlider greenSlider = new JSlider(JSlider.HORIZONTAL,
-						INTERVAL_MIN, INTERVAL_MAX, (int) lights.get(i - 1)
+						INTERVAL_MIN, INTERVAL_MAX, (int) lights.get(i)
 								.getGreen()); // THIS IS NEW
 
 				greenSlider.setName(TrifficLightID);
 				greenSlider.setPaintTicks(true);
 				greenSlider.setPaintLabels(true);
-				greenSlider.setMinorTickSpacing(2);
+				greenSlider.setMinorTickSpacing(1);
 				greenSlider.setBackground(Color.WHITE);
+				greenSlider.setMajorTickSpacing(5);
 				greenSlider.addChangeListener(new ChangeListener() {
 
 					@Override
@@ -138,14 +130,16 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				});
 
 				JSlider redSlider = new JSlider(JSlider.HORIZONTAL,
-						INTERVAL_MIN, INTERVAL_MAX, (int) lights.get(i - 1)
+						INTERVAL_MIN, INTERVAL_MAX, (int) lights.get(i)
 								.getRed()); // THIS IS NEW
 
 				redSlider.setName(TrifficLightID);
 				redSlider.setPaintTicks(true);
 				redSlider.setPaintLabels(true);
-				redSlider.setMinorTickSpacing(2);
+				redSlider.setMinorTickSpacing(1);
 				redSlider.setBackground(Color.WHITE);
+				redSlider.setMajorTickSpacing(5);
+			
 				redSlider.addChangeListener(new ChangeListener() {
 
 					@Override
@@ -164,7 +158,7 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				});
 				JButton removeBtn = new LightRemoveButton("remove",
 						Integer.parseInt(TrifficLightID));
-				removeBtn.setPreferredSize(new Dimension(30, 20));
+				removeBtn.setPreferredSize(new Dimension(100, 40));
 				removeBtn.addActionListener(new ActionListener() {
 
 					@Override
@@ -177,12 +171,12 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 					}
 
 				});
-				panel.add(initialSlider);
-				panel.add(greenSlider);
-				panel.add(redSlider);
-				panel.add(removeBtn);
-
-			}
+				container.add(initialSlider);
+				container.add(greenSlider);
+				container.add(redSlider);
+				container.add(removeBtn);
+				panel.add(container);
+			
 
 		}
 
@@ -192,7 +186,7 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 		 * slider1.setPaintTicks(true); slider1.setPaintLabels(true);
 		 * slider1.setMinorTickSpacing(2);
 		 */
-		panel.setLayout(gl);
+		
 
 		jsp = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

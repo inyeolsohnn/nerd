@@ -8,6 +8,7 @@ import java.util.Date;
 public class TrafficLight {
 	private Lane lane; // lane object it belongs to
 	private String status;
+	private boolean initial;
 	private float greenInterval;
 	private float redInterval;
 	private float initInterval;
@@ -20,6 +21,7 @@ public class TrafficLight {
 	// testing stubs
 	public TrafficLight() {
 		this.greenInterval = 5;
+
 		this.redInterval = 5;
 		this.lastChanged = new Date();
 		System.out.println(this.lastChanged);
@@ -43,6 +45,10 @@ public class TrafficLight {
 			float redInterval, float initInterval, Point2D.Float coordination) {
 		this.lane = lane;
 		System.out.println("traffic coord" + coordination);
+		initial = true;
+		if (initInterval == 0) {
+			initial = false;
+		}
 		this.initInterval = initInterval;
 		this.redInterval = redInterval;
 		this.greenInterval = greenInterval;
@@ -103,29 +109,38 @@ public class TrafficLight {
 		 * = "Red"; } else if (status.equals("Red")) { this.status = "Green"; }
 		 * System.out.println(this.status); }
 		 */
-		if (tempInterval < initInterval) {
+
+		if (initial) {
+			// stay red till initial interval
+			// past initial interval make initial false
 			this.status = "red";
 			tempInterval += 0.02;
-		}
-
-		else if (this.status.equalsIgnoreCase("green")) {
-
-			if (tempInterval >= greenInterval + initInterval) {
-				if (redInterval != 0)
-					this.status = "red";
-				tempInterval = initInterval;
-			} else {
-				tempInterval += 0.02;
+			if (tempInterval >= initInterval) {
+				this.initial = false;
+				this.status="green";
 			}
 		} else {
-			if (tempInterval >= redInterval + initInterval) {
-				if (greenInterval != 0)
-					this.status = "green";
-				tempInterval = initInterval;
+			if (this.status.equalsIgnoreCase("green")) {
+
+				if (tempInterval >= greenInterval + initInterval) {
+					if (redInterval != 0)
+						this.status = "red";
+					tempInterval = initInterval;
+				} else {
+					tempInterval += 0.02;
+				}
 			} else {
-				tempInterval += 0.02;
+				if (tempInterval >= redInterval + initInterval) {
+					if (greenInterval != 0)
+						this.status = "green";
+					tempInterval = initInterval;
+				} else {
+					tempInterval += 0.02;
+				}
 			}
+
 		}
+
 		// System.out.println(getStatus());
 	}
 
@@ -155,6 +170,11 @@ public class TrafficLight {
 
 	public void reset() {
 		this.tempInterval = 0d;
+		this.status="green";
+		if (initInterval != 0)
+			this.initial = true;
+		else if (initInterval == 0)
+			this.initial = false;
 	}
 
 }

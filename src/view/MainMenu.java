@@ -25,7 +25,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		this.wControl = wControl;
 		this.mainFrame = mainFrame;
 		buttonJPanel = new JPanel();
-		
+
 		tButton = new CustomJButton("T Junction");
 		tButton.addActionListener(this);
 		roundButton = new CustomJButton("Roundabout");
@@ -34,19 +34,18 @@ public class MainMenu extends JPanel implements ActionListener {
 		interButton.addActionListener(this);
 		fullSimulation = new CustomJButton("Full Simulation");
 		fullSimulation.addActionListener(this);
-		
+
 		title_img = new ImageIcon("src" + File.separator + "gfx"
 				+ File.separator + "title_gfx.gif");
 		JLabel titleSimulationTitle = new JLabel();
 		titleSimulationTitle.setIcon(title_img);
 		this.add(titleSimulationTitle);
 
-		this.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3,
-				Color.BLACK));
+		this.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLACK));
 		buttonJPanel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2,
 				Color.BLACK));
 		buttonJPanel.setBackground(Color.WHITE);
-		buttonJPanel.setPreferredSize(new Dimension(400,200));
+		buttonJPanel.setPreferredSize(new Dimension(400, 200));
 		this.add(buttonJPanel);
 
 		buttonJPanel.add(tButton);
@@ -60,15 +59,16 @@ public class MainMenu extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource().equals(tButton)) { // T Junction choosen by user
-
-			mainFrame.simulationView();
 			wControl.setTJunction();
+			mainFrame.simulationView();
+
 		} else if (e.getSource().equals(roundButton)) { // Roundabout example
 														// chosen by user
 			mainFrame.simulationView();
 			wControl.setRoundAbout();
 		} else if (e.getSource().equals(interButton)) { // Intersection chooen
 														// by user
+			wControl.setIntersection();
 			mainFrame.simulationView();
 			// If there views set up for intersecton
 		} else if (e.getSource().equals(fullSimulation)) { // Full simulation
