@@ -1,10 +1,10 @@
 package view;
 
-public class LightRemoveButton extends CustomJButton {
+public class LightButton extends CustomJButton {
 
 	int lightId;
 
-	public LightRemoveButton(String text, int id) {
+	public LightButton(String text, int id) {
 		super(text);
 		// TODO Auto-generated constructor stub
 		this.lightId = id;

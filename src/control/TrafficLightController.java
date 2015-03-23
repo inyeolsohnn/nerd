@@ -26,7 +26,7 @@ public class TrafficLightController {
 		return this.world.getLights();
 	}
 
-	public void setInterval(String color, int interval, int id) {
+	public void setInterval(String color, float interval, int id) {
 		ArrayList<TrafficLight> lights = getLights();
 
 		for (int i = 0; i < lights.size(); i++) {
@@ -59,9 +59,9 @@ public class TrafficLightController {
 
 	}
 
-	public void addNewLight(Integer selectedPark, Point point) {
+	public void addNewLight(Integer selectedLane, Point point) {
 		// TODO Auto-generated method stub
-		this.world.addNewLight(selectedPark, point);
+		this.world.addNewLight(selectedLane, point);
 		
 	}
 }

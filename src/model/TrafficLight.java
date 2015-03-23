@@ -75,7 +75,7 @@ public class TrafficLight {
 		this.status = status;
 	}
 
-	public void setRedInterval(long interval) {
+	public void setRedInterval(float interval) {
 		this.redInterval = interval;
 	}
 

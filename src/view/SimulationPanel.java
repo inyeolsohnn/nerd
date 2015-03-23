@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 
 import model.Car;
 import model.CarPark;
+import model.Lane;
 import model.Road;
 import model.TrafficLight;
 import control.TrafficLightController;
@@ -29,7 +30,7 @@ class SimulationPanel extends JPanel implements MouseListener {
 	private CarSimView mainFrame;
 	private JButton stopButton, startButton, returnButton; // not used
 	private BorderLayout borderLayout;
-	private Integer selectedPark = null;
+	private Integer selectedLane = null;
 
 	public SimulationPanel(WorldController control, TrafficLightController tlc,
 			CarSimView mainFrame) {
@@ -68,9 +69,14 @@ class SimulationPanel extends JPanel implements MouseListener {
 
 		}
 		if (mainFrame.getAddingLight()) {
-			ArrayList<CarPark> parks = this.control.getParks();
-			for (int i = 0; i < parks.size(); i++) {
-				parks.get(i).paint(g);
+			ArrayList<Lane> lanes = this.control.getLanes();
+			for (int i = 0; i < lanes.size(); i++) {
+				g.setColor(Color.BLACK);
+				g.fillOval((int) (lanes.get(i).getStart().x - Math
+						.sqrt(2 * (Math.pow(7.5 / 2, 2)))), (int) (lanes.get(i)
+						.getStart().y - Math.sqrt(2 * (Math.pow(7.5 / 2, 2)))),
+						15, 15);
+
 			}
 		}
 	}
@@ -90,17 +96,17 @@ class SimulationPanel extends JPanel implements MouseListener {
 			// change color
 			// add to main panel
 		} else if (this.mainFrame.getAddingLight()) {
-			if (selectedPark == null) {
-				selectedPark = control.findPark(e.getPoint());
-				if (selectedPark != null) {
-					JOptionPane.showMessageDialog(null, "park id : "
-							+ selectedPark + " has been selected");
+			if (selectedLane == null) {
+				selectedLane = control.findLane(e.getPoint());
+				if (selectedLane != null) {
+					JOptionPane.showMessageDialog(null, "lane id : "
+							+ selectedLane + " has been selected");
 				}
 			}
 
 			else {
-				tlc.addNewLight(selectedPark, e.getPoint());
-				selectedPark = null;
+				tlc.addNewLight(selectedLane, e.getPoint());
+				selectedLane = null;
 				this.mainFrame.setAddingLight(false);
 				this.repaint();
 			}

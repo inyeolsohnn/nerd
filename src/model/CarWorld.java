@@ -184,27 +184,27 @@ public class CarWorld {
 		for (int i = 0; i < lights.size(); i++) {
 			lights.get(i).reset();
 		}
-		Car.carsCreated=0;
+		Car.carsCreated = 0;
 
 		// remove previous car from car park
 		// reset time intervals in traffic lights
 
 	}
 
-	public void addNewLight(Integer selectedPark, Point point) {
+	public void addNewLight(Integer selectedLane, Point point) {
 		// TODO Auto-generated method stub
-		Lane selectedLane = null;
-		for (int i = 0; i < parks.size(); i++) {
-			if (parks.get(i).getId() == selectedPark) {
-				selectedLane = parks.get(i).getLane();
+		Lane sl = null;
+		for (int i = 0; i < this.getLanes().size(); i++) {
+			if (this.getLanes().get(i).getLaneId() == selectedLane) {
+				sl = this.getLanes().get(i);
 				break;
 			}
 		}
 		Point2D.Float closest = getClosestPointOnSegment(
-				selectedLane.getStart(), selectedLane.getEnd(), point);
-		TrafficLight tl = new TrafficLight(selectedLane, "green", 5f, 5f, 1f,
+				sl.getStart(), sl.getEnd(), point);
+		TrafficLight tl = new TrafficLight(sl, "green", 5f, 5f, 1f,
 				closest);
-		selectedLane.addTrafficLight(tl);
+		sl.addTrafficLight(tl);
 
 	}
 
@@ -255,4 +255,18 @@ public class CarWorld {
 
 		return closestPoint;
 	}
+
+	public ArrayList<Lane> getLanes() {
+		ArrayList<Lane> laneReturn = new ArrayList<Lane>();
+		for (int i = 0; i < this.roads.size(); i++) {
+			Road cr = roads.get(i);
+			Iterator<Entry<Integer, Lane>> lIt = cr.getLanes().entrySet()
+					.iterator();
+			while (lIt.hasNext()) {
+				laneReturn.add(lIt.next().getValue());
+			}
+		}
+		return laneReturn;
+	}
+
 }

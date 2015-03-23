@@ -14,6 +14,7 @@ import view.CarSimView;
 import model.Car;
 import model.CarPark;
 import model.CarWorld;
+import model.Lane;
 import model.Road;
 import model.StraightRoad;
 import model.TrafficLight;
@@ -137,7 +138,7 @@ public class WorldController {
 		sr.setCarParks(0);
 		sr.setCarParks(1);
 		ar.setCarParks(1);
-		
+
 		sr.setEnding(0, true);
 		sr.setEnding(1, true);
 		ar.setEnding(0, true);
@@ -292,19 +293,20 @@ public class WorldController {
 		this.cWorld.reset();
 	}
 
-	public Integer findPark(Point p) {
+	public Integer findLane(Point p) {
 		// TODO Auto-generated method stub
-		ArrayList<CarPark> parks = this.cWorld.getParks();
+		ArrayList<Lane> lanes = this.cWorld.getLanes();
 
-		for (int i = 0; i < parks.size(); i++) {
-			CarPark cp = parks.get(i);
-			if ((p.x > cp.getCoordinate().x - 7.5 && p.x < cp.getCoordinate().x + 7.5)
-					&& (p.y > cp.getCoordinate().y - 7.5 && p.y < cp
-							.getCoordinate().y + 7.5)) {
-				return cp.getId();
+		for (int i = 0; i < lanes.size(); i++) {
+			Lane cl = lanes.get(i);
+			if ((p.x > cl.getStart().x - 7.5 && p.x < cl.getStart().x + 7.5)
+					&& (p.y > cl.getStart().y - 7.5 && p.y < cl.getStart().y + 7.5)) {
+				return cl.getLaneId();
 			}
 		}
 		return null;
 	}
-
+	public ArrayList<Lane> getLanes(){
+		return this.cWorld.getLanes();
+	}
 }

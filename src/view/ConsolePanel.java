@@ -128,6 +128,7 @@ public class ConsolePanel extends JPanel implements ActionListener {
 			this.wController.start();
 		} else if (e.getSource() == returnButton) {
 			this.wController.pause();
+			mainFrame.setAddingLight(false);
 			System.out.println("Main Menu");
 			mainFrame.mainMenu();
 		} else if (e.getSource() == trafficlightButton) {
