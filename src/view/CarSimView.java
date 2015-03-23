@@ -42,7 +42,7 @@ public class CarSimView extends JFrame {
 
 		usrHelpPanel = new UserHelpPanel(this.wControl, this);
 
-		this.setResizable(true);
+		this.setResizable(false);
 		this.setSize(1280, 670);
 		mainContainer.setBackground(Color.WHITE);
 		consolePanel.setPreferredSize(new Dimension(200, 660));
@@ -53,6 +53,8 @@ public class CarSimView extends JFrame {
 
 		mainContainer.removeAll();
 		mainContainer.add(mainMenu, BorderLayout.CENTER);
+		this.repaint();
+		this.revalidate();
 
 	}
 

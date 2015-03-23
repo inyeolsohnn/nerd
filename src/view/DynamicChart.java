@@ -49,7 +49,7 @@ public class DynamicChart extends ApplicationFrame {
 		content.add(chartPanel);
 
 		// Sets the size of whole window (JPanel)
-		chartPanel.setPreferredSize(new java.awt.Dimension(200, 200));
+		chartPanel.setPreferredSize(new java.awt.Dimension(200, 140));
 
 		// Puts the whole content on a Frame
 		// setContentPane(content);
@@ -69,11 +69,11 @@ public class DynamicChart extends ApplicationFrame {
 
 	private JFreeChart createChart(final XYDataset dataset) {
 		final JFreeChart result = ChartFactory.createTimeSeriesChart(
-				"Average Car Speed", "Time", "Speed", dataset, true, true, false);
+				"Average Car Speed", "Time", "Speed", dataset, false, true, false);
 		
 		final XYPlot plot = result.getXYPlot();
 
-		plot.setBackgroundPaint(new Color(0xffffe0));
+		plot.setBackgroundPaint(new Color(255,255,255));
 		plot.setDomainGridlinesVisible(true);
 		plot.setDomainGridlinePaint(Color.lightGray);
 		plot.setRangeGridlinesVisible(true);

@@ -185,6 +185,9 @@ public class CarWorld {
 			lights.get(i).reset();
 		}
 		Car.carsCreated = 0;
+		for(int i=0; i<parks.size(); i++){
+			parks.get(i).reset();
+		}
 
 		// remove previous car from car park
 		// reset time intervals in traffic lights

@@ -98,4 +98,10 @@ public class CarPark {
 	public Lane getLane(){
 		return this.lane;
 	}
+
+	public void reset() {
+		// TODO Auto-generated method stub
+		this.previousCar=null;
+		
+	}
 }

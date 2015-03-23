@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,12 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import model.TrafficLight;
 import control.TrafficLightController;
@@ -60,15 +56,24 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 		traffic_img = new ImageIcon("src" + File.separator + "gfx"
 				+ File.separator + "adjustTrafficLight_gfx.png");
 		trafficLightTitle.setIcon(traffic_img);
+		
+		JLabel iInterval = new JLabel("Initial Interval");
+		JLabel gInterval = new JLabel("Green Interval");
+		JLabel rInterval = new JLabel("Red Interval");
+		
+		Font font = new Font("Tahoma",Font.BOLD,20);
+		iInterval.setFont(font);
+		gInterval.setFont(font);
+		rInterval.setFont(font);
 
 		int trafficLightSize = lights.size();
-		panel.setPreferredSize(new Dimension(1000, 64 * trafficLightSize));
-
+		panel.setPreferredSize(new Dimension(920, 64 * trafficLightSize));
+	
 		System.out.println("size" + trafficLightSize);
 		for (int i = 0; i < trafficLightSize; i++) {
 
 			JPanel container = new JPanel();
-			container.setPreferredSize(new Dimension(900, 58));
+			
 			TrifficLightID = "" + lights.get(i).getId(); // THIS IS NEW
 
 			JLabel lbl = new JLabel(TrifficLightID);
@@ -88,6 +93,7 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 			JTextField redTField = new JTextField("" + lights.get(i).getRed(),
 					5);
 			redList.add(redTField);
+			container.setBackground(Color.WHITE);
 
 			/*
 			 * JSlider initialSlider = new JSlider(JSlider.HORIZONTAL,
@@ -165,7 +171,7 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 			 */
 			JButton submitBtn = new LightButton("submit",
 					Integer.parseInt(TrifficLightID));
-			submitBtn.setPreferredSize(new Dimension(100, 40));
+			submitBtn.setPreferredSize(new Dimension(100, 25));
 			submitBtn.addActionListener(new ActionListener() {
 
 				@Override
@@ -199,7 +205,7 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 			});
 			JButton removeBtn = new LightButton("remove",
 					Integer.parseInt(TrifficLightID));
-			removeBtn.setPreferredSize(new Dimension(100, 40));
+			removeBtn.setPreferredSize(new Dimension(100, 25));
 			removeBtn.addActionListener(new ActionListener() {
 
 				@Override
@@ -231,7 +237,7 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		panel.setBackground(Color.WHITE);
 		btnHolderPanel.setPreferredSize(new Dimension(1000, 200));
-		jsp.setPreferredSize(new Dimension(1200, 500));
+		jsp.setPreferredSize(new Dimension(920, 500));
 		jsp.setBackground(Color.WHITE);
 		this.add(trafficLightTitle);
 		this.add(jsp);

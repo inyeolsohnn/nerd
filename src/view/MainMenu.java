@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import control.WorldController;
 
 public class MainMenu extends JPanel implements ActionListener {
-	JButton tButton, roundButton, interButton, fullSimulation;
+	JButton tButton, interButton, fullSimulation;
 	WorldController wControl;
 	CarSimView mainFrame;
 	private JPanel buttonJPanel;
@@ -28,8 +28,6 @@ public class MainMenu extends JPanel implements ActionListener {
 
 		tButton = new CustomJButton("T Junction");
 		tButton.addActionListener(this);
-		roundButton = new CustomJButton("Roundabout");
-		roundButton.addActionListener(this);
 		interButton = new CustomJButton("Intersection");
 		interButton.addActionListener(this);
 		fullSimulation = new CustomJButton("Full Simulation");
@@ -45,11 +43,10 @@ public class MainMenu extends JPanel implements ActionListener {
 		buttonJPanel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2,
 				Color.BLACK));
 		buttonJPanel.setBackground(Color.WHITE);
-		buttonJPanel.setPreferredSize(new Dimension(400, 200));
+		buttonJPanel.setPreferredSize(new Dimension(400, 70));
 		this.add(buttonJPanel);
 
 		buttonJPanel.add(tButton);
-		buttonJPanel.add(roundButton);
 		buttonJPanel.add(interButton);
 		buttonJPanel.add(fullSimulation);
 
@@ -62,11 +59,7 @@ public class MainMenu extends JPanel implements ActionListener {
 			wControl.setTJunction();
 			mainFrame.simulationView();
 
-		} else if (e.getSource().equals(roundButton)) { // Roundabout example
-														// chosen by user
-			mainFrame.simulationView();
-			wControl.setRoundAbout();
-		} else if (e.getSource().equals(interButton)) { // Intersection chooen
+		}else if (e.getSource().equals(interButton)) { // Intersection chooen
 														// by user
 			wControl.setIntersection();
 			mainFrame.simulationView();

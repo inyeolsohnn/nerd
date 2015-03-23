@@ -26,12 +26,12 @@ public class ConsolePanel extends JPanel implements ActionListener {
 	private Font font = new Font("Tahoma", Font.BOLD, 20);
 	private JButton startButton, stopButton, returnButton, trafficlightButton,
 			helpButton, resetButton, addLightBtn;
-	private JLabel cntrlPanel_gfx, carSpawnLabel, teamLabel;
+	private JLabel cntrlPanel_gfx, carSpawnLabel, teamLabel, carSpeedLabel;
 	private JPanel bottomButtonPanel, topButtonPanel;
 	private JSlider carSpawnSlider = new JSlider(0, 10, 3);
 	private BorderLayout borderLayout = new BorderLayout();
 	DynamicChart demo;
-	private ImageIcon cntrlPanel_img, teamlogo_img;
+	private ImageIcon cntrlPanel_img, teamlogo_img, carspeed_img;
 
 	public ConsolePanel(WorldController wController, CarSimView mainFrame,
 			final ParkController pc) {
@@ -56,6 +56,11 @@ public class ConsolePanel extends JPanel implements ActionListener {
 		teamlogo_img = new ImageIcon("src" + File.separator + "gfx"
 				+ File.separator + "teamNERD_img.gif");
 		teamLabel.setIcon(teamlogo_img);
+		carSpeedLabel = new JLabel();
+		carspeed_img = new ImageIcon("src" + File.separator + "gfx"
+				+ File.separator + "CSC.gif");
+		carSpeedLabel.setIcon(carspeed_img);
+		
 
 		this.add(topButtonPanel, BorderLayout.NORTH);
 		// topButtonPanel
@@ -111,10 +116,11 @@ public class ConsolePanel extends JPanel implements ActionListener {
 		topButtonPanel.add(carSpawnLabel);
 		topButtonPanel.add(carSpawnSlider);
 		topButtonPanel.add(demo.content);
+		topButtonPanel.add(carSpeedLabel);
 		bottomButtonPanel.add(returnButton);
 		bottomButtonPanel.add(helpButton);
 		bottomButtonPanel.add(teamLabel);
-		topButtonPanel.setPreferredSize(new Dimension(200, 500));
+		topButtonPanel.setPreferredSize(new Dimension(200, 520));
 		bottomButtonPanel.setPreferredSize(new Dimension(200, 100));
 
 		mainFrame.add(this);
