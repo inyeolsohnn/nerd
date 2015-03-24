@@ -66,7 +66,8 @@ public class MainMenu extends JPanel implements ActionListener {
 			// If there views set up for intersecton
 		} else if (e.getSource().equals(fullSimulation)) { // Full simulation
 															// chosen by user.
-
+			wControl.setFullSimulation();
+			mainFrame.simulationView();
 		}
 	}
 }

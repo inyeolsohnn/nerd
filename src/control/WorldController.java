@@ -118,6 +118,99 @@ public class WorldController {
 
 	}
 
+	public void setFullSimulation() {
+		this.cWorld.setStatus("paused");
+		this.cWorld.flush();
+		Road road1 = new StraightRoad(new Point2D.Float(100, 70),
+				new Point2D.Float(1000, 70), 1, 1, this.getcWorld());
+		Road road2 = new StraightRoad(new Point2D.Float(800, 50),
+				new Point2D.Float(800, 590), 1, 1, this.getcWorld());
+		Road road3 = new StraightRoad(new Point2D.Float(100, 570),
+				new Point2D.Float(1000, 570), 1, 1, this.getcWorld());
+		Road road4 = new StraightRoad(new Point2D.Float(100, 200),
+				new Point2D.Float(1000, 400), 2, 2, this.getcWorld());
+		Road road5 = new StraightRoad(new Point2D.Float(550, 70),
+				new Point2D.Float(180, 570), 1, 1, this.getcWorld());
+		try {
+			Road.connectLane(road1, 0, road2, 0);
+			Road.connectLane(road1, 0, road5, 0);
+			Road.connectLane(road1, 1, road2, 0);
+			Road.connectLane(road1, 1, road5, 0);
+
+			Road.connectLane(road2, 1, road1, 0);
+			Road.connectLane(road2, 1, road1, 1);
+			Road.connectLane(road2, 0, road3, 0);
+			Road.connectLane(road2, 0, road3, 1);
+			Road.connectLane(road2, 0, road4, 2);
+			Road.connectLane(road2, 0, road4, 0);
+			Road.connectLane(road2, 0, road4, 1);
+			Road.connectLane(road2, 0, road4, 3);
+			Road.connectLane(road2, 1, road4, 2);
+			Road.connectLane(road2, 1, road4, 0);
+			Road.connectLane(road2, 1, road4, 1);
+			Road.connectLane(road2, 1, road4, 3);
+
+			Road.connectLane(road3, 0, road2, 1);
+			Road.connectLane(road3, 1, road2, 1);
+			Road.connectLane(road3, 0, road5, 1);
+			Road.connectLane(road3, 1, road5, 1);
+
+			Road.connectLane(road5, 1, road1, 0);
+			Road.connectLane(road5, 1, road1, 1);
+			Road.connectLane(road5, 0, road3, 0);
+			Road.connectLane(road5, 0, road3, 1);
+			Road.connectLane(road5, 0, road4, 2);
+			Road.connectLane(road5, 0, road4, 0);
+			Road.connectLane(road5, 0, road4, 1);
+			Road.connectLane(road5, 0, road4, 3);
+			Road.connectLane(road5, 1, road4, 2);
+			Road.connectLane(road5, 1, road4, 0);
+			Road.connectLane(road5, 1, road4, 1);
+			Road.connectLane(road5, 1, road4, 3);
+
+			Road.connectLane(road4, 2, road5, 1);
+			Road.connectLane(road4, 0, road5, 0);
+			Road.connectLane(road4, 2, road2, 1);
+			Road.connectLane(road4, 0, road2, 0);
+			Road.connectLane(road4, 1, road5, 1);
+			Road.connectLane(road4, 3, road5, 0);
+			Road.connectLane(road4, 1, road2, 1);
+			Road.connectLane(road4, 3, road2, 0);
+
+		} catch (Exception e) {
+
+		}
+		road1.setCarParks(0);
+		road1.setCarParks(1);
+		road1.setEnding(0, true);
+		road1.setEnding(1, true);
+
+		road1.setCarParks(0);
+		road1.setCarParks(1);
+		road1.setEnding(0, true);
+		road1.setEnding(1, true);
+
+		road4.setCarParks(0);
+		road4.setCarParks(1);
+		road4.setCarParks(2);
+		road4.setCarParks(3);
+		road4.setEnding(0, true);
+		road4.setEnding(1, true);
+		road4.setEnding(2, true);
+		road4.setEnding(3, true);
+
+		road3.setCarParks(0);
+		road3.setCarParks(1);
+		road3.setEnding(0, true);
+		road3.setEnding(1, true);
+
+		this.cWorld.addRoad(road1);
+		this.cWorld.addRoad(road2);
+		this.cWorld.addRoad(road3);
+		this.cWorld.addRoad(road4);
+		this.cWorld.addRoad(road5);
+	}
+
 	// example case setup
 	public void setTJunction() {
 		this.cWorld.setStatus("paused");

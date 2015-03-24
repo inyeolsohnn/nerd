@@ -132,7 +132,14 @@ public class Car {
 		// TODO Auto-generated method stub
 		Connection dummy = new Connection();
 		ArrayList<Connection> connections = currentLane.getSameConnections();// gets
+		ArrayList<Connection> legalConnections = new ArrayList<Connection>();
 
+		for (int i = 0; i < connections.size(); i++) {
+			Connection cc = connections.get(i);
+			if (Car.distance(this.currentLane.getStart(), cc.getStart()) >= this.distanceTravelled) {
+				legalConnections.add(cc);
+			}
+		}
 		boolean ending = currentLane.isEnding(); // same lanes of this road has
 													// ending lanes
 		// connections
@@ -144,11 +151,11 @@ public class Car {
 		// the same
 		// road
 		if (ending) {
-			connections.add(dummy);
+			legalConnections.add(dummy);
 		}
 
-		int random = rng.nextInt(connections.size());
-		Connection chosen = connections.get(random);
+		int random = rng.nextInt(legalConnections.size());
+		Connection chosen = legalConnections.get(random);
 
 		if (chosen.equals(dummy)) {
 			ArrayList<Lane> sameLanes = currentLane.getSameLanes();
@@ -300,7 +307,8 @@ public class Car {
 			if (this.targetConnection != null) {
 
 				if (Car.distance(this.currentLane.getStart(),
-						targetConnection.getStart()) <= this.distanceTravelled) {
+						targetConnection.getStart()) <= this.distanceTravelled
+						&& checkCourse()) {
 
 					this.enterLane(targetConnection,
 							targetConnection.getStart());
