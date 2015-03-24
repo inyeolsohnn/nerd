@@ -62,6 +62,8 @@ public class TrafficLightController {
 	public void addNewLight(Integer selectedLane, Point point) {
 		// TODO Auto-generated method stub
 		this.world.addNewLight(selectedLane, point);
+		mainFrame.repaint();
+		mainFrame.revalidate();
 		
 	}
 }
