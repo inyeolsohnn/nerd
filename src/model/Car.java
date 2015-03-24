@@ -197,6 +197,7 @@ public class Car {
 		} else if ((td < cd && td < 100 && tfl.getStatus().equals("green"))) {
 
 			if (this.targetConnection != null
+					&& checkCourse()
 					&& Car.distance(this.coordinate,
 							this.targetConnection.getStart()) < 100) {
 				if (td < 70)
@@ -211,7 +212,7 @@ public class Car {
 				} else if (cd < 70) {
 					this.setCurrentSpeed(cd);
 				} else if (cd > 90) {
-					
+
 					accelerate();
 				}
 			}
@@ -223,7 +224,7 @@ public class Car {
 				this.setCurrentSpeed(0);
 			} else if (cd < 70) {
 				this.setCurrentSpeed(cd);
-			} else if (cd > 90 ) {
+			} else if (cd > 90) {
 				accelerate();
 			}
 		}
