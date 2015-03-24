@@ -88,7 +88,7 @@ public class DynamicChart extends ApplicationFrame {
 		// xaxis.setVerticalTickLabels(true);
 
 		ValueAxis yaxis = plot.getRangeAxis();
-		yaxis.setRange(0.0, 100.0);
+		yaxis.setRange(0.0, 200.0);
 
 		return result;
 	}

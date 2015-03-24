@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Car {
-	public static int carsCreated = 0;
+	private static int carsCreated = 0;
 
 	private Point2D.Float coordinate;
 	private final int id;
-	private float currentSpeedLimit;
 	private float desiredSpeed;
 	private float currentSpeed;
 	private Random rng = new Random();
@@ -23,12 +22,6 @@ public class Car {
 	private float distanceTravelled; // distance travelled on the current road
 										// 0-roadSpan
 
-	public Car() {
-		// dummy constructor for testing
-		this.id = carsCreated;
-		carsCreated++;
-	}
-
 	public Car(Point2D.Float coordinate, float ds, Lane initialLane,
 			CarWorld cWorld, Point2D.Float entryPoint) {
 		this.id = Car.carsCreated;
@@ -36,9 +29,40 @@ public class Car {
 		this.coordinate = coordinate;
 		this.desiredSpeed = ds;
 		this.enterLane(initialLane, entryPoint);
-
 		this.cWorld = cWorld;
 
+	}
+
+	public static int totalCar() {
+		return Car.carsCreated;
+	}
+
+	public Road getRoad() {
+		return this.currentRoad;
+	}
+
+	public float getTravelled() {
+		// TODO Auto-generated method stub
+		return this.distanceTravelled;
+	}
+
+	public static void setCarsCreated(int i) {
+		// TODO Auto-generated method stub
+		carsCreated = i;
+
+	}
+
+	private boolean checkCourse() {
+		// TODO Auto-generated method stub
+		return (this.currentLane.equals(this.targetLane));
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setTravelled(float f) {
+		this.distanceTravelled = f;
 	}
 
 	public Point2D.Float getCoordinate() {
@@ -47,14 +71,6 @@ public class Car {
 
 	public void setCoordinate(Point2D.Float coordinate) {
 		this.coordinate = coordinate;
-	}
-
-	public float getCurrentSpeedLimit() {
-		return currentSpeedLimit;
-	}
-
-	public void setCurrentSpeedLimit(float currentSpeedLimit) {
-		this.currentSpeedLimit = currentSpeedLimit;
 	}
 
 	public float getDesiredSpeed() {
@@ -178,20 +194,39 @@ public class Car {
 			else if (td < 70)
 				this.setCurrentSpeed(td);
 
-		} else if ((td < cd && td < 100 && tfl.getStatus().equals("green"))
-				|| (cd < td && cd < 100)) {
+		} else if ((td < cd && td < 100 && tfl.getStatus().equals("green"))) {
 
+			if (this.targetConnection != null
+					&& Car.distance(this.coordinate,
+							this.targetConnection.getStart()) < 100) {
+				if (td < 70)
+					if (currentSpeed < 60)
+						this.accelerate();
+					else if (currentSpeed > 80) {
+						this.decelerate();
+					}
+			} else {
+				if (cd < 15) {
+					this.setCurrentSpeed(0);
+				} else if (cd < 70) {
+					this.setCurrentSpeed(cd);
+				} else if (cd > 90) {
+					
+					accelerate();
+				}
+			}
+			// slow down for intersection
+
+		} else if ((cd < td && cd < 100)) {
+			// react to the car
 			if (cd < 15) {
 				this.setCurrentSpeed(0);
 			} else if (cd < 70) {
 				this.setCurrentSpeed(cd);
-			} else if (cd > 90) {
+			} else if (cd > 90 ) {
 				accelerate();
 			}
-			// react to the car
 		}
-
-		boolean onCourse = checkCourse();
 
 		// ////Initial Beleif section/////
 
@@ -248,7 +283,7 @@ public class Car {
 				this.remove();
 			} else if ((this.currentLane instanceof Connection)) {
 				Point2D.Float lastPoint = this.currentLane.getEnd();
-				if (Car.distance(this.coordinate, lastPoint) < 2) {
+				if (Car.distance(this.coordinate, lastPoint) < 5) {
 					this.enterLane(
 							((Connection) this.currentLane).getTargetLane(),
 							((Connection) this.currentLane).getEnd());
@@ -271,9 +306,14 @@ public class Car {
 		}
 	}
 
+	private void decelerate() {
+		// TODO Auto-generated method stub
+		this.currentSpeed -= 80 * 0.02;
+	}
+
 	private void accelerate() {
 		// TODO Auto-generated method stub
-		if (this.currentSpeed < 100) {
+		if (this.currentSpeed < this.desiredSpeed) {
 			this.currentSpeed += 20 * 0.02;
 		}
 	}
@@ -286,32 +326,16 @@ public class Car {
 
 	}
 
-
-	private boolean checkCourse() {
-		// TODO Auto-generated method stub
-		return (this.currentLane.equals(this.targetLane));
-	}
-
-
-
-	public int getId() {
-		return this.id;
-	}
-
-	public void setTravelled(float f) {
-		this.distanceTravelled = f;
-	}
-
 	public void paint(Graphics g) {
-		if (this.currentSpeed >= 80) {
+		if (this.currentSpeed >= 120) {
 			g.setColor(Color.RED);
-		} else if (this.currentSpeed < 80 && this.currentSpeed >= 60) {
+		} else if (this.currentSpeed < 120 && this.currentSpeed >= 90) {
 			g.setColor(Color.ORANGE);
-		} else if (this.currentSpeed < 60 && this.currentSpeed >= 40) {
+		} else if (this.currentSpeed < 90 && this.currentSpeed >= 60) {
 			g.setColor(Color.YELLOW);
-		} else if (this.currentSpeed < 40 && this.currentSpeed >= 20) {
+		} else if (this.currentSpeed < 60 && this.currentSpeed >= 30) {
 			g.setColor(Color.MAGENTA);
-		} else if (this.currentSpeed < 20 && this.currentSpeed > 0) {
+		} else if (this.currentSpeed < 30 && this.currentSpeed > 0) {
 			g.setColor(Color.BLUE);
 		} else if (this.currentSpeed == 0) {
 			g.setColor(Color.BLACK);
@@ -325,16 +349,4 @@ public class Car {
 				+ Math.pow(p1.y - p2.y, 2.0));
 	}
 
-	public static int totalCar() {
-		return Car.carsCreated;
-	}
-
-	public Road getRoad() {
-		return this.currentRoad;
-	}
-
-	public float getTravelled() {
-		// TODO Auto-generated method stub
-		return this.distanceTravelled;
-	}
 }

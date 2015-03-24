@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ConnectionPoint {
-	HashMap<Lane, Connection> connections = new HashMap<Lane, Connection>();
+	private HashMap<Lane, Connection> connections = new HashMap<Lane, Connection>();
 	private Point2D.Float pointCoordinate;
 	private Road road;
 	private Lane lane;
@@ -36,7 +36,8 @@ public class ConnectionPoint {
 	public void addConnection(Connection cn) throws UnknownConnectionError {
 		connections.put(cn.getTargetLane(), cn);
 	}
-	public  HashMap<Lane, Connection> getConnections(){
+
+	public HashMap<Lane, Connection> getConnections() {
 		return connections;
 	}
 }

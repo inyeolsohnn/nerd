@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Graphics;
+import java.awt.RenderingHints;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
@@ -18,8 +19,8 @@ public abstract class Lane {
 	private int laneKey;
 	protected Road contained;
 	protected float laneSpan;
-	protected HashMap<Point2D.Float, ConnectionPoint> connectionPoints = new HashMap<Point2D.Float, ConnectionPoint>();
-	protected HashMap<Integer, Car> carsInLane = new HashMap<Integer, Car>();
+	private HashMap<Point2D.Float, ConnectionPoint> connectionPoints = new HashMap<Point2D.Float, ConnectionPoint>();
+	private HashMap<Integer, Car> carsInLane = new HashMap<Integer, Car>();
 	private boolean hasPark = false;
 	private CarWorld world;
 	protected Point2D.Float startPoint;
@@ -208,8 +209,8 @@ public abstract class Lane {
 		// TODO Auto-generated method stub
 		int currentKey = this.getLaneKey();
 		ArrayList<Connection> cal = new ArrayList<Connection>();
-		Iterator<Entry<Integer, Lane>> lit = this.contained.lanes.entrySet()
-				.iterator();
+		Iterator<Entry<Integer, Lane>> lit = this.contained.getLanes()
+				.entrySet().iterator();
 		while (lit.hasNext()) {
 			Map.Entry<Integer, Lane> lp = lit.next();
 			Lane currentLane = lp.getValue();
@@ -254,8 +255,8 @@ public abstract class Lane {
 	public ArrayList<Lane> getSameLanes() {
 		int currentKey = this.getLaneKey();
 		ArrayList<Lane> sal = new ArrayList<Lane>();
-		Iterator<Entry<Integer, Lane>> lit = this.contained.lanes.entrySet()
-				.iterator();
+		Iterator<Entry<Integer, Lane>> lit = this.contained.getLanes()
+				.entrySet().iterator();
 		while (lit.hasNext()) {
 			Map.Entry<Integer, Lane> lp = lit.next();
 			Lane currentLane = lp.getValue();
@@ -267,4 +268,9 @@ public abstract class Lane {
 	}
 
 	public abstract void paintBorders(Graphics g);
+
+	public HashMap<Integer, Car> getCarsInLane() {
+		// TODO Auto-generated method stub
+		return this.carsInLane;
+	}
 }

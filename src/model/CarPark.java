@@ -11,7 +11,7 @@ public class CarPark {
 	private int parkId;
 	private int type;
 	private Point2D.Float coordinate;
-	public static int parksCreated = 0;
+	private static int parksCreated = 0;
 	private Random rng = new Random();
 	private double spawnRate;
 	private Lane lane;
@@ -43,6 +43,25 @@ public class CarPark {
 		this.spawnRate = ((double) i / (double) 1000);
 	}
 
+	public Point2D.Float getCoordinate() {
+		return this.coordinate;
+	}
+
+	public Lane getLane() {
+		return this.lane;
+	}
+
+	public void reset() {
+		// TODO Auto-generated method stub
+		this.previousCar = null;
+
+	}
+
+	public static void setParksCreated(int i) {
+		// TODO Auto-generated method stub
+		parksCreated = i;
+	}
+
 	public void update() {
 
 		// if (Car.totalCar() < 1) {
@@ -50,7 +69,7 @@ public class CarPark {
 			// spawn cars
 			double range = this.spawnRate / 2;
 			double dice = Math.random();
-			int speed = rng.nextInt((100 - 80) + 1) + 80;
+			int dspeed = rng.nextInt((150 - 100) + 1) + 100;
 			if (dice >= 0.5d - range && dice <= 0.5d + range
 					&& this.world.getCars().size() < 80) {
 
@@ -60,17 +79,17 @@ public class CarPark {
 				 * Point2D.Float entryPoint)
 				 */
 				if (previousCar == null) {
-					Car c = new Car(this.lane.getStart(), speed, this.lane,
+					Car c = new Car(this.lane.getStart(), dspeed, this.lane,
 							this.world, this.lane.getStart());
-					c.setCurrentSpeed(40);
+					c.setCurrentSpeed(100);
 					previousCar = c;
 					this.world.addCar(c);
 				} else {
 					if (Car.distance(previousCar.getCoordinate(),
 							this.coordinate) > 15) {
-						Car c = new Car(this.lane.getStart(), speed, this.lane,
+						Car c = new Car(this.lane.getStart(), dspeed, this.lane,
 								this.world, this.lane.getStart());
-						c.setCurrentSpeed(40);
+						c.setCurrentSpeed(100);
 						previousCar = c;
 						this.world.addCar(c);
 					}
@@ -91,17 +110,4 @@ public class CarPark {
 
 	}
 
-	public Point2D.Float getCoordinate() {
-		return this.coordinate;
-	}
-	
-	public Lane getLane(){
-		return this.lane;
-	}
-
-	public void reset() {
-		// TODO Auto-generated method stub
-		this.previousCar=null;
-		
-	}
 }

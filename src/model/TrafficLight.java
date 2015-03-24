@@ -15,7 +15,7 @@ public class TrafficLight {
 	private Date lastChanged;
 	private Point2D.Float coordination;
 	private int id;
-	public static int totalLights = 0;
+	private static int totalLights = 0;
 	private double tempInterval = 0.0;
 
 	// testing stubs
@@ -117,7 +117,7 @@ public class TrafficLight {
 			tempInterval += 0.02;
 			if (tempInterval >= initInterval) {
 				this.initial = false;
-				this.status="green";
+				this.status = "green";
 			}
 		} else {
 			if (this.status.equalsIgnoreCase("green")) {
@@ -170,11 +170,16 @@ public class TrafficLight {
 
 	public void reset() {
 		this.tempInterval = 0d;
-		this.status="green";
+		this.status = "green";
 		if (initInterval != 0)
 			this.initial = true;
 		else if (initInterval == 0)
 			this.initial = false;
+	}
+
+	public static void setTotalLights(int i) {
+		// TODO Auto-generated method stub
+		totalLights = i;
 	}
 
 }

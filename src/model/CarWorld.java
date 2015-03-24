@@ -97,9 +97,9 @@ public class CarWorld {
 	}
 
 	public void flush() {
-		TrafficLight.totalLights = 0;
-		Car.carsCreated = 0;
-		CarPark.parksCreated = 0;
+		TrafficLight.setTotalLights(0);
+		Car.setCarsCreated(0);
+		CarPark.setParksCreated(0);
 		roads = new ArrayList<Road>();
 		cars = new HashMap<Integer, Car>();
 		parks = new ArrayList<CarPark>();
@@ -165,17 +165,17 @@ public class CarWorld {
 
 			Road cr = roads.get(i);
 
-			Iterator<Entry<Integer, Lane>> lIt = cr.lanes.entrySet().iterator();
+			Iterator<Entry<Integer, Lane>> lIt = cr.getLanes().entrySet().iterator();
 			while (lIt.hasNext()) {
 				Lane currentLane = lIt.next().getValue();
-				currentLane.carsInLane.clear();
-				Iterator<Entry<Point2D.Float, ConnectionPoint>> cpIt = currentLane.connectionPoints
+				currentLane.getCarsInLane().clear();
+				Iterator<Entry<Point2D.Float, ConnectionPoint>> cpIt = currentLane.getConnectionPoints()
 						.entrySet().iterator();
 				while (cpIt.hasNext()) {
 					Iterator<Entry<Lane, Connection>> conIt = cpIt.next()
-							.getValue().connections.entrySet().iterator();
+							.getValue().getConnections().entrySet().iterator();
 					while (conIt.hasNext()) {
-						conIt.next().getValue().carsInLane.clear();
+						conIt.next().getValue().getCarsInLane().clear();
 					}
 				}
 			}
@@ -184,8 +184,8 @@ public class CarWorld {
 		for (int i = 0; i < lights.size(); i++) {
 			lights.get(i).reset();
 		}
-		Car.carsCreated = 0;
-		for(int i=0; i<parks.size(); i++){
+		Car.setCarsCreated(0);
+		for (int i = 0; i < parks.size(); i++) {
 			parks.get(i).reset();
 		}
 
@@ -203,10 +203,9 @@ public class CarWorld {
 				break;
 			}
 		}
-		Point2D.Float closest = getClosestPointOnSegment(
-				sl.getStart(), sl.getEnd(), point);
-		TrafficLight tl = new TrafficLight(sl, "green", 5f, 5f, 1f,
-				closest);
+		Point2D.Float closest = getClosestPointOnSegment(sl.getStart(),
+				sl.getEnd(), point);
+		TrafficLight tl = new TrafficLight(sl, "green", 5f, 5f, 1f, closest);
 		sl.addTrafficLight(tl);
 
 	}

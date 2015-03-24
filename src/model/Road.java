@@ -20,14 +20,14 @@ public abstract class Road {
 	// base lane decides the type of the lanes that can be added
 	// bilateral vs unilateral state
 	// definition of connection: contiguous legal movements possible
-	protected final int roadId;
-	protected final int roadType;
-	protected final static int roadWidth = 20; // each lanes are 20 pixels wide
+	private int roadId;
+	private final int roadType;
+	public final static int roadWidth = 20; // each lanes are 20 pixels wide
 	private static int roadsCreated = 0;
 	public static final int STRAIGHT_LANE = 0;
 	public static final int ROUNDABOUT = 1;
 	public static final int CURVE = 2;
-	protected HashMap<Integer, Lane> lanes = new HashMap<Integer, Lane>();
+	private HashMap<Integer, Lane> lanes = new HashMap<Integer, Lane>();
 	private CarWorld world;
 	private boolean bilateral;
 	private static final int[][] perpenMat = new int[][] { { 0, -1 }, { 1, 0 } };

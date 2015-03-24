@@ -189,12 +189,12 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					int id = ((LightButton) e.getSource()).getId();
-					int index = id - 1;
-					JTextField init = initList.get(index);
+			
+					JTextField init = initList.get(0);
 
-					JTextField red = redList.get(index);
+					JTextField red = redList.get(0);
 
-					JTextField green = greenList.get(index);
+					JTextField green = greenList.get(0);
 					try {
 						float redInt = Float.parseFloat(red.getText());
 						float initInt = Float.parseFloat(init.getText());

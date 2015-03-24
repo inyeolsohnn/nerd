@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Graphics;
+import java.awt.RenderingHints;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
@@ -103,6 +104,12 @@ public class Connection extends Lane {
 
 	public Road getRoad() {
 		return this.sRoad;
+	}
+
+	@Override
+	public TrafficLight getNextTrafficLight(Car car) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private Point2D.Float calculateBezier(float t) {
@@ -224,8 +231,8 @@ public class Connection extends Lane {
 		// as well as cars after the connection
 
 		// in originating lane
-		Iterator<Entry<Integer, Car>> olCars = this.sLane.carsInLane.entrySet()
-				.iterator();
+		Iterator<Entry<Integer, Car>> olCars = this.sLane.getCarsInLane()
+				.entrySet().iterator();
 		while (olCars.hasNext()) {
 			Car oCar = olCars.next().getValue();
 			if (oCar.getTravelled() > car.getTravelled() + dtp
@@ -237,8 +244,8 @@ public class Connection extends Lane {
 		}
 
 		// in ending lane
-		Iterator<Entry<Integer, Car>> elCars = this.tLane.carsInLane.entrySet()
-				.iterator();
+		Iterator<Entry<Integer, Car>> elCars = this.tLane.getCarsInLane()
+				.entrySet().iterator();
 		while (elCars.hasNext()) {
 			Car eCar = elCars.next().getValue();
 			if (eCar.getTravelled() > Car.distance(new Point2D.Float(
@@ -256,7 +263,7 @@ public class Connection extends Lane {
 			}
 		}
 		// in current connection
-		Iterator<Entry<Integer, Car>> cit = this.carsInLane.entrySet()
+		Iterator<Entry<Integer, Car>> cit = this.getCarsInLane().entrySet()
 				.iterator();
 
 		while (cit.hasNext()) {
@@ -279,14 +286,9 @@ public class Connection extends Lane {
 	}
 
 	@Override
-	public TrafficLight getNextTrafficLight(Car car) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void paintBorders(Graphics g) {
 		// TODO Auto-generated method stub
 
 	}
+
 }

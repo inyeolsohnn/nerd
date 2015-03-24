@@ -23,7 +23,7 @@ public class StraightRoad extends Road {
 		this.startingPoint = startingPoint;
 		this.endingPoint = endingPoint;
 		setUpLanes(startingPoint, endingPoint, numAddLane, numSubLane);
-		Iterator it = this.lanes.entrySet().iterator();
+		Iterator it = this.getLanes().entrySet().iterator();
 		if ((numAddLane == 0 && numSubLane != 0)
 				|| (numAddLane != 0 && numSubLane == 0))
 			this.setBilateral(false);
@@ -75,7 +75,7 @@ public class StraightRoad extends Road {
 					+ halfScaled.y + i * scaledPerpen.y);
 			Lane newStraight = new StraightLane(newStart, newEnd, this,
 					this.getWorld(), laneNumber);
-			this.lanes.put(laneNumber, newStraight);
+			this.getLanes().put(laneNumber, newStraight);
 		}
 
 		// setting up sub lanes
@@ -90,7 +90,7 @@ public class StraightRoad extends Road {
 					- halfScaled.y - i * scaledPerpen.y);
 			Lane newStraight = new StraightLane(newStart, newEnd, this,
 					this.getWorld(), laneNumber);
-			this.lanes.put(laneNumber, newStraight);
+			this.getLanes().put(laneNumber, newStraight);
 		}
 
 	}

@@ -121,7 +121,7 @@ public class StraightLane extends Lane {
 		ConnectionPoint closestPoint = null;
 		// find closest connection point to the car that is <100f distance
 
-		Iterator<Entry<Point2D.Float, ConnectionPoint>> cpIt = this.connectionPoints
+		Iterator<Entry<Point2D.Float, ConnectionPoint>> cpIt = this.getConnectionPoints()
 				.entrySet().iterator();
 		while (cpIt.hasNext()) {
 			ConnectionPoint currentPoint = cpIt.next().getValue();
@@ -141,7 +141,7 @@ public class StraightLane extends Lane {
 					.getConnections().entrySet().iterator();
 			while (connectionIt.hasNext()) {
 				Iterator<Entry<Integer, Car>> connectionCarsIt = connectionIt
-						.next().getValue().carsInLane.entrySet().iterator();
+						.next().getValue().getCarsInLane().entrySet().iterator();
 				while (connectionCarsIt.hasNext()) {
 					Car connectionCar = connectionCarsIt.next().getValue();
 					if ((connectionCar.getTravelled() + dtp) > car
@@ -164,7 +164,7 @@ public class StraightLane extends Lane {
 
 		// get cars in the connections that belongs to the closest connection
 		// point
-		Iterator<Entry<Integer, Car>> cit = this.carsInLane.entrySet()
+		Iterator<Entry<Integer, Car>> cit = this.getCarsInLane().entrySet()
 				.iterator();
 
 		while (cit.hasNext()) {
