@@ -57,22 +57,24 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 		traffic_img = new ImageIcon("src" + File.separator + "gfx"
 				+ File.separator + "adjustTrafficLight_gfx.png");
 		trafficLightTitle.setIcon(traffic_img);
+		//JLabel space = new JLabel("  ");
+		JLabel iInterval = new JLabel("Initial Interval ");
+		JLabel gInterval = new JLabel("  Green Interval  ");
+		JLabel rInterval = new JLabel("  Red Interval");
 
-		JLabel iInterval = new JLabel("Initial Interval");
-		JLabel gInterval = new JLabel("Green Interval");
-		JLabel rInterval = new JLabel("Red Interval");
-
-		Font font = new Font("Tahoma", Font.BOLD, 10);
+		Font font = new Font("Tahoma", Font.BOLD, 15);
 		iInterval.setFont(font);
 		gInterval.setFont(font);
 		rInterval.setFont(font);
+		//space.setFont(font);
 
 		JPanel a = new JPanel();
 		a.setPreferredSize(new Dimension(920, 30));
+	//	a.add(space);
 		a.add(iInterval);
 		a.add(gInterval);
 		a.add(rInterval);
-		a.add(new JLabel("                                                   "));
+		a.add(new JLabel("                         "));
 
 		panel.add(a);
 		int trafficLightSize = lights.size();
@@ -87,7 +89,9 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				container.setPreferredSize(new Dimension(920, 58));
 				TrifficLightID = "" + lights.get(i).getId(); // THIS IS NEW
 
-				JLabel lbl = new JLabel(TrifficLightID);
+				JLabel lbl = new JLabel("traffic light "+TrifficLightID+"   ");
+				Font font2 = new Font("Tahoma", Font.BOLD, 16);
+				lbl.setFont(font2);
 				lbl.setForeground(Color.black);
 				if (lights.get(i).getId() == id) {
 					lbl.setOpaque(true);
@@ -96,13 +100,13 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				}
 				container.add(lbl);
 				JTextField initialTField = new JTextField(""
-						+ lights.get(i).getInit(), 5);
+						+ lights.get(i).getInit(), 7);
 				initList.put(lights.get(i).getId(), initialTField);
 				JTextField greenTField = new JTextField(""
-						+ lights.get(i).getGreen(), 5);
+						+ lights.get(i).getGreen(), 7);
 				greenList.put(lights.get(i).getId(), greenTField);
 				JTextField redTField = new JTextField(""
-						+ lights.get(i).getRed(), 5);
+						+ lights.get(i).getRed(), 7);
 				redList.put(lights.get(i).getId(), redTField);
 
 				JButton submitBtn = new LightButton("submit",
@@ -153,9 +157,13 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 					}
 
 				});
+				container.add(new JLabel("      "));
 				container.add(initialTField);
+				container.add(new JLabel("            "));
 				container.add(greenTField);
+				container.add(new JLabel("             "));
 				container.add(redTField);
+				container.add(new JLabel("      "));
 				container.add(submitBtn);
 				container.add(removeBtn);
 				panel.add(container);
@@ -176,16 +184,17 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				}
 
 			}
-
-			JLabel lbl = new JLabel(TrifficLightID);
+			JLabel lbl = new JLabel("traffic light "+TrifficLightID+"   ");
+			Font font2 = new Font("Tahoma", Font.BOLD, 16);
+			lbl.setFont(font2);
 			lbl.setForeground(Color.black);
 
 			container.add(lbl);
-			JTextField initialTField = new JTextField("" + cl.getInit(), 5);
+			JTextField initialTField = new JTextField("" + cl.getInit(), 7);
 			initList.put(cl.getId(), initialTField);
-			JTextField greenTField = new JTextField("" + cl.getGreen(), 5);
+			JTextField greenTField = new JTextField("" + cl.getGreen(), 7);
 			greenList.put(cl.getId(), greenTField);
-			JTextField redTField = new JTextField("" + cl.getRed(), 5);
+			JTextField redTField = new JTextField("" + cl.getRed(), 7);
 			redList.put(cl.getId(), redTField);
 
 			JButton submitBtn = new LightButton("submit",
@@ -236,9 +245,13 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				}
 
 			});
+			container.add(new JLabel("      "));
 			container.add(initialTField);
+			container.add(new JLabel("            "));
 			container.add(greenTField);
+			container.add(new JLabel("             "));
 			container.add(redTField);
+			container.add(new JLabel("      "));
 			container.add(submitBtn);
 			container.add(removeBtn);
 			panel.add(container);
