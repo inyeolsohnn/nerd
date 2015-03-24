@@ -105,6 +105,7 @@ public class Car {
 			this.setTravelled(lane.findDistance(this));
 		} else if (lane instanceof Connection) {
 			this.setTravelled(1);
+			this.targetConnection = null;
 
 		}
 		this.coordinate = entryPoint;
@@ -159,7 +160,11 @@ public class Car {
 		} else {
 
 			this.targetLane = chosen.getStartLane();
-			this.targetConnection = chosen;
+			if (Car.distance(this.currentLane.getStart(), chosen.getStart()) >= this.distanceTravelled) {
+				this.targetConnection = chosen;
+			} else {
+				this.targetConnection = null;
+			}
 		}
 		this.currentRoad = tRoad;
 	}
@@ -289,14 +294,13 @@ public class Car {
 							((Connection) this.currentLane).getTargetLane(),
 							((Connection) this.currentLane).getEnd());
 				}
-			} else {
 			}
 			this.coordinate = nextPosition;
 
 			if (this.targetConnection != null) {
 
-				if (Car.distance(this.getCoordinate(),
-						targetConnection.getStart()) < 1) {
+				if (Car.distance(this.currentLane.getStart(),
+						targetConnection.getStart()) <= this.distanceTravelled) {
 
 					this.enterLane(targetConnection,
 							targetConnection.getStart());

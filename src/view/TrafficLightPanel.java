@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -35,14 +36,14 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 
 	private String TrifficLightID;
 	private ImageIcon traffic_img;
-	private ArrayList<JTextField> greenList, redList, initList;
+	private HashMap<Integer, JTextField> greenList, redList, initList;
 
 	public TrafficLightPanel(WorldController wc,
 			final TrafficLightController tlc, final CarSimView mainFrame, int id) {
 		this.wController = wc;
-		this.greenList = new ArrayList<JTextField>();
-		this.redList = new ArrayList<JTextField>();
-		this.initList = new ArrayList<JTextField>();
+		this.greenList = new HashMap<Integer, JTextField>();
+		this.redList = new HashMap<Integer, JTextField>();
+		this.initList = new HashMap<Integer, JTextField>();
 		this.mainFrame = mainFrame;
 
 		panel = new JPanel();
@@ -96,13 +97,13 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				container.add(lbl);
 				JTextField initialTField = new JTextField(""
 						+ lights.get(i).getInit(), 5);
-				initList.add(initialTField);
+				initList.put(lights.get(i).getId(), initialTField);
 				JTextField greenTField = new JTextField(""
 						+ lights.get(i).getGreen(), 5);
-				greenList.add(greenTField);
+				greenList.put(lights.get(i).getId(), greenTField);
 				JTextField redTField = new JTextField(""
 						+ lights.get(i).getRed(), 5);
-				redList.add(redTField);
+				redList.put(lights.get(i).getId(), redTField);
 
 				JButton submitBtn = new LightButton("submit",
 						Integer.parseInt(TrifficLightID));
@@ -113,12 +114,12 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
 						int id = ((LightButton) e.getSource()).getId();
-						int index = id - 1;
-						JTextField init = initList.get(index);
 
-						JTextField red = redList.get(index);
+						JTextField init = initList.get(id);
 
-						JTextField green = greenList.get(index);
+						JTextField red = redList.get(id);
+
+						JTextField green = greenList.get(id);
 						try {
 							float redInt = Float.parseFloat(red.getText());
 							float initInt = Float.parseFloat(init.getText());
@@ -164,21 +165,28 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 			JPanel container = new JPanel();
 			container.setBackground(Color.WHITE);
 			container.setPreferredSize(new Dimension(920, 58));
-			TrifficLightID = "" + lights.get(id - 1).getId(); // THIS IS NEW
+			TrifficLightID = ""; // THIS IS NEW
+			TrafficLight cl = null;
+			for (int i = 0; i < lights.size(); i++) {
+
+				if (lights.get(i).getId() == id) {
+					cl = lights.get(i);
+					TrifficLightID += cl.getId();
+					break;
+				}
+
+			}
 
 			JLabel lbl = new JLabel(TrifficLightID);
 			lbl.setForeground(Color.black);
 
 			container.add(lbl);
-			JTextField initialTField = new JTextField(""
-					+ lights.get(id - 1).getInit(), 5);
-			initList.add(initialTField);
-			JTextField greenTField = new JTextField(""
-					+ lights.get(id - 1).getGreen(), 5);
-			greenList.add(greenTField);
-			JTextField redTField = new JTextField(""
-					+ lights.get(id - 1).getRed(), 5);
-			redList.add(redTField);
+			JTextField initialTField = new JTextField("" + cl.getInit(), 5);
+			initList.put(cl.getId(), initialTField);
+			JTextField greenTField = new JTextField("" + cl.getGreen(), 5);
+			greenList.put(cl.getId(), greenTField);
+			JTextField redTField = new JTextField("" + cl.getRed(), 5);
+			redList.put(cl.getId(), redTField);
 
 			JButton submitBtn = new LightButton("submit",
 					Integer.parseInt(TrifficLightID));
@@ -189,19 +197,18 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					int id = ((LightButton) e.getSource()).getId();
-			
-					JTextField init = initList.get(0);
 
-					JTextField red = redList.get(0);
+					JTextField init = initList.get(id);
 
-					JTextField green = greenList.get(0);
+					JTextField red = redList.get(id);
+
+					JTextField green = greenList.get(id);
 					try {
 						float redInt = Float.parseFloat(red.getText());
 						float initInt = Float.parseFloat(init.getText());
 						float greenInt = Float.parseFloat(green.getText());
 						if (redInt < 0 || initInt < 0 || greenInt < 0)
 							throw new Exception();
-
 						tlc.setInterval("red", redInt, id);
 						tlc.setInterval("green", greenInt, id);
 						tlc.setInterval("initial", initInt, id);
@@ -223,7 +230,8 @@ public class TrafficLightPanel extends JPanel implements ActionListener {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					tlc.removeLight(((LightButton) e.getSource()).getId());
-					mainFrame.TrafficPanel(0);
+					panel.removeAll();
+					repaint();
 
 				}
 

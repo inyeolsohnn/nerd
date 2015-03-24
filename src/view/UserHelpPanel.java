@@ -17,14 +17,16 @@ import javax.swing.JTextArea;
 
 import control.WorldController;
 
-public class UserHelpPanel extends JPanel implements ActionListener{
+public class UserHelpPanel extends JPanel implements ActionListener {
 	WorldController wController;
 	CarSimView mainFrame;
 	private JScrollPane jscrollPane;
 	private JPanel usrHelpPanel, btnHolderPanel;
 	private JButton rtrnButton;
-	private JLabel helpTitle, aimTitle, trafficTitle, collsionTitle, addTrafficLightLabel, collisionLabel;
-	private ImageIcon helpTitle_img, aim_img, addTrafficLight_img, collision_img;
+	private JLabel helpTitle, aimTitle, trafficTitle, collsionTitle,
+			addTrafficLightLabel, collisionLabel;
+	private ImageIcon helpTitle_img, aim_img, addTrafficLight_img,
+			collision_img;
 	private JTextArea introTextArea, trafficTextArea, collsionTextArea;
 	private Font titleFont = new Font("Tahoma", Font.BOLD, 20);
 
@@ -46,7 +48,7 @@ public class UserHelpPanel extends JPanel implements ActionListener{
 		collsionTextArea = new JTextArea(2, 50);
 		collsionTextArea.setLineWrap(true);
 		collsionTextArea.setEditable(false);
-		
+
 		rtrnButton = new CustomJButton("Return");
 		rtrnButton.addActionListener(this);
 
@@ -58,22 +60,21 @@ public class UserHelpPanel extends JPanel implements ActionListener{
 		aim_img = new ImageIcon("src" + File.separator + "gfx" + File.separator
 				+ "aim_gfx.gif");
 		aimTitle.setIcon(aim_img);
-	
-		
-		trafficTitle = new JLabel("Traffic Light Information:");
-		collsionTitle = new JLabel("Collision Information:");
+
+		trafficTitle = new JLabel("How to add a traffic light:");
+		collsionTitle = new JLabel("What is a collsion? b:");
 		trafficTitle.setFont(titleFont);
 		collsionTitle.setFont(titleFont);
 		addTrafficLightLabel = new JLabel();
-		addTrafficLight_img= new ImageIcon("src" + File.separator + "gfx"
-					+ File.separator + "addTrafficLightHelp.png");
+		addTrafficLight_img = new ImageIcon("src" + File.separator + "gfx"
+				+ File.separator + "addTrafficLightHelp.png");
 		addTrafficLightLabel.setIcon(addTrafficLight_img);
-		
+
 		collisionLabel = new JLabel();
 		collision_img = new ImageIcon("src" + File.separator + "gfx"
-					+ File.separator + "collisonHelp.png");
+				+ File.separator + "collisonHelp.png");
 		collisionLabel.setIcon(collision_img);
-		
+
 		this.add(helpTitle);
 
 		jscrollPane = new JScrollPane(usrHelpPanel,
@@ -84,12 +85,14 @@ public class UserHelpPanel extends JPanel implements ActionListener{
 		jscrollPane.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2,
 				Color.BLACK));
 
-		introTextArea
-				.setText("The aim of this software is to allow you to..");
-		trafficTextArea.setText("The image above illustrates the process in how to add traffic lights to the road. ");
-		collsionTextArea.setText("The image above illustrates an example collsion, this is an indication that the way your trafficlights are set up are not good.");
-		usrHelpPanel.add(aimTitle);
-		usrHelpPanel.add(introTextArea);
+		// introTextArea
+		// .setText("The aim of this software is to allow you to find the perfect coordination f");
+		trafficTextArea
+				.setText("The above image illustrates how you can add new traffic light to the system. (1) Press the 'Add Traffic Light' button and then the screen will pause and you will then see the black circles at each lane entry point (2) Select the lane you would like to add the traffic light to (3) Simply click on the part of the lane you would like to add the traffic light to. If you make a mistake or do not place the traffic light in the position you wanted simply, select the new tarffic light created and once 'Adjust Traffic Light' screen opens up simply delete that traffic light and start again.");
+		collsionTextArea
+				.setText("The image above illustrates an example of a collision, this is an indication that they setup of the traffic light intervals is not good and has resulted in a collsion between two cars. To solve select 'Adjust Traffic Lights' or select each traffic light and make adjustments and press the 'submit' button to confirm these changes. When making adjustments to the traffic light intervals the Initial Interval is the interval that the traffic light will stay as red before it enters recurring [Green] and [Red] light loop. The [Green] and [Red] interval values are the time (seconds) you would like the interval to last");
+		// usrHelpPanel.add(aimTitle);
+		// usrHelpPanel.add(introTextArea);
 		usrHelpPanel.add(trafficTitle);
 		usrHelpPanel.add(addTrafficLightLabel);
 		usrHelpPanel.add(trafficTextArea);
@@ -97,7 +100,7 @@ public class UserHelpPanel extends JPanel implements ActionListener{
 		usrHelpPanel.add(collisionLabel);
 		usrHelpPanel.add(collsionTextArea);
 		usrHelpPanel.setBackground(Color.WHITE);
-		usrHelpPanel.setPreferredSize(new Dimension(700, 1200));
+		usrHelpPanel.setPreferredSize(new Dimension(700, 1000));
 		btnHolderPanel.setPreferredSize(new Dimension(1000, 150));
 
 		this.add(jscrollPane);
@@ -111,7 +114,8 @@ public class UserHelpPanel extends JPanel implements ActionListener{
 		// TODO Auto-generated method stub
 		if (e.getSource() == rtrnButton) { // T Junction choosen by user
 			this.wController.pause();
-			mainFrame.simulationView(); //Need to confirm where user goes back too
+			mainFrame.simulationView(); // Need to confirm where user goes back
+										// too
 		}
 
 	}

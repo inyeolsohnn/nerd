@@ -44,7 +44,7 @@ public class CarSimView extends JFrame {
 
 		this.setResizable(false);
 		this.setSize(1280, 670);
-		mainContainer.setBackground(Color.WHITE);
+		mainContainer.setBackground(new Color(0,150,0));
 		consolePanel.setPreferredSize(new Dimension(200, 660));
 		mainMenu.setPreferredSize(new Dimension(1000, 660));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

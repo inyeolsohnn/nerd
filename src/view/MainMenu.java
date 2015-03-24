@@ -43,7 +43,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		buttonJPanel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2,
 				Color.BLACK));
 		buttonJPanel.setBackground(Color.WHITE);
-		buttonJPanel.setPreferredSize(new Dimension(400, 70));
+		buttonJPanel.setPreferredSize(new Dimension(400, 50));
 		this.add(buttonJPanel);
 
 		buttonJPanel.add(tButton);
