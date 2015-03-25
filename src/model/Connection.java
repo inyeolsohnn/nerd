@@ -9,8 +9,11 @@ import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+//this is quadratic bezier curve that car will move onto while changing
+// lane
 
 public class Connection extends Lane {
+
 	private Road sRoad, tRoad;
 	private Lane sLane, tLane;
 	private Point2D.Float interStartPoint;
@@ -20,10 +23,8 @@ public class Connection extends Lane {
 	private float[] bezierDistanceTable = new float[1001];
 	private Point2D.Float[] bezierPointTable = new Point2D.Float[1001];
 
-	// this is quadratic bezier curve that car will move onto while changing
-	// lane
 	public Connection() {
-		// dummy
+		// dummy: used to represent an exit point.
 
 	}
 
@@ -47,14 +48,15 @@ public class Connection extends Lane {
 	@Override
 	public float calculateLaneSpan() {
 		// TODO Auto-generated method stub
-		return 0;
+		return bezierDistanceTable[1000];
 	}
 
 	@Override
 	public Point2D.Float nextPosition(Car car, float targetDistance,
 			float distanceTravelled) {
-		// TODO Auto-generated method stub
-		// bezier curve. Only look at the distanceTravelled+targetDistance;
+
+		// bezier curve. Only up the table for coordinate according to
+		// distanceTravelled+targetDistance;
 
 		float finalDistance = targetDistance + distanceTravelled;
 
@@ -62,8 +64,6 @@ public class Connection extends Lane {
 
 		int index = binarySearch(this.bezierDistanceTable, finalDistance,
 				targetDistance);
-		System.out.println("index : " + index);
-		System.out.println("car id : " + car.getId());
 		if (index == -1) {
 			System.out.println("something went wrong");
 			System.exit(0);
@@ -71,7 +71,6 @@ public class Connection extends Lane {
 			index = 1000;
 		}
 		car.setTravelled(finalDistance);
-		System.out.println("Final distance: " + finalDistance);
 		return bezierPointTable[index];
 	}
 
@@ -139,7 +138,7 @@ public class Connection extends Lane {
 			currentPoint = bezierPoint;
 			t += 0.001f;
 		}
-		System.out.println("bezier setup done");
+		System.out.println("bezier setup");
 		System.out.println("Total connection distance = "
 				+ bezierDistanceTable[1000]);
 
@@ -156,18 +155,15 @@ public class Connection extends Lane {
 	private int binarySearch(float[] table, float target, float errorBound) {
 		int firstKey = (table.length / 2);
 		if (Math.abs(table[firstKey] - target) < errorBound) {
-			System.out.println("First key : " + table[firstKey]);
-			System.out.println("Target : " + target);
-			System.out.println("Error bound " + errorBound);
-			System.out.println("case 1");
+
 			return firstKey;
 		} else if (table[firstKey] > target) {
 			// look for the values smaller
-			System.out.println("case 2");
+
 			return binarySearch(table, 0, firstKey - 1, target, errorBound);
 		} else if (table[firstKey] < target) {
 			// look for the values larger
-			System.out.println("case 3");
+
 			return binarySearch(table, firstKey + 1, table.length, target,
 					errorBound);
 		}
@@ -202,13 +198,12 @@ public class Connection extends Lane {
 
 	@Override
 	public void paint(Graphics g) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public float findDistance(Car car) {
-		// TODO Auto-generated method stub
+		// not needed for this class
 		return 0;
 	}
 
@@ -225,8 +220,8 @@ public class Connection extends Lane {
 		// as well as cars after the connection
 
 		// in originating lane
-		Iterator<Entry<Integer, Car>> olCars = this.sLane.getCarsInLane().entrySet()
-				.iterator();
+		Iterator<Entry<Integer, Car>> olCars = this.sLane.getCarsInLane()
+				.entrySet().iterator();
 		while (olCars.hasNext()) {
 			Car oCar = olCars.next().getValue();
 			if (oCar.getTravelled() > car.getTravelled() + dtp
@@ -238,8 +233,8 @@ public class Connection extends Lane {
 		}
 
 		// in ending lane
-		Iterator<Entry<Integer, Car>> elCars = this.tLane.getCarsInLane().entrySet()
-				.iterator();
+		Iterator<Entry<Integer, Car>> elCars = this.tLane.getCarsInLane()
+				.entrySet().iterator();
 		while (elCars.hasNext()) {
 			Car eCar = elCars.next().getValue();
 			if (eCar.getTravelled() > Car.distance(new Point2D.Float(
@@ -263,8 +258,7 @@ public class Connection extends Lane {
 		while (cit.hasNext()) {
 			Map.Entry<Integer, Car> cPair = cit.next();
 			Car cCar = cPair.getValue();
-			System.out.println("id : " + cCar.getId()
-					+ " distance travelled : " + cCar.getTravelled());
+			
 			if (cCar.getTravelled() > car.getTravelled()) {
 				// cCar is somewhere ahead of the car in the same lane
 				if (((cCar.getTravelled() - car.getTravelled()) < closest)
@@ -281,15 +275,14 @@ public class Connection extends Lane {
 
 	@Override
 	public TrafficLight getNextTrafficLight(Car car) {
-		// TODO Auto-generated method stub
+		// not needed
 		return null;
 	}
 
 	@Override
 	public void paintBorders(Graphics g) {
-		// TODO Auto-generated method stub
+		// not needed
 
 	}
 
-	
 }

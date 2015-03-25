@@ -4,6 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//object holding connections
 public class ConnectionPoint {
 	private HashMap<Lane, Connection> connections = new HashMap<Lane, Connection>();
 	private Point2D.Float pointCoordinate;

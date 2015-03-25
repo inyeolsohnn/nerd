@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 
 public class StraightLane extends Lane {
 
-	private int noPoints;
 	private static final int[][] perpenMat = new int[][] { { 0, -1 }, { 1, 0 } };
 
 	public StraightLane(Point2D.Float startingPoint, Point2D.Float endPoint,
@@ -121,8 +120,8 @@ public class StraightLane extends Lane {
 		ConnectionPoint closestPoint = null;
 		// find closest connection point to the car that is <100f distance
 
-		Iterator<Entry<Point2D.Float, ConnectionPoint>> cpIt = this.getConnectionPoints()
-				.entrySet().iterator();
+		Iterator<Entry<Point2D.Float, ConnectionPoint>> cpIt = this
+				.getConnectionPoints().entrySet().iterator();
 		while (cpIt.hasNext()) {
 			ConnectionPoint currentPoint = cpIt.next().getValue();
 			if (Car.distance(currentPoint.getPointCoordinate(),
@@ -141,7 +140,8 @@ public class StraightLane extends Lane {
 					.getConnections().entrySet().iterator();
 			while (connectionIt.hasNext()) {
 				Iterator<Entry<Integer, Car>> connectionCarsIt = connectionIt
-						.next().getValue().getCarsInLane().entrySet().iterator();
+						.next().getValue().getCarsInLane().entrySet()
+						.iterator();
 				while (connectionCarsIt.hasNext()) {
 					Car connectionCar = connectionCarsIt.next().getValue();
 					if ((connectionCar.getTravelled() + dtp) > car

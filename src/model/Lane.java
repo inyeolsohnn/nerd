@@ -13,10 +13,10 @@ import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
 
+//abstract class that all types of lanes extends
 public abstract class Lane {
 
 	private static final float SMALL_NUM = (float) 0.00000001;
-
 	private int laneId; // its id
 	private int laneKey;
 	protected Road contained;
@@ -28,14 +28,13 @@ public abstract class Lane {
 	protected Point2D.Float startPoint;
 	protected Point2D.Float endPoint;
 	private boolean isEnding = false;
-
 	private static int lanesCreated = 0;
 
 	// store traffic lights that belong to this lane.
 	ArrayList<TrafficLight> trafficLights = new ArrayList<TrafficLight>();
 
 	public Lane() {
-		// for special lanes
+		// test stub
 	}
 
 	public Lane(Point2D.Float start, Point2D.Float end, Road cRoad,
@@ -76,13 +75,12 @@ public abstract class Lane {
 
 	// in case of roundabout this will return center point
 	public Point2D.Float getEnd() {
-		// TODO Auto-generated method stub
+
 		return this.endPoint;
 	}
 
 	public void addTrafficLight(TrafficLight light) {
-		// needs to check if the point lies on the lane
-		// not yet implemented
+
 		ArrayList<TrafficLight> lights = light.getLane().trafficLights;
 		for (int i = 0; i < lights.size(); i++) {
 			TrafficLight currentLight = lights.get(i);
@@ -137,22 +135,6 @@ public abstract class Lane {
 	public boolean addConnectionPoint(ConnectionPoint cp, Connection cn)
 			throws UnknownConnectionError {
 
-		// if cp starting point and cn starting point is not equal throw an
-		// error
-		// if they are the same, but not on the lane throw an error
-		// start checking
-
-		// if failed return false
-		// end checking
-
-		// check if the connection point starting at the same coordinate in the
-		// starting Lane exists
-
-		// exist
-		// if it doesn't add connection to the connection point and add it to
-		// the lane
-		// if it does add connection to the existing connection point
-
 		if (connectionPoints.get(new Point2D.Float((int) cp
 				.getPointCoordinate().x, (int) cp.getPointCoordinate().y)) == null) {
 
@@ -194,9 +176,6 @@ public abstract class Lane {
 		// TODO Auto-generated method stub
 		int carId = car.getId();
 		carsInLane.put(carId, car);
-		System.out.println("car added. Current numbers of cars in lane : "
-				+ carsInLane.size() + " car id : " + car.getId());
-
 	}
 
 	public void carLeaves(Car car) {
@@ -209,9 +188,9 @@ public abstract class Lane {
 		return this.laneKey;
 	}
 
+	// returns all the connections in the same direction lane
 	public ArrayList<Connection> getSameConnections() {
-		// TODO Auto-generated method stub
-		int currentKey = this.getLaneKey();
+
 		ArrayList<Connection> cal = new ArrayList<Connection>();
 		Iterator<Entry<Integer, Lane>> lit = this.contained.getLanes()
 				.entrySet().iterator();
@@ -256,6 +235,8 @@ public abstract class Lane {
 		return this.isEnding;
 	}
 
+	// return the list of the lanes of the same direction that are in the same
+	// road
 	public ArrayList<Lane> getSameLanes() {
 		int currentKey = this.getLaneKey();
 		ArrayList<Lane> sal = new ArrayList<Lane>();

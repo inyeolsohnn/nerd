@@ -50,7 +50,7 @@ class SimulationPanel extends JPanel implements MouseListener {
 	protected void paintComponent(Graphics g) {
 
 		ArrayList<Road> roads = control.getRoads();
-		System.out.println("Painting roads");
+
 		for (int i = 0; i < roads.size(); i++) {
 			roads.get(i).paint(g);
 

@@ -6,6 +6,7 @@ import java.awt.geom.Point2D.Float;
 
 public class ChangingLane extends Lane {
 	// special lane that will be created dynamically when ever a car changes
+	//NOT IN USE IN CURRENT VERSION OF THE SYSTEM
 	private Lane startLane;
 	private Lane targetLane;
 	private Point2D.Float startPoint, endPoint;

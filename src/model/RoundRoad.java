@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class RoundRoad extends Road {
 
+	// currently not supported
 	// can only hold RoundAbout
 	// centerPoint= center point of the roundabout
 	// radius= radius of center circle
@@ -15,7 +16,7 @@ public class RoundRoad extends Road {
 	public RoundRoad(Point2D.Float centerPoint, int radius, int numLanes,
 			CarWorld world) {
 		super(1, world);
-		// TODO Auto-generated constructor stub
+
 		setUpLanes(centerPoint, radius, numLanes);
 		Iterator it = this.getLanes().entrySet().iterator();
 		while (it.hasNext()) {

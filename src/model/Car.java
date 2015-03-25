@@ -16,11 +16,23 @@ public class Car {
 	private Random rng = new Random();
 	private Road currentRoad;
 	private Lane currentLane;
+	/*
+	 * targetLane: not used to its full purpose in current version. Was supposed
+	 * to be part of inner road lane change
+	 */
 	private Lane targetLane;
+	/*
+	 * target connection: connection it aims to make a turn at. Can be null if
+	 * the car decides to reach an exit point
+	 */
 	private Connection targetConnection;
 	private CarWorld cWorld;
-	private float distanceTravelled; // distance travelled on the current road
-										// 0-roadSpan
+
+	/*
+	 * distanceTravelled: distance travelled on the current road, required for
+	 * perception sequence
+	 */
+	private float distanceTravelled;
 
 	public Car(Point2D.Float coordinate, float ds, Lane initialLane,
 			CarWorld cWorld, Point2D.Float entryPoint) {
@@ -42,18 +54,23 @@ public class Car {
 	}
 
 	public float getTravelled() {
-		// TODO Auto-generated method stub
+
 		return this.distanceTravelled;
 	}
 
 	public static void setCarsCreated(int i) {
-		// TODO Auto-generated method stub
+
 		carsCreated = i;
 
 	}
 
+	/*
+	 * checkCourse: not used to its full purpose in current version. Was
+	 * supposed to be part of inner road lane change. Currently being used as a
+	 * part of speed decision when making a turn
+	 */
 	private boolean checkCourse() {
-		// TODO Auto-generated method stub
+
 		return (this.currentLane.equals(this.targetLane));
 	}
 
@@ -97,13 +114,19 @@ public class Car {
 		this.currentLane = currentLane;
 	}
 
+	/*
+	 * enterLane: lane entering logic. If the road of the lanes change,
+	 * enterRoad will be called as well
+	 */
 	public void enterLane(Lane lane, Point2D.Float entryPoint) {
 		if (this.currentLane != null) {
 			this.currentLane.carLeaves(this);
 		}
 		if (lane instanceof StraightLane) {
+			// entering a straightlane
 			this.setTravelled(lane.findDistance(this));
 		} else if (lane instanceof Connection) {
+			// entering a connection
 			this.setTravelled(1);
 			this.targetConnection = null;
 
@@ -125,31 +148,23 @@ public class Car {
 			enterRoad(tRoad);
 		}
 
-		// car entering a lane logic
 	}
 
 	private void enterRoad(Road tRoad) {
-		// TODO Auto-generated method stub
-		Connection dummy = new Connection();
-		ArrayList<Connection> connections = currentLane.getSameConnections();// gets
-		ArrayList<Connection> legalConnections = new ArrayList<Connection>();
 
+		/* gets the whole connections available on */
+		ArrayList<Connection> connections = currentLane.getSameConnections();
+		/* sanitizes the list to have connections that are ahead of the cars */
+		ArrayList<Connection> legalConnections = new ArrayList<Connection>();
 		for (int i = 0; i < connections.size(); i++) {
 			Connection cc = connections.get(i);
 			if (Car.distance(this.currentLane.getStart(), cc.getStart()) >= this.distanceTravelled) {
 				legalConnections.add(cc);
 			}
 		}
-		boolean ending = currentLane.isEnding(); // same lanes of this road has
-													// ending lanes
-		// connections
-		// that are
-		// in the
-		// same
-		// direction
-		// lanes of
-		// the same
-		// road
+		boolean ending = currentLane.isEnding();
+		/* dummy: Connection representing an exit point */
+		Connection dummy = new Connection();
 		if (ending) {
 			legalConnections.add(dummy);
 		}
@@ -157,9 +172,13 @@ public class Car {
 		int random = rng.nextInt(legalConnections.size());
 		Connection chosen = legalConnections.get(random);
 
+		/*
+		 * if the dummy connection is randomly chosen it will aim to reach the
+		 * exit point of the car. Other wise appropriate state changes occur for
+		 * making turns
+		 */
 		if (chosen.equals(dummy)) {
 			ArrayList<Lane> sameLanes = currentLane.getSameLanes();
-
 			int nr = rng.nextInt(sameLanes.size());
 			Lane chosenLane = sameLanes.get(nr);
 			this.targetLane = chosenLane;
@@ -176,9 +195,10 @@ public class Car {
 		this.currentRoad = tRoad;
 	}
 
+	/* move: decision making as well as updating its coordinate */
 	public void move() {
 
-		// ///Initial Belief section//////
+		// perception sequence: START
 
 		Car frontCar = this.currentLane.getFrontCar(this);
 		TrafficLight tfl = this.currentLane.getNextTrafficLight(this);
@@ -196,18 +216,22 @@ public class Car {
 		// current -----100m----x-----y :: free run
 		if (cd >= 100 && td >= 100) {
 			// free run
-
 			accelerate();
 		} else if (td < cd && td < 100 && tfl.getStatus().equals("red")) {
-			// react to the light
-
+			// react to the red light
 			if (td < 15)
 				this.setCurrentSpeed(0);
 			else if (td < 70)
 				this.setCurrentSpeed(td);
+			else if (td < 100) {
+				if (this.currentSpeed > td) {
+					decelerate();
+				}
+			}
 
 		} else if ((td < cd && td < 100 && tfl.getStatus().equals("green"))) {
-
+			// react to the green light-> ignore the light and react to the
+			// closest car or slow down if making turn
 			if (this.targetConnection != null
 					&& checkCourse()
 					&& Car.distance(this.coordinate,
@@ -223,37 +247,28 @@ public class Car {
 					this.setCurrentSpeed(0);
 				} else if (cd < 70) {
 					this.setCurrentSpeed(cd);
-				} else if (cd > 90) {
-
+				} else if (cd < 100) {
+					if (this.currentSpeed > cd) {
+						decelerate();
+					}
+				} else {
 					accelerate();
 				}
 			}
-			// slow down for intersection
-
 		} else if ((cd < td && cd < 100)) {
 			// react to the car
 			if (cd < 15) {
 				this.setCurrentSpeed(0);
 			} else if (cd < 70) {
 				this.setCurrentSpeed(cd);
-			} else if (cd > 90) {
-				accelerate();
+			} else if (cd < 100) {
+				if (this.currentSpeed > cd)
+					decelerate();
 			}
 		}
+		// perception sequence: END
 
-		// ////Initial Beleif section/////
-
-		// if oncourse & acceptable speed//
-		// -> keep this state-> just move along
-
-		// if unacceptable speed: ; and on course//
-		// ->if due to front car; if not just increase the speed till due to
-		// ->if canOverTake (checks gaps: allowed distance infront of the front
-		// car, allowed gap in side lane)-> change lane
-
-		// if !onCourse-> change lane: requires checking where to change to and
-		// if it can change,
-
+		// action sequence: START
 		if (this.currentSpeed == 0) {
 			if (frontCar != null) {
 				System.out.println("front car : " + frontCar.coordinate);
@@ -264,35 +279,21 @@ public class Car {
 
 			Point2D.Float nextPosition = this.currentLane.nextPosition(this,
 					tempDistance, this.distanceTravelled);
+
+			// state change sequence: Additional perception and change in
+			// states: START
 			Point2D.Float nextDisplacement = new Point2D.Float(
 					Math.abs(nextPosition.x - this.coordinate.x),
 					Math.abs(nextPosition.y - this.coordinate.y));
-			/*
-			 * System.out.println("From car, next displacement: " +
-			 * nextDisplacement);
-			 */
+
 			Point2D.Float dToEnd = new Point2D.Float(Math.abs(currentLane
 					.getEnd().x - this.getCoordinate().x), Math.abs(currentLane
 					.getEnd().y - this.getCoordinate().y));
-			/*
-			 * System.out.println("From car, dte: " + dToEnd);
-			 * System.out.println(this.currentLane.getClass().getName());
-			 */
 
 			if ((this.currentLane instanceof StraightLane)
 					&& (dToEnd.x < nextDisplacement.x || dToEnd.y < nextDisplacement.y)) {
-				this.coordinate = this.currentLane.getEnd(); // reached the
-																// end
-																// of the
-																// lane
-																// additional
-																// appropriate
-																// logic
-																// required
-				/*
-				 * System.out
-				 * .println("Car has reached the end of it's current lane");
-				 */
+				// reached an exit point
+				this.coordinate = this.currentLane.getEnd();
 				this.remove();
 			} else if ((this.currentLane instanceof Connection)) {
 				Point2D.Float lastPoint = this.currentLane.getEnd();
@@ -317,17 +318,19 @@ public class Car {
 			}
 
 		}
+		// State change sequence: END
+		// action sequence: END
 	}
 
 	private void decelerate() {
 		// TODO Auto-generated method stub
-		this.currentSpeed -= 80 * 0.02;
+		this.currentSpeed -= 500 * 0.02;
 	}
 
 	private void accelerate() {
 		// TODO Auto-generated method stub
 		if (this.currentSpeed < this.desiredSpeed) {
-			this.currentSpeed += 20 * 0.02;
+			this.currentSpeed += 30 * 0.02;
 		}
 	}
 
@@ -340,15 +343,15 @@ public class Car {
 	}
 
 	public void paint(Graphics g) {
-		if (this.currentSpeed >= 120) {
+		if (this.currentSpeed >= 160) {
 			g.setColor(Color.RED);
-		} else if (this.currentSpeed < 120 && this.currentSpeed >= 90) {
+		} else if (this.currentSpeed < 160 && this.currentSpeed >= 120) {
 			g.setColor(Color.ORANGE);
-		} else if (this.currentSpeed < 90 && this.currentSpeed >= 60) {
+		} else if (this.currentSpeed < 120 && this.currentSpeed >= 80) {
 			g.setColor(Color.YELLOW);
-		} else if (this.currentSpeed < 60 && this.currentSpeed >= 30) {
+		} else if (this.currentSpeed < 80 && this.currentSpeed >= 40) {
 			g.setColor(Color.MAGENTA);
-		} else if (this.currentSpeed < 30 && this.currentSpeed > 0) {
+		} else if (this.currentSpeed < 40 && this.currentSpeed > 0) {
 			g.setColor(Color.BLUE);
 		} else if (this.currentSpeed == 0) {
 			g.setColor(Color.BLACK);

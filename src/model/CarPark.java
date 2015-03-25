@@ -13,9 +13,12 @@ public class CarPark {
 	private Point2D.Float coordinate;
 	private static int parksCreated = 0;
 	private Random rng = new Random();
+	// higher the spawn rate, more frequent car spawn
 	private double spawnRate;
 	private Lane lane;
 	private CarWorld world;
+	// attribute to check that the park does not spawn another car too soon.
+	// distance is checked between the car park and the previous car it spawned.
 	private Car previousCar = null;
 
 	public CarPark(Lane bLane, int type, CarWorld cWorld) {
@@ -28,10 +31,7 @@ public class CarPark {
 			this.coordinate = lane.getStart();
 		} else if (type == END) {
 			this.coordinate = lane.getEnd();
-		} else {
-			System.out.println("Error");
-			System.exit(0);
-		}
+		} 
 		parksCreated++;
 	}
 
@@ -64,20 +64,12 @@ public class CarPark {
 
 	public void update() {
 
-		// if (Car.totalCar() < 1) {
 		if (this.type == START) {
-			// spawn cars
 			double range = this.spawnRate / 2;
 			double dice = Math.random();
-			int dspeed = rng.nextInt((150 - 100) + 1) + 100;
+			int dspeed = rng.nextInt((180 - 160) + 1) + 160;
 			if (dice >= 0.5d - range && dice <= 0.5d + range
 					&& this.world.getCars().size() < 80) {
-
-				/*
-				 * public Car(Point2D.Float coordinate, float maxSpeed, Lane
-				 * initialLane, CarPark destinationPark, CarWorld cWorld,
-				 * Point2D.Float entryPoint)
-				 */
 				if (previousCar == null) {
 					Car c = new Car(this.lane.getStart(), dspeed, this.lane,
 							this.world, this.lane.getStart());
@@ -87,8 +79,8 @@ public class CarPark {
 				} else {
 					if (Car.distance(previousCar.getCoordinate(),
 							this.coordinate) > 15) {
-						Car c = new Car(this.lane.getStart(), dspeed, this.lane,
-								this.world, this.lane.getStart());
+						Car c = new Car(this.lane.getStart(), dspeed,
+								this.lane, this.world, this.lane.getStart());
 						c.setCurrentSpeed(100);
 						previousCar = c;
 						this.world.addCar(c);
@@ -97,8 +89,6 @@ public class CarPark {
 			}
 		}
 	}
-
-	// }
 
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub

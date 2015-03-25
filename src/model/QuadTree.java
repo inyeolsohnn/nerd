@@ -3,6 +3,10 @@ package model;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+//collision checking
+//origially from
+/*http://gamedevelopment.tutsplus.com/tutorials/
+ * quick-tip-use-quadtrees-to-detect-likely-collisions-in-2d-space--gamedev-374*/
 
 public class QuadTree {
 	private int MAX_OBJECTS = 8;

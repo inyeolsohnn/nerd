@@ -30,12 +30,10 @@ public class CarWorld {
 	}
 
 	public int getHeight() {
-		// TODO Auto-generated method stub
 		return height;
 	}
 
 	public int getWidth() {
-		// TODO Auto-generated method stub
 		return width;
 	}
 
@@ -52,7 +50,6 @@ public class CarWorld {
 	}
 
 	public String toString() {
-
 		return "Number of roads: " + roads.size() + "Number of cars"
 				+ cars.size();
 	}
@@ -81,21 +78,23 @@ public class CarWorld {
 			Road cRoad = roads.get(i);
 			if (cRoad.getId() == roadId) {
 				tRoad = cRoad;
+				break;
 			}
 		}
 		return tRoad;
 	}
 
 	public ArrayList<Road> getRoads() {
-		// TODO Auto-generated method stub
+
 		return roads;
 	}
 
 	public ArrayList<TrafficLight> getLights() {
-		// TODO Auto-generated method stub
+
 		return lights;
 	}
 
+	// resetting the state of the world for a new road network
 	public void flush() {
 		TrafficLight.setTotalLights(0);
 		Car.setCarsCreated(0);
@@ -104,7 +103,6 @@ public class CarWorld {
 		cars = new HashMap<Integer, Car>();
 		parks = new ArrayList<CarPark>();
 		this.lights = new ArrayList<TrafficLight>();
-		// TODO Auto-generated method stub
 
 	}
 
@@ -142,7 +140,6 @@ public class CarWorld {
 				if ((!returnObjects.get(i).equals(currentCar))
 						&& Car.distance(returnObjects.get(i).getCoordinate(),
 								currentCar.getCoordinate()) < 7) {
-					System.out.println("Collision detected");
 					this.status = "paused";
 					collided.add(currentCar);
 					collided.add(returnObjects.get(i));
@@ -155,22 +152,19 @@ public class CarWorld {
 	}
 
 	public void reset() {
-		// TODO Auto-generated method stub
-		// remove cars from car world
-
-		// remove cars from straight lanes
-		// remove cars from connections
+		// returning to the initial state of the current simulation
 
 		for (int i = 0; i < roads.size(); i++) {
 
 			Road cr = roads.get(i);
 
-			Iterator<Entry<Integer, Lane>> lIt = cr.getLanes().entrySet().iterator();
+			Iterator<Entry<Integer, Lane>> lIt = cr.getLanes().entrySet()
+					.iterator();
 			while (lIt.hasNext()) {
 				Lane currentLane = lIt.next().getValue();
 				currentLane.getCarsInLane().clear();
-				Iterator<Entry<Point2D.Float, ConnectionPoint>> cpIt = currentLane.getConnectionPoints()
-						.entrySet().iterator();
+				Iterator<Entry<Point2D.Float, ConnectionPoint>> cpIt = currentLane
+						.getConnectionPoints().entrySet().iterator();
 				while (cpIt.hasNext()) {
 					Iterator<Entry<Lane, Connection>> conIt = cpIt.next()
 							.getValue().getConnections().entrySet().iterator();
@@ -189,13 +183,23 @@ public class CarWorld {
 			parks.get(i).reset();
 		}
 
-		// remove previous car from car park
-		// reset time intervals in traffic lights
-
+	}
+	
+	public ArrayList<Lane> getLanes() {
+		ArrayList<Lane> laneReturn = new ArrayList<Lane>();
+		for (int i = 0; i < this.roads.size(); i++) {
+			Road cr = roads.get(i);
+			Iterator<Entry<Integer, Lane>> lIt = cr.getLanes().entrySet()
+					.iterator();
+			while (lIt.hasNext()) {
+				laneReturn.add(lIt.next().getValue());
+			}
+		}
+		return laneReturn;
 	}
 
 	public void addNewLight(Integer selectedLane, Point point) {
-		// TODO Auto-generated method stub
+
 		Lane sl = null;
 		for (int i = 0; i < this.getLanes().size(); i++) {
 			if (this.getLanes().get(i).getLaneId() == selectedLane) {
@@ -216,22 +220,10 @@ public class CarWorld {
 	}
 
 	/**
-	 * Returns closest point on segment to point
-	 * 
-	 * @param sx1
-	 *            segment x coord 1
-	 * @param sy1
-	 *            segment y coord 1
-	 * @param sx2
-	 *            segment x coord 2
-	 * @param sy2
-	 *            segment y coord 2
-	 * @param px
-	 *            point x coord
-	 * @param py
-	 *            point y coord
-	 * @return closets point on segment to point
-	 */
+	 * used to find coordinate for the new traffic light From
+	 * http://www.java2s.com
+	 * /Code/Java/2D-Graphics-GUI/Returnsclosestpointonsegmenttopoint.htm
+	 **/
 	public static Point2D.Float getClosestPointOnSegment(float sx1, float sy1,
 			float sx2, float sy2, int px, int py) {
 		double xDelta = sx2 - sx1;
@@ -256,19 +248,6 @@ public class CarWorld {
 		}
 
 		return closestPoint;
-	}
-
-	public ArrayList<Lane> getLanes() {
-		ArrayList<Lane> laneReturn = new ArrayList<Lane>();
-		for (int i = 0; i < this.roads.size(); i++) {
-			Road cr = roads.get(i);
-			Iterator<Entry<Integer, Lane>> lIt = cr.getLanes().entrySet()
-					.iterator();
-			while (lIt.hasNext()) {
-				laneReturn.add(lIt.next().getValue());
-			}
-		}
-		return laneReturn;
 	}
 
 }

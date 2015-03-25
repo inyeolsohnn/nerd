@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
 
+//currently not supported
+//lane class of roundRoad object
 public class RoundAbout extends Lane {
 	private Point2D.Float center;
 	private float radius;
@@ -94,7 +96,7 @@ public class RoundAbout extends Lane {
 	@Override
 	public void paintBorders(Graphics g) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
