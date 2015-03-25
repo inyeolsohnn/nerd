@@ -62,7 +62,7 @@ public class UserHelpPanel extends JPanel implements ActionListener {
 		aimTitle.setIcon(aim_img);
 
 		trafficTitle = new JLabel("How to add a traffic light:");
-		collsionTitle = new JLabel("What is a collsion? b:");
+		collsionTitle = new JLabel("What is a collsion?");
 		trafficTitle.setFont(titleFont);
 		collsionTitle.setFont(titleFont);
 		addTrafficLightLabel = new JLabel();

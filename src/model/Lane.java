@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.swing.JOptionPane;
+
 public abstract class Lane {
 
 	private static final float SMALL_NUM = (float) 0.00000001;
@@ -81,11 +83,13 @@ public abstract class Lane {
 	public void addTrafficLight(TrafficLight light) {
 		// needs to check if the point lies on the lane
 		// not yet implemented
-		ArrayList<TrafficLight> lights = this.world.getLights();
+		ArrayList<TrafficLight> lights = light.getLane().trafficLights;
 		for (int i = 0; i < lights.size(); i++) {
 			TrafficLight currentLight = lights.get(i);
 			if (Car.distance(currentLight.getCoordinate(),
-					light.getCoordinate()) < 5) {
+					light.getCoordinate()) < 20) {
+				JOptionPane.showMessageDialog(null,
+						"the light is too close to other lights in lane");
 				return;
 			}
 		}

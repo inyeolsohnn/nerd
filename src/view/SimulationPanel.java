@@ -101,6 +101,8 @@ class SimulationPanel extends JPanel implements MouseListener {
 				if (selectedLane != null) {
 					JOptionPane.showMessageDialog(null, "lane id : "
 							+ selectedLane + " has been selected");
+					this.mainFrame.repaint();
+					this.mainFrame.revalidate();
 				}
 			}
 
